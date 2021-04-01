@@ -6,3 +6,5 @@ I doubt this will become good enough to be used for any proper server, but I'm h
 And yes I know this code probably burns your eyes, but I will make it better as I learn this (and more java)
 
 Im using PacketEvents by retrooper.
+
+I will post compiled versions of the plguin in my [discord server](https://discord.com/invite/wVCSqV7ptB).
