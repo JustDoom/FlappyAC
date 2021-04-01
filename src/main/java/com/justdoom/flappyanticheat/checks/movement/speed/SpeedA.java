@@ -1,20 +1,20 @@
 package com.justdoom.flappyanticheat.checks.movement.speed;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import io.github.retrooper.packetevents.event.PacketListenerDynamic;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.priority.PacketEventPriority;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 public class SpeedA extends PacketListenerDynamic {
 
-    public SpeedA() {
+    private final FlappyAnticheat plugin;
+
+    public SpeedA(FlappyAnticheat plugin) {
         super(PacketEventPriority.NORMAL);
+        this.plugin = plugin;
     }
 
     private double lastDist;
@@ -27,11 +27,9 @@ public class SpeedA extends PacketListenerDynamic {
         byte packetID = e.getPacketId();
         if (packetID == PacketType.Play.Client.POSITION) {
             WrappedPacketInFlying pos = new WrappedPacketInFlying(e.getNMSPacket());
-            //e.getPlayer().sendMessage("packet" + String.valueOf(pos.getX()));
-            //e.getPlayer().sendMessage("player" + String.valueOf(e.getPlayer().getLocation().getX()));
 
-            double distX = pos.getX() - this.pastLoc.getX();
-            double distZ = pos.getZ() - this.pastLoc.getZ();
+            double distX = pos.getX() - e.getPlayer().getLocation().getX();
+            double distZ = pos.getZ() - e.getPlayer().getLocation().getZ();
             double dist = (distX * distX) + (distZ * distZ);
             double lastDist = this.lastDist;
             this.lastDist = dist;
@@ -47,7 +45,7 @@ public class SpeedA extends PacketListenerDynamic {
 
             if(!onGround && !lastOnGround){
                 if(scaledEqualness >= 1.0){
-                    Bukkit.broadcastMessage("hax");
+                    plugin.msgutil.flagMessage(e.getPlayer(), "SpeedA");
                 }
             }
         }

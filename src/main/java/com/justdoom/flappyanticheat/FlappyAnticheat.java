@@ -24,7 +24,7 @@ public final class FlappyAnticheat extends JavaPlugin {
     @Override
     public void onEnable() {
         //Bukkit.getPluginManager().registerEvents(new SpeedA(), this);
-        PacketEvents.get().getEventManager().registerListener(new SpeedA());
+        PacketEvents.get().getEventManager().registerListener(new SpeedA(this));
 
         PacketEvents.get().init(this);
 
