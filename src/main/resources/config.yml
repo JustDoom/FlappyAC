@@ -1,0 +1,3 @@
+messages:
+  prefix: '[FlappyAC]'
+  failed-check: '%player% failed %check%'
