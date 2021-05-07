@@ -18,11 +18,18 @@ public class GroundSpoofA extends Check implements Listener {
         super("GroundSpoof", "A", true);
     }
 
+    public void playerOnGround(Player p){
+
+    }
+
     @EventHandler
     protected void check(PlayerMoveEvent e){
         Player player = e.getPlayer();
 
-        boolean client = player.isOnGround(), server = player.getLocation().getY() % groundY < 0.0001;
+        boolean client = player.isOnGround(), server = e.getTo().getY() % groundY < 0.0001;
+
+        System.out.println(client);
+        System.out.println(server);
 
         if (client && !server) {
             boolean boat = false;
@@ -43,7 +50,7 @@ public class GroundSpoofA extends Check implements Listener {
             }
 
             if (!boat && !shulker) {
-                fail("mod=" + player.getLocation().getY() % groundY);
+                fail("mod=" + e.getTo().getY() % groundY);
             }
         }
     }
