@@ -1,6 +1,9 @@
 package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import org.bukkit.Location;
+import org.bukkit.Tag;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -8,7 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroundSpoofA extends Check implements Listener {
 
@@ -18,8 +23,18 @@ public class GroundSpoofA extends Check implements Listener {
         super("GroundSpoof", "A", true);
     }
 
-    public void playerOnGround(Player p){
+    public Set<Block> getNearbyBlocks(Location location, int radius) {
+        Set<Block> blocks = new HashSet<>();
 
+        for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
+            for(int y = location.getBlockY() - radius; y <= location.getBlockY() + radius; y++) {
+                for(int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
+                    blocks.add(location.getWorld().getBlockAt(x, y, z));
+                }
+            }
+        }
+
+        return blocks;
     }
 
     @EventHandler
@@ -27,9 +42,6 @@ public class GroundSpoofA extends Check implements Listener {
         Player player = e.getPlayer();
 
         boolean client = player.isOnGround(), server = e.getTo().getY() % groundY < 0.0001;
-
-        System.out.println(client);
-        System.out.println(server);
 
         if (client && !server) {
             boolean boat = false;
@@ -49,8 +61,15 @@ public class GroundSpoofA extends Check implements Listener {
                 }
             }
 
+            for (Block block : getNearbyBlocks(new Location(player.getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ()), 2)) {
+                if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
+                    shulker = true;
+                    break;
+                }
+            }
+
             if (!boat && !shulker) {
-                fail("mod=" + e.getTo().getY() % groundY);
+                fail("mod=" + e.getTo().getY() % groundY, player);
             }
         }
     }
