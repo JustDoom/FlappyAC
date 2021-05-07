@@ -9,4 +9,4 @@ And yes I know this code probably burns your eyes, but I will make it better as 
 
 Im using PacketEvents by retrooper.
 
-I will post compiled versions of the plguin in my [discord server](https://discord.com/invite/wVCSqV7ptB).
+I will post compiled versions of the plugin in my [discord server](https://discord.com/invite/wVCSqV7ptB) or in the releases tab.
