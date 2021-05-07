@@ -2,6 +2,8 @@ package com.justdoom.flappyanticheat;
 
 import com.justdoom.flappyanticheat.alert.AlertManager;
 import com.justdoom.flappyanticheat.checks.CheckManager;
+import com.justdoom.flappyanticheat.data.PlayerDataManager;
+import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FlappyAnticheat extends JavaPlugin {
@@ -17,16 +19,13 @@ public final class FlappyAnticheat extends JavaPlugin {
     }
 
     public AlertManager msgutil = new AlertManager(this);
-    private CheckManager checkManager;
+    public PlayerDataManager dataManager;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        loadModules();
-    }
 
-    public void loadModules(){
-        checkManager = new CheckManager(this);
-        checkManager.loadChecks();
+        this.dataManager = new PlayerDataManager();
+        this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
     }
 }

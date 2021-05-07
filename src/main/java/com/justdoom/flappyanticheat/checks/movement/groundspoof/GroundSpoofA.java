@@ -1,6 +1,8 @@
 package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.checks.CheckData;
+import com.justdoom.flappyanticheat.data.PlayerData;
 import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -15,13 +17,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@CheckData(name = "GroundSpoof", type = "A")
 public class GroundSpoofA extends Check implements Listener {
 
     private final double groundY = 0.015625;
 
-    public GroundSpoofA(){
-        super("GroundSpoof", "A", true);
+    public GroundSpoofA(PlayerData data) {
+        super(data);
     }
+
 
     public Set<Block> getNearbyBlocks(Location location, int radius) {
         Set<Block> blocks = new HashSet<>();
