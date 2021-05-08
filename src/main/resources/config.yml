@@ -1,12 +1,12 @@
-prefix: '[FlappyAC]'
+prefix: '&8[FlappyAC]'
 
 alerts:
-  failed-check: '{player} failed {check}'
+  failed-check: '&2{player} &4failed &2{check}'
   hover:  |
-    TPS: {tps}
-    Ping: {ping}
+    &4TPS: &2{tps}
+    &4Ping: &2{ping}
 
-    Debug: {debug}`
+    &4Debug: &2{debug}`
 
 checks:
   groundspoof:

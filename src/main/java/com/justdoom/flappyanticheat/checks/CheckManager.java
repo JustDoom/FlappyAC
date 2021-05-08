@@ -4,10 +4,6 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CheckManager {
 
@@ -20,7 +16,6 @@ public class CheckManager {
         this.data = data;
 
     }
-
 
     public void loadChecks(){
         Bukkit.getServer().getPluginManager().registerEvents(new GroundSpoofA(data), plugin);

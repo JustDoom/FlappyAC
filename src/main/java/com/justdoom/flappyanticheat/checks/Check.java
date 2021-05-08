@@ -3,16 +3,16 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.Color;
+import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Check {
 
@@ -39,16 +39,17 @@ public class Check {
     }
 
     public void fail(String debug, Player player){
+        FlappyAnticheat.getInstance().violationHandler.addViolation(this, player);
+
         String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + " " + FlappyAnticheat.getInstance().getConfig().getString("alerts.failed-check");
         flagmsg = flagmsg.replace("{player}", player.getName()).replace("{check}", this.check + " " + checkType);
         String hover = FlappyAnticheat.getInstance().getConfig().getString("alerts.hover").replace("{ping}", "add later").replace("{debug}", debug);
 
         TextComponent component = new TextComponent(Color.translate(flagmsg));
-        component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
+        component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(hover)).create()));
 
         FlappyAnticheat.getInstance().dataManager.dataMap.values()
                 .stream().filter(playerData -> data.player.hasPermission("flappyanticheat.alerts"))
                 .forEach(playerData -> playerData.player.spigot().sendMessage(component));
-
     }
 }

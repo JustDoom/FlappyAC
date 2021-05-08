@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@CheckData(name = "GroundSpoof", type = "A")
+@CheckData(name = "GroundSpoof", type = "A", experimental = false)
 public class GroundSpoofA extends Check implements Listener {
 
     private final double groundY = 0.015625;
