@@ -22,8 +22,8 @@ public class GroundSpoofA extends Check implements Listener {
 
     private final double groundY = 0.015625;
 
-    public GroundSpoofA(PlayerData data) {
-        super(data);
+    public GroundSpoofA(){
+        super("GroundSpoof", "A", true);
     }
 
     public Set<Block> getNearbyBlocks(Location location, int radius) {

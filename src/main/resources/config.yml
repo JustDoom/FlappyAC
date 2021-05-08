@@ -1,7 +1,7 @@
-prefix: '&8[FlappyAC]'
+prefix: '&7[FlappyAC]'
 
 alerts:
-  failed-check: '&2{player} &4failed &2{check}'
+  failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
   hover:  |
     &4TPS: &2{tps}
     &4Ping: &2{ping}

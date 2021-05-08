@@ -1,11 +1,15 @@
 package com.justdoom.flappyanticheat.data;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
+import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public class PlayerData {
 
@@ -18,7 +22,7 @@ public class PlayerData {
         this.uuid = uuid;
         this.player = Bukkit.getPlayer(uuid);
 
-        this.checkManager = new CheckManager(FlappyAnticheat.getInstance(), this);
-        this.checkManager.loadChecks();
+        this.checkManager = new CheckManager(FlappyAnticheat.getInstance());
+        //this.checkManager.loadChecks();
     }
 }

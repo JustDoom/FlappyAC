@@ -8,16 +8,16 @@ import org.bukkit.Bukkit;
 public class CheckManager {
 
     private final FlappyAnticheat plugin;
-    private final PlayerData data;
+    //private final PlayerData data;
 
 
-    public CheckManager(FlappyAnticheat plugin, PlayerData data) {
+    public CheckManager(FlappyAnticheat plugin) {
         this.plugin = plugin;
-        this.data = data;
+        //this.data = data;
 
     }
 
     public void loadChecks(){
-        Bukkit.getServer().getPluginManager().registerEvents(new GroundSpoofA(data), plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(new GroundSpoofA(), plugin);
     }
 }

@@ -1,7 +1,8 @@
 package com.justdoom.flappyanticheat;
 
-import com.justdoom.flappyanticheat.alert.AlertManager;
+import com.justdoom.flappyanticheat.checks.CheckManager;
 import com.justdoom.flappyanticheat.commands.FlappyACCommand;
+import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
@@ -15,13 +16,14 @@ public final class FlappyAnticheat extends JavaPlugin {
         return instance;
     }
 
+    public ViolationHandler violationHandler = new ViolationHandler();
+    public PlayerDataManager dataManager;
+    private CheckManager checkManager;
+    public PlayerData playerData;
+
     public FlappyAnticheat(){
         instance = this;
     }
-
-    public AlertManager msgutil = new AlertManager(this);
-    public ViolationHandler violationHandler;
-    public PlayerDataManager dataManager;
 
     @Override
     public void onEnable() {
@@ -33,5 +35,12 @@ public final class FlappyAnticheat extends JavaPlugin {
 
         this.dataManager = new PlayerDataManager();
         this.violationHandler = new ViolationHandler();
+
+        loadModules();
+    }
+
+    public void loadModules(){
+        checkManager = new CheckManager(this);
+        checkManager.loadChecks();
     }
 }
