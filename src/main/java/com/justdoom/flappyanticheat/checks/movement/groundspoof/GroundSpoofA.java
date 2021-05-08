@@ -26,7 +26,6 @@ public class GroundSpoofA extends Check implements Listener {
         super(data);
     }
 
-
     public Set<Block> getNearbyBlocks(Location location, int radius) {
         Set<Block> blocks = new HashSet<>();
 

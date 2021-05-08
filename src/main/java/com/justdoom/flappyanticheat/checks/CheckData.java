@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CheckData {
 
-    String name() default "Default";
+    String name() default "Dg";
     String type () default "NONE";
     boolean experimental() default true;
 

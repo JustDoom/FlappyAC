@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat;
 
 import com.justdoom.flappyanticheat.alert.AlertManager;
+import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
@@ -25,7 +26,9 @@ public final class FlappyAnticheat extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        this.dataManager = new PlayerDataManager();
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
+
+
+        this.dataManager = new PlayerDataManager();
     }
 }
