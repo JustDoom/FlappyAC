@@ -38,24 +38,17 @@ public class Check {
 
     }
 
-
     public void fail(String debug, Player player){
         String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + " " + FlappyAnticheat.getInstance().getConfig().getString("alerts.failed-check");
-        flagmsg = flagmsg.replace("%player%", player.getName()).replace("%check%", this.check + " " + checkType);
+        flagmsg = flagmsg.replace("{player}", player.getName()).replace("{check}", this.check + " " + checkType);
+        String hover = FlappyAnticheat.getInstance().getConfig().getString("alerts.hover").replace("{ping}", "add later").replace("{debug}", debug);
 
         TextComponent component = new TextComponent(Color.translate(flagmsg));
-        component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(debug).create()));
+        component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
 
         FlappyAnticheat.getInstance().dataManager.dataMap.values()
                 .stream().filter(playerData -> data.player.hasPermission("flappyanticheat.alerts"))
                 .forEach(playerData -> playerData.player.spigot().sendMessage(component));
 
-    }
-
-    public void sync(Runnable runnable) {
-        AtomicBoolean waiting = new AtomicBoolean(true);
-            Bukkit.getScheduler().runTask(FlappyAnticheat.getInstance(), () -> {
-                waiting.set(false);
-            });
     }
 }

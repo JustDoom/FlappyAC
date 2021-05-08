@@ -7,6 +7,6 @@ I will learn the basics of anticheats while using events then recode it with pac
 
 And yes I know this code probably burns your eyes, but I will make it better as I learn this (and more java)
 
-Im using PacketEvents by retrooper.
+I will be using PacketEvents by retrooper when I start using packets.
 
 I will post compiled versions of the plugin in my [discord server](https://discord.com/invite/wVCSqV7ptB) or in the releases tab.

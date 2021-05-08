@@ -1,4 +1,19 @@
 prefix: '[FlappyAC]'
 
 alerts:
-  failed-check: '%player% failed %check%'
+  failed-check: '{player} failed {check}'
+  hover:  |
+    TPS: {tps}
+    Ping: {ping}
+
+    Debug: {debug}`
+
+checks:
+  groundspoof:
+    a:
+      enabled: true
+      punishable: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} GroundSpoof A"
+      vl: 20

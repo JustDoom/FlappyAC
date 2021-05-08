@@ -2,6 +2,12 @@ name: FlappyAnticheat
 version: ${project.version}
 main: com.justdoom.flappyanticheat.FlappyAnticheat
 api-version: 1.16
+commands:
+  flappyanticheat:
+    permission: flappyanticheat.commands
+    aliases: flappyac
 permissions:
   flappyanticheat.alerts:
+    default: op
+  flappyanticheat.commands:
     default: op
