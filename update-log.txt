@@ -16,3 +16,6 @@ the punishable and enabled config options for checks now work
 ground spoof a false positives dont happen as much
 changed flag hover message colours
 added violation reset command
+
+1.4.0 BETA
+fixed groundspoof a false potitives, doesnt flag as much but still easily catches hackers

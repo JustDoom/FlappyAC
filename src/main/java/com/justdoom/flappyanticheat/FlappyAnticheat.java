@@ -8,6 +8,8 @@ import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.Callable;
+
 public final class FlappyAnticheat extends JavaPlugin {
 
     private static FlappyAnticheat instance;
@@ -27,6 +29,16 @@ public final class FlappyAnticheat extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        int pluginId = 11300;
+        Metrics metrics = new Metrics(this, pluginId);
+
+        metrics.addCustomChart(new Metrics.SimplePie("used_language", new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getConfig().getString("language", "en");
+            }
+        }));
 
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
 
