@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.Color;
+import com.justdoom.flappyanticheat.utils.Ping;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -15,8 +16,8 @@ import java.util.Map;
 
 public class Check {
 
-    private String check, checkType;
-    private boolean experimental;
+    public String check, checkType;
+    public boolean experimental;
 
     public CheckData checkData;
 
@@ -47,9 +48,9 @@ public class Check {
     public void fail(String debug, Player player){
         FlappyAnticheat.getInstance().violationHandler.addViolation(this, player);
 
-        String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + " " + FlappyAnticheat.getInstance().getConfig().getString("alerts.failed-check");
+        String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.failed-check");
         flagmsg = flagmsg.replace("{player}", player.getName()).replace("{check}", this.check + " " + checkType).replace("{vl}", String.valueOf(FlappyAnticheat.getInstance().violationHandler.getViolations(this, player)));
-        String hover = FlappyAnticheat.getInstance().getConfig().getString("alerts.hover").replace("{ping}", "add later").replace("{debug}", debug);
+        String hover = FlappyAnticheat.getInstance().getConfig().getString("messages.hover").replace("{ping}", String.valueOf(Ping.getPing(player))).replace("{debug}", debug);
 
         TextComponent component = new TextComponent(Color.translate(flagmsg));
         component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(hover)).create()));

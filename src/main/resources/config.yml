@@ -1,6 +1,8 @@
-prefix: '&7[FlappyAC]'
+prefix: '&7[FlappyAC] '
+violation-reset-delay: 300
 
-alerts:
+messages:
+  violation-reset: 'Violations reset'
   failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
   hover:  |
     &4TPS: &2{tps}

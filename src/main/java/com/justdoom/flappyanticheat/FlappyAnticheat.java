@@ -16,10 +16,9 @@ public final class FlappyAnticheat extends JavaPlugin {
         return instance;
     }
 
-    public ViolationHandler violationHandler = new ViolationHandler();
+    public ViolationHandler violationHandler;
     public PlayerDataManager dataManager;
     private CheckManager checkManager;
-    public PlayerData playerData;
 
     public FlappyAnticheat(){
         instance = this;
@@ -33,14 +32,13 @@ public final class FlappyAnticheat extends JavaPlugin {
 
         this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
 
-        this.dataManager = new PlayerDataManager();
-        this.violationHandler = new ViolationHandler();
-
         loadModules();
     }
 
     public void loadModules(){
         checkManager = new CheckManager(this);
+        dataManager = new PlayerDataManager();
+        violationHandler = new ViolationHandler();
         checkManager.loadChecks();
     }
 }

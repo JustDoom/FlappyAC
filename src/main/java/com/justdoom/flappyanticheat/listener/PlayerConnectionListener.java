@@ -26,6 +26,7 @@ public class PlayerConnectionListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        flappyAnticheat.violationHandler.clearViolations(player);
         flappyAnticheat.dataManager.removePlayer(player.getUniqueId());
     }
 }
