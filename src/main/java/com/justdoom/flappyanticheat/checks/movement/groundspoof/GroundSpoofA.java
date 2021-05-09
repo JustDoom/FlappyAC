@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
@@ -22,6 +23,8 @@ public class GroundSpoofA extends Check implements Listener {
 
     private final double groundY = 0.015625;
 
+    private int buffer = 0;
+
     public GroundSpoofA(){
         super("GroundSpoof", "A", true);
     }
@@ -43,37 +46,41 @@ public class GroundSpoofA extends Check implements Listener {
     @EventHandler
     protected void check(PlayerMoveEvent e){
         Player player = e.getPlayer();
+        PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(player.getUniqueId());
 
         boolean client = player.isOnGround(), server = e.getTo().getY() % groundY < 0.0001;
 
         if (client && !server) {
-            boolean boat = false;
-            boolean shulker = false;
+            if(++buffer > 1) {
 
-            List<Entity> nearby = player.getNearbyEntities(1.5, 10, 1.5);
+                boolean boat = false;
+                boolean shulker = false;
 
-            for (Entity entity : nearby) {
-                if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
-                    boat = true;
-                    break;
+                List<Entity> nearby = player.getNearbyEntities(1.5, 10, 1.5);
+
+                for (Entity entity : nearby) {
+                    if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
+                        boat = true;
+                        break;
+                    }
+
+                    if (entity.getType() == EntityType.SHULKER && player.getLocation().getY() > entity.getBoundingBox().getMinY()) {
+                        shulker = true;
+                        break;
+                    }
                 }
 
-                if (entity.getType() == EntityType.SHULKER && player.getLocation().getY() > entity.getBoundingBox().getMinY()) {
-                    shulker = true;
-                    break;
+                for (Block block : getNearbyBlocks(new Location(player.getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ()), 2)) {
+                    if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
+                        shulker = true;
+                        break;
+                    }
+                }
+
+                if (!boat && !shulker) {
+                    fail("mod=" + e.getTo().getY() % groundY, player);
                 }
             }
-
-            for (Block block : getNearbyBlocks(new Location(player.getWorld(), e.getTo().getX(), e.getTo().getY(), e.getTo().getZ()), 2)) {
-                if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
-                    shulker = true;
-                    break;
-                }
-            }
-
-            if (!boat && !shulker) {
-                fail("mod=" + e.getTo().getY() % groundY, player);
-            }
-        }
+        } else if(buffer > 0) buffer--;
     }
 }

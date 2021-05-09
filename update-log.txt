@@ -12,3 +12,7 @@ Can change it in the config
 
 1.3.0 BETA
 fix flag alert not working unless your the only/first player in the server
+the punishable and enabled config options for checks now work
+ground spoof a false positives dont happen as much
+changed flag hover message colours
+added violation reset command

@@ -5,10 +5,10 @@ messages:
   violation-reset: 'Violations reset'
   failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
   hover:  |
-    &4TPS: &2{tps}
-    &4Ping: &2{ping}
+    &7TPS: &2{tps}
+    &7Ping: &2{ping}
 
-    &4Debug: &2{debug}`
+    &7Debug: &2{debug}
 
 checks:
   groundspoof:
