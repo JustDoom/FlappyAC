@@ -1,0 +1,14 @@
+1.0.0 SNAPSHOT
+first release
+
+1.1.0 SNAPSHOT
+First semi stable version of Flappy
+It has flags, punishments and a configurable config
+
+1.2.0 BETA
+rename SNAPSHOT to BETA
+Violations reset every 5 minutes!
+Can change it in the config
+
+1.3.0 BETA
+fix flag alert not working unless your the only/first player in the server

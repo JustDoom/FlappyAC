@@ -56,10 +56,9 @@ public class Check {
         component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(hover)).create()));
 
         for(Player p: Bukkit.getOnlinePlayers()){
-            if(!p.hasPermission("flappyanticheat.alerts")){
-                return;
+            if(p.hasPermission("flappyanticheat.alerts")){
+                p.spigot().sendMessage(component);
             }
-            p.spigot().sendMessage(component);
         }
 
         /**FlappyAnticheat.getInstance().dataManager.dataMap.values()
