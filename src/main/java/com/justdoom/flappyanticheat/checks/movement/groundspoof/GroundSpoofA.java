@@ -24,7 +24,7 @@ public class GroundSpoofA extends Check implements Listener {
 
     private final double groundY = 0.015625;
 
-    //private int buffer = 0;
+    private int buffer = 0;
     private boolean lastOnGround, lastLastOnGround;
 
     public GroundSpoofA(){
@@ -47,7 +47,7 @@ public class GroundSpoofA extends Check implements Listener {
         this.lastLastOnGround = lastOnGround;
 
         if (client && !server) {
-            if(!onGround && !lastOnGround && !lastLastOnGround) {
+            if(++buffer > 1) {
 
                 boolean boat = false;
                 boolean shulker = false;
@@ -78,7 +78,7 @@ public class GroundSpoofA extends Check implements Listener {
                     fail("mod=" + e.getTo().getY() % groundY, player);
                 }
             }
-        }// else if(buffer > 0) buffer--;
+        } else if(buffer > 0) buffer--;
     }
 
     public boolean isNearGround(Location location){
