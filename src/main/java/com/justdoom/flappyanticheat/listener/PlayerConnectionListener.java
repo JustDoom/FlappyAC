@@ -28,5 +28,6 @@ public class PlayerConnectionListener implements Listener {
 
         flappyAnticheat.violationHandler.clearViolations(player);
         flappyAnticheat.dataManager.removePlayer(player.getUniqueId());
+        flappyAnticheat.dataManager.disabledAlertsRemove(player);
     }
 }

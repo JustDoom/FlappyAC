@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat;
 
 import com.justdoom.flappyanticheat.checks.CheckManager;
+import com.justdoom.flappyanticheat.commands.FlagClickCommand;
 import com.justdoom.flappyanticheat.commands.FlappyACCommand;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
@@ -43,6 +44,7 @@ public final class FlappyAnticheat extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
 
         this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
+        this.getCommand("flappyacpunish").setExecutor(new FlagClickCommand());
         this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
 
         loadModules();

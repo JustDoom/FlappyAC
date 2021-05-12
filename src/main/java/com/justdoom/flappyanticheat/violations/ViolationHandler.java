@@ -67,6 +67,9 @@ public class ViolationHandler {
             command = command.replace("{player}", player.getName());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         }
+        for(Player p:Bukkit.getOnlinePlayers()){
+            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("messages.punish")).replace("{player}", player.getName()));
+        }
     }
 
     public void clearViolations(Player p) {

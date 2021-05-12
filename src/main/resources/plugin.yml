@@ -6,8 +6,12 @@ commands:
   flappyanticheat:
     permission: flappyanticheat.commands
     aliases: flappyac
+  flappyacpunish:
+    permission: flappyanticheat.commands
 permissions:
   flappyanticheat.alerts:
     default: op
   flappyanticheat.commands:
+    default: op
+  flappyanticheat.bypass:
     default: op

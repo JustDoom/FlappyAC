@@ -18,4 +18,10 @@ changed flag hover message colours
 added violation reset command
 
 1.4.0 BETA
-fixed groundspoof a false potitives, doesnt flag as much but still easily catches hackers
+added bstats metrics
+added flag-to-console option
+added bypass permission
+added alerts command to toggle if you get alerts or not
+added runnable commands on flag click
+stopped flagging while in spectator and creative
+added punish message

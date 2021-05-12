@@ -24,6 +24,12 @@ public class FlappyACCommand implements CommandExecutor {
                         p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
                     }
                 }
+            } else if (args[0].equalsIgnoreCase("alerts")) {
+                if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(((Player) sender).getPlayer())){
+                    FlappyAnticheat.getInstance().dataManager.disabledAlertsAdd(((Player) sender).getPlayer());
+                } else {
+                    FlappyAnticheat.getInstance().dataManager.disabledAlertsRemove(((Player) sender).getPlayer());
+                }
             }
         }
         return false;

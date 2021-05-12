@@ -2,13 +2,22 @@ prefix: '&7[FlappyAC] '
 violation-reset-delay: 300
 
 messages:
+  flag-to-console: false
   violation-reset: 'Violations reset'
   failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
+  punish:  |
+    &7--------------------
+    &2{player} &7has been caught cheating
+    &7--------------------
   hover:  |
     &7TPS: &2{tps}
     &7Ping: &2{ping}
 
     &7Debug: &2{debug}
+
+  commands:
+    - 'tp {player}'
+    - 'gamemode spectator'
 
 checks:
   groundspoof:

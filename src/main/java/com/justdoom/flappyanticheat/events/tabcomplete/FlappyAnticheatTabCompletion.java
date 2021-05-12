@@ -16,6 +16,7 @@ public class FlappyAnticheatTabCompletion implements TabCompleter {
         if(arguments.isEmpty()){
             arguments.add("reload");
             arguments.add("resetviolations");
+            arguments.add("alerts");
         }
 
         List<String> result = new ArrayList<String>();

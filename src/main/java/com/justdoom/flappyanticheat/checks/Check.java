@@ -5,10 +5,12 @@ import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.Color;
 import com.justdoom.flappyanticheat.utils.Ping;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -46,6 +48,9 @@ public class Check {
     }
 
     public void fail(String debug, Player player){
+        if(player.hasPermission("flappyanticheat.bypass") || player.getGameMode() == GameMode.SPECTATOR || player.getGameMode() == GameMode.CREATIVE)
+            return;
+
         FlappyAnticheat.getInstance().violationHandler.addViolation(this, player);
 
         String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.failed-check");
@@ -54,11 +59,17 @@ public class Check {
 
         TextComponent component = new TextComponent(Color.translate(flagmsg));
         component.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(hover)).create()));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyacpunish " + player.getName()));
 
         for(Player p: Bukkit.getOnlinePlayers()){
             if(p.hasPermission("flappyanticheat.alerts")){
-                p.spigot().sendMessage(component);
+                if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(p))
+                    p.spigot().sendMessage(component);
             }
+        }
+
+        if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+            Bukkit.getConsoleSender().sendMessage(Color.translate(flagmsg));
         }
 
         /**FlappyAnticheat.getInstance().dataManager.dataMap.values()
