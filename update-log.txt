@@ -30,9 +30,12 @@ added punish message
 added messages to alerts message
 
 1.4.2 BETA
-added more messages (alerts command, reload command and reset violations command) to the config + they use the prefix now (check if works)
-violation resets now output to the console (check if works)
-violation reset command can reset certain players, make print to console (check if works)
+added more messages (alerts command, reload command and reset violations command) to the config + they use the prefix now
+violation resets now output to the console
+violation reset command can reset certain players, make print to console
+violation reset message for resetting player
+removed console output from working on a fly check
 
 todo
 check if fly check actually works/fix fly check
+change flag to output config option to output to console or something

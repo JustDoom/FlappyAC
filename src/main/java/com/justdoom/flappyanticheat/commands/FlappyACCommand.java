@@ -18,9 +18,17 @@ public class FlappyACCommand implements CommandExecutor {
                 FlappyAnticheat.getInstance().reloadConfig();
                 sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.reload")));
             } else if (args[0].equalsIgnoreCase("resetviolations")) {
-                if(args.length >= 1){
-                    if(Bukkit.getPlayer(args[1]) == Bukkit.getPlayerExact(args[1])) {
+                if(args.length >= 2){
+                    if(Bukkit.getPlayerExact(args[1]) != null) {
                         FlappyAnticheat.getInstance().violationHandler.clearViolations(Bukkit.getPlayerExact(args[1]));
+                        for(Player p: Bukkit.getOnlinePlayers()){
+                            if(p.hasPermission("flappyanticheat.alerts")){
+                                p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.player").replace("{player}", args[1])));
+                            }
+                        }
+                        if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+                            Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.player").replace("{player}", args[1])));
+                        }
                     } else {
                         sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-remove-invalid-player")));
                     }
@@ -28,8 +36,11 @@ public class FlappyACCommand implements CommandExecutor {
                     FlappyAnticheat.getInstance().violationHandler.clearAllViolations();
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.hasPermission("flappyanticheat.alerts")) {
-                            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
+                            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
                         }
+                    }
+                    if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+                        Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
                     }
                 }
             } else if (args[0].equalsIgnoreCase("alerts")) {

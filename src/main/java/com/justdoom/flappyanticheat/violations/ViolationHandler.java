@@ -21,11 +21,11 @@ public class ViolationHandler {
             clearAllViolations();
             for(Player p: Bukkit.getOnlinePlayers()){
                 if(p.hasPermission("flappyanticheat.alerts")){
-                    p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
+                    p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
                 }
             }
             if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
-                Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
+                Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
             }
         }, delay, delay);
     }

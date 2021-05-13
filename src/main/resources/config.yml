@@ -8,7 +8,9 @@ messages:
   alert-toggle:
     disable: "&7You will no longer receive alerts"
     enable: "&7You will receive alerts"
-  violation-reset: 'Violations reset'
+  violation-reset:
+    all: '&7Violations reset'
+    player: '&7Violations reset for &2{player}'
   failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
   punish:  |
     &7--------------------
