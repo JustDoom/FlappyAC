@@ -24,6 +24,9 @@ public class ViolationHandler {
                     p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
                 }
             }
+            if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+                Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset")));
+            }
         }, delay, delay);
     }
 

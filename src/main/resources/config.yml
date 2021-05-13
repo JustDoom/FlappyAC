@@ -3,6 +3,11 @@ violation-reset-delay: 300
 
 messages:
   flag-to-console: false
+  reload: "&7FlappyAC has been reloaded"
+  violation-remove-invalid-player: "&7Invalid player name"
+  alert-toggle:
+    disable: "&7You will no longer receive alerts"
+    enable: "&7You will receive alerts"
   violation-reset: 'Violations reset'
   failed-check: '&2{player} &7failed &2{check} &7VL: &2{vl}'
   punish:  |
@@ -27,4 +32,12 @@ checks:
       punish-vl: 200
       punish-commands:
         - "kick {player} GroundSpoof A"
+      vl: 20
+  fly:
+    a:
+      enabled: true
+      punishable: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} Fly A"
       vl: 20

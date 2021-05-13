@@ -25,3 +25,14 @@ added alerts command to toggle if you get alerts or not
 added runnable commands on flag click
 stopped flagging while in spectator and creative
 added punish message
+
+1.4.1 BETA
+added messages to alerts message
+
+1.4.2 BETA
+added more messages (alerts command, reload command and reset violations command) to the config + they use the prefix now (check if works)
+violation resets now output to the console (check if works)
+violation reset command can reset certain players, make print to console (check if works)
+
+todo
+check if fly check actually works/fix fly check

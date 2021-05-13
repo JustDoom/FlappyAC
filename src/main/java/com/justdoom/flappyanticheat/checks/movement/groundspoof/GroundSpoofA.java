@@ -26,7 +26,7 @@ public class GroundSpoofA extends Check implements Listener {
     private int buffer = 0;
 
     public GroundSpoofA(){
-        super("GroundSpoof", "A", true);
+        super("GroundSpoof", "A", false);
     }
 
     @EventHandler
