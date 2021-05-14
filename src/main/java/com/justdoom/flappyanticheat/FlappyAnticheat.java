@@ -7,6 +7,7 @@ import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
+import com.justdoom.flappyanticheat.utils.UpdateChecker;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +34,15 @@ public final class FlappyAnticheat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        (new UpdateChecker(this, 92180)).getVersion(version -> {
+            if (!getConfig().getBoolean("disable-update-checker"))
+                if (getDescription().getVersion().equalsIgnoreCase(version)) {
+                    getLogger().info("There is not a new update available.");
+                } else {
+                    getLogger().info("There is a new update available.");
+                }
+        });
+
         saveDefaultConfig();
 
         int pluginId = 11300;

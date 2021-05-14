@@ -1,5 +1,6 @@
 I have *borrowed* some code from some peoples anticheats so I will list them off here. I have made the base myself though
-Anticheat | Developer
-Juaga | Salers
-Tutorial Series | funkemonkey
-Tutorial Series | Jonhan
+Anticheat | Developer | For
+Juaga | Salers | Main Fly A check
+Tutorial Series | funkemonkey | Bit of check code here and there
+Tutorial Series | Jonhan | Little bit of check code here and there
+Optimus | notOM3GA | Main GroundSpoof A Check

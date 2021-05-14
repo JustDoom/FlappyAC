@@ -1,3 +1,5 @@
+disable-update-checker: false
+
 prefix: '&7[FlappyAC] '
 violation-reset-delay: 300
 
