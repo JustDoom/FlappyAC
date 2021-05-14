@@ -3,12 +3,19 @@ package com.justdoom.flappyanticheat.violations;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.Color;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class ViolationHandler {
 
@@ -50,6 +57,7 @@ public class ViolationHandler {
         this.violations.put(p.getUniqueId(), vl);
         if(getViolations(check, p) >= FlappyAnticheat.getInstance().getConfig().getInt(path + ".punish-vl")){
             punish(p, path);
+            FlappyAnticheat.getInstance().fileData.addToFile("punishments.txt", "\n" + p.getName() + " has been punished for " + check.check.toLowerCase() + " " + check.checkType.toLowerCase());
         }
     }
 

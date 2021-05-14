@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -36,11 +37,20 @@ public class GroundSpoofA extends Check implements Listener {
 
         boolean client = player.isOnGround(), server = e.getTo().getY() % groundY < 0.0001;
 
-        if (client && !server) {
+        if (e.getFrom().getX() == e.getTo().getX()
+                && e.getFrom().getY() == e.getTo().getY()
+                && e.getFrom().getZ() == e.getTo().getZ()) {
+            return;
+        }
+
+        if (client != server) {
             if(++buffer > 1) {
+
+                //player.sendMessage("C: " + client + "    S: " + server);
 
                 boolean boat = false;
                 boolean shulker = false;
+                boolean slime = false;
 
                 List<Entity> nearby = player.getNearbyEntities(1.5, 10, 1.5);
 
@@ -62,10 +72,15 @@ public class GroundSpoofA extends Check implements Listener {
                         shulker = true;
                         break;
                     }
+
+                    if (block.getType() == Material.SLIME_BLOCK) {
+                        slime = true;
+                        break;
+                    }
                 }
 
-                if (!boat && !shulker) {
-                    fail("mod=" + e.getTo().getY() % groundY, player);
+                if (!boat && !shulker && !slime) {
+                    fail("mod=" + e.getTo().getY() % groundY + "\n&7Client: &2" + client + " &7Server: &2" + server, player);
                 }
             }
         } else if(buffer > 0) buffer--;

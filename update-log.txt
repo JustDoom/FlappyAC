@@ -36,6 +36,33 @@ violation reset command can reset certain players, make print to console
 violation reset message for resetting player
 removed console output from working on a fly check
 
-todo
-check if fly check actually works/fix fly check
-change flag to output config option to output to console or something
+1.5.0 BETA
+Added a basic Fly A check
+GroundSpoof A Now detects anti hunger
+GroundSpoof A doesnt flag near pistons
+GroundSpoof A no longer false flags on pistons
+added a violation and punishment log
+
+
+Todo
+- change flag to output config option to output to console or something
+
+- More checks
+- Ban wave
+- client brand on join (when packets)
+- async?
+- viaversion compat
+- checks run on new thread?
+- update notification
+- view player profile command (player client brand, violations etc)
+- GUI for enabling checks etc
+- lag back feature??? Could be an extension
+- api (flagevent, punishevent, etc)
+- proper 1.8 - 1.16 support possibly
+- change to packets
+
+next checks
+- speed
+- reach
+
+false todo

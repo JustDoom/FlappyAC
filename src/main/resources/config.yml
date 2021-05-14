@@ -38,8 +38,8 @@ checks:
   fly:
     a:
       enabled: true
-      punishable: true
+      punishable: false
       punish-vl: 200
       punish-commands:
         - "kick {player} Fly A"
-      vl: 20
+      vl: 15

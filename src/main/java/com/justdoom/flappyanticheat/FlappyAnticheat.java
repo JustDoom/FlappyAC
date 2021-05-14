@@ -3,12 +3,15 @@ package com.justdoom.flappyanticheat;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import com.justdoom.flappyanticheat.commands.FlagClickCommand;
 import com.justdoom.flappyanticheat.commands.FlappyACCommand;
+import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public final class FlappyAnticheat extends JavaPlugin {
@@ -21,6 +24,7 @@ public final class FlappyAnticheat extends JavaPlugin {
 
     public ViolationHandler violationHandler;
     public PlayerDataManager dataManager;
+    public FileData fileData;
     private CheckManager checkManager;
 
     public FlappyAnticheat(){
@@ -53,7 +57,10 @@ public final class FlappyAnticheat extends JavaPlugin {
     public void loadModules(){
         checkManager = new CheckManager(this);
         dataManager = new PlayerDataManager();
+        fileData = new FileData();
         violationHandler = new ViolationHandler();
         checkManager.loadChecks();
     }
+
+
 }

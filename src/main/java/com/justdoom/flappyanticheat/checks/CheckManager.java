@@ -1,8 +1,8 @@
 package com.justdoom.flappyanticheat.checks;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
+import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
-import com.justdoom.flappyanticheat.data.PlayerData;
 import org.bukkit.Bukkit;
 
 public class CheckManager {
@@ -19,5 +19,6 @@ public class CheckManager {
 
     public void loadChecks(){
         Bukkit.getServer().getPluginManager().registerEvents(new GroundSpoofA(), plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(new FlyA(), plugin);
     }
 }

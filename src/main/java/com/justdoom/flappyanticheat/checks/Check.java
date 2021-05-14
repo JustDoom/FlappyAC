@@ -72,6 +72,8 @@ public class Check {
             Bukkit.getConsoleSender().sendMessage(Color.translate(flagmsg));
         }
 
+        FlappyAnticheat.getInstance().fileData.addToFile("violations.txt", "\n" + Color.translate(flagmsg + " " + debug));
+
         /**FlappyAnticheat.getInstance().dataManager.dataMap.values()
                 .stream().filter(playerData -> data.player.hasPermission("flappyanticheat.alerts"))
                 .forEach(playerData -> playerData.player.spigot().sendMessage(component));**/
