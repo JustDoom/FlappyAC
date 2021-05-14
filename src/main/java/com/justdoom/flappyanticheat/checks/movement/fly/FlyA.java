@@ -62,6 +62,6 @@ public class FlyA extends Check implements Listener {
         return false;
     }
 
-    //Not at all taken from Juaga, ignore this message ;)
-    //Got stuck with a bug
+    //Not at all taken from Juaga Anticheat, ignore this message ;)
+    //Got stuck with a bug, had most of this code myself anyway
 }

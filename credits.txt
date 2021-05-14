@@ -1,0 +1,5 @@
+I have *borrowed* some code from some peoples anticheats so I will list them off here. I have made the base myself though
+Anticheat | Developer
+Juaga | Salers
+Tutorial Series | funkemonkey
+Tutorial Series | Jonhan

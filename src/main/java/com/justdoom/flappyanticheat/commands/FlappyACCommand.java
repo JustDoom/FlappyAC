@@ -45,7 +45,7 @@ public class FlappyACCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("alerts")) {
                 if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(((Player) sender).getPlayer())){
-                    FlappyAnticheat.getInstance().dataManager.disabledAlertsAdd(((Player) sender).getPlayer());;
+                    FlappyAnticheat.getInstance().dataManager.disabledAlertsAdd(((Player) sender).getPlayer());
                     sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.alert-toggle.disable")));
                 } else {
                     FlappyAnticheat.getInstance().dataManager.disabledAlertsRemove(((Player) sender).getPlayer());
