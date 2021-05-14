@@ -40,9 +40,10 @@ removed console output from working on a fly check
 Added a basic Fly A check
 GroundSpoof A Now detects anti hunger
 GroundSpoof A doesnt flag near pistons unless its a giant piston elevator
-GroundSpoof A no longer false flags on pistons
 Added a violation and punishment log
 Added an update checker
+Changed to packets
+fixed tps placeholder
 
 
 Todo
@@ -50,21 +51,19 @@ Todo
 
 - More checks
 - Ban wave
-- client brand on join (when packets)
+- client brand on join
 - async?
 - viaversion compat
-- checks run on new thread?
-- update notification
+- checks run on new thread
 - view player profile command (player client brand, violations etc)
 - GUI for enabling checks etc
 - lag back feature??? Could be an extension
 - api (flagevent, punishevent, etc)
 - proper 1.8 - 1.16 support possibly
-- change to packets
 
 next checks
 - speed
 - reach
 
 false todo
-groundspoof a piston elevator false
+groundspoof/fly A piston elevator false

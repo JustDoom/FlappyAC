@@ -1,6 +1,11 @@
 package com.justdoom.flappyanticheat.checks.movement.fly;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.checks.CheckData;
+import com.justdoom.flappyanticheat.data.PlayerData;
+import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
+import io.github.retrooper.packetevents.packettype.PacketType;
+import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,46 +13,50 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class FlyA extends Check implements Listener {
+@CheckData(name = "Fly", type = "A")
+public class FlyA extends Check {
 
     private float buffer;
     private double lastResult, lastDeltaY;
     private boolean lastLastOnGround, lastOnGround;
+    private Location lastLocation = data.player.getLocation();
 
-    public FlyA() {
-        super("Fly", "A", true);
+    public FlyA(PlayerData data) {
+        super(data);
     }
 
-    @EventHandler
-    public void onMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+    @Override
+    public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
+        if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
-        if (event.getFrom().getX() == event.getTo().getX()
-                && event.getFrom().getY() == event.getTo().getY()
-                && event.getFrom().getZ() == event.getTo().getZ()) {
-            return;
-        }
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
+            Player player = event.getPlayer();
 
-        boolean onGround = isNearGround(event.getTo());
-        boolean lastOnGround = this.lastOnGround;
-        this.lastOnGround = onGround;
-        boolean lastLastOnGround = this.lastLastOnGround;
-        this.lastLastOnGround = lastOnGround;
-        if (!lastLastOnGround && !lastOnGround && !onGround) {
-            double deltaY = (event.getTo().getY() - event.getFrom().getY());
-            double lastDeltaY = this.lastDeltaY;
-            this.lastDeltaY = deltaY;
-            double predictedDeltaY = (lastDeltaY - 0.08) * 0.9800000190734863D;
-            double result = event.getTo().getY() - event.getFrom().getY() - predictedDeltaY;
+            Location currentLoc = new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ());
+            Location lastLocation = this.lastLocation;
+            this.lastLocation = currentLoc;
 
-            double lastResult = this.lastResult;
-            this.lastResult = result;
+            boolean onGround = packet.isOnGround();
+            boolean lastOnGround = this.lastOnGround;
+            this.lastOnGround = onGround;
+            boolean lastLastOnGround = this.lastLastOnGround;
+            this.lastLastOnGround = lastOnGround;
+            if (!lastLastOnGround && !lastOnGround && !onGround && !player.isInWater()) {
+                double deltaY = (currentLoc.getY() - lastLocation.getY());
+                double lastDeltaY = this.lastDeltaY;
+                this.lastDeltaY = deltaY;
+                double predictedDeltaY = (lastDeltaY - 0.08) * 0.9800000190734863D;
+                double result = currentLoc.getY() - lastLocation.getY() - predictedDeltaY;
 
-            if (result > 0.1 || (lastResult == 0.0784000015258789 && result == 0.0784000015258789)) {
-                if (++buffer > 2) {
-                    fail("lastResult=" + lastResult + " result=" + result + " predictedDeltaY=" + predictedDeltaY + " deltaY=" + String.valueOf(event.getTo().getY() - event.getFrom().getY()), player);
-                }
-            } else buffer -= buffer > 0 ? 1 : 0;
+                double lastResult = this.lastResult;
+                this.lastResult = result;
+
+                if (result > 0.1 || (lastResult == 0.0784000015258789 && result == 0.0784000015258789)) {
+                    if (++buffer > 2) {
+                        fail("lastResult=" + lastResult + " result=" + result + " predictedDeltaY=" + predictedDeltaY + " deltaY=" + String.valueOf(currentLoc.getY() - lastLocation.getY()), player);
+                    }
+                } else buffer -= buffer > 0 ? 1 : 0;
+            }
         }
     }
 

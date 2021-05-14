@@ -1,6 +1,10 @@
 package com.justdoom.flappyanticheat.listener;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
+import com.justdoom.flappyanticheat.utils.Color;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.player.ClientVersion;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +24,19 @@ public class PlayerConnectionListener implements Listener {
         Player player = event.getPlayer();
 
         flappyAnticheat.dataManager.addPlayer(player.getUniqueId());
+
+        ClientVersion clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+
+        /**for(Player p: Bukkit.getOnlinePlayers()){
+            if(p.hasPermission("flappyanticheat.alerts")){
+                if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(p))
+                    p.sendMessage(String.valueOf(clientVersion));
+            }
+        }
+
+        if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(clientVersion));
+        }**/
     }
 
     @EventHandler

@@ -29,7 +29,7 @@ public class PlayerData {
         this.uuid = uuid;
         this.player = Bukkit.getPlayer(uuid);
 
-        this.checkManager = new CheckManager(FlappyAnticheat.getInstance());
-        //this.checkManager.loadChecks();
+        this.checkManager = new CheckManager(FlappyAnticheat.getInstance(), this);
+        this.checkManager.loadChecks();
     }
 }

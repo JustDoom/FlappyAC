@@ -9,6 +9,9 @@ import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabComplet
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.utils.UpdateChecker;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.settings.PacketEventsSettings;
+import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -30,6 +33,17 @@ public final class FlappyAnticheat extends JavaPlugin {
 
     public FlappyAnticheat(){
         instance = this;
+    }
+
+    @Override
+    public void onLoad(){
+        PacketEvents.create(this);
+        PacketEventsSettings settings = PacketEvents.get().getSettings();
+        settings
+                .fallbackServerVersion(ServerVersion.v_1_16_5)
+                .compatInjector(false)
+                .checkForUpdates(false);
+        PacketEvents.get().loadAsyncNewThread();
     }
 
     @Override
@@ -62,15 +76,20 @@ public final class FlappyAnticheat extends JavaPlugin {
         this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
 
         loadModules();
+
+        PacketEvents.get().init();
+    }
+
+    @Override
+    public void onDisable() {
+        PacketEvents.get().terminate();
     }
 
     public void loadModules(){
-        checkManager = new CheckManager(this);
+        //checkManager = new CheckManager(this);
         dataManager = new PlayerDataManager();
         fileData = new FileData();
         violationHandler = new ViolationHandler();
-        checkManager.loadChecks();
+        //checkManager.loadChecks();
     }
-
-
 }
