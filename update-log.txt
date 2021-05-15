@@ -44,6 +44,7 @@ Added a violation and punishment log
 Added an update checker
 Changed to packets
 fixed tps placeholder
+Added BadPackets A-B check
 
 
 Todo
@@ -67,3 +68,4 @@ next checks
 
 false todo
 groundspoof/fly A piston elevator false
+groundspoof A on join false

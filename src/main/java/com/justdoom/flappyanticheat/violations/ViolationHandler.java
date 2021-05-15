@@ -56,8 +56,10 @@ public class ViolationHandler {
         }
         this.violations.put(p.getUniqueId(), vl);
         if(getViolations(check, p) >= FlappyAnticheat.getInstance().getConfig().getInt(path + ".punish-vl")){
-            punish(p, path);
-            FlappyAnticheat.getInstance().fileData.addToFile("punishments.txt", "\n" + p.getName() + " has been punished for " + check.check.toLowerCase() + " " + check.checkType.toLowerCase());
+            if(FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".punishable")){
+                punish(p, path);
+                FlappyAnticheat.getInstance().fileData.addToFile("punishments.txt", "\n" + p.getName() + " has been punished for " + check.check.toLowerCase() + " " + check.checkType.toLowerCase());
+            }
         }
     }
 
@@ -71,9 +73,6 @@ public class ViolationHandler {
     }
 
     public void punish(Player player, String path){
-        if(!FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".punishable")){
-            return;
-        }
         for(String command: FlappyAnticheat.getInstance().getConfig().getStringList(path + ".punish-commands")) {
             command = command.replace("{player}", player.getName());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);

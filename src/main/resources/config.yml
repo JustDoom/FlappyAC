@@ -45,3 +45,18 @@ checks:
       punish-commands:
         - "kick {player} Fly A"
       vl: 15
+  badpackets:
+    a:
+      enabled: true
+      punishable: true
+      punish-vl: 10
+      punish-commands:
+        - "kick {player} BadPackets A"
+      vl: 10
+    b:
+      enabled: true
+      punishable: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} BadPackets A"
+      vl: 10

@@ -13,7 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-@CheckData(name = "Fly", type = "A")
+@CheckData(name = "Fly", type = "A", experimental = false)
 public class FlyA extends Check {
 
     private float buffer;
@@ -36,12 +36,12 @@ public class FlyA extends Check {
             Location lastLocation = this.lastLocation;
             this.lastLocation = currentLoc;
 
-            boolean onGround = packet.isOnGround();
+            boolean onGround = packet.getY() % 0.015625 < 0.0001;
             boolean lastOnGround = this.lastOnGround;
             this.lastOnGround = onGround;
             boolean lastLastOnGround = this.lastLastOnGround;
             this.lastLastOnGround = lastOnGround;
-            if (!lastLastOnGround && !lastOnGround && !onGround && !player.isInWater()) {
+            if (!lastLastOnGround && !lastOnGround && !onGround && !isInLiquid(player)) {
                 double deltaY = (currentLoc.getY() - lastLocation.getY());
                 double lastDeltaY = this.lastDeltaY;
                 this.lastDeltaY = deltaY;
@@ -60,13 +60,9 @@ public class FlyA extends Check {
         }
     }
 
-    public boolean isNearGround(Location location) {
-        double expand = 0.3;
-        for (double x = -expand; x <= expand; x += expand) {
-            for (double z = -expand; z <= expand; z += expand) {
-                if (location.clone().add(x, -0.5001, z).getBlock().getType() != Material.AIR)
-                    return true;
-            }
+    public boolean isInLiquid(Player player) {
+        if(player.isInWater() || player.getLocation().getBlock().getType() == Material.LAVA){
+            return true;
         }
         return false;
     }

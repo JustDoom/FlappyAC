@@ -3,6 +3,8 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import io.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
@@ -21,5 +23,7 @@ public class CheckManager {
     public void loadChecks(){
         PacketEvents.get().registerListener(new GroundSpoofA(data));
         PacketEvents.get().registerListener(new FlyA(data));
+        PacketEvents.get().registerListener(new BadPacketsA(data));
+        PacketEvents.get().registerListener(new BadPacketsB(data));
     }
 }

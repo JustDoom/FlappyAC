@@ -2,5 +2,5 @@ I have *borrowed* some code from some peoples anticheats so I will list them off
 Anticheat | Developer | For
 Juaga | Salers | Main Fly A check
 Tutorial Series | funkemonkey | Bit of check code here and there
-Tutorial Series | Jonhan | Little bit of check code here and there
+Tutorial Series | Jonhan | Little bit of check code here and there and some badpacket checks
 Optimus | notOM3GA | Main GroundSpoof A Check
