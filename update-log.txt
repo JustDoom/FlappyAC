@@ -46,6 +46,9 @@ Changed to packets
 fixed tps placeholder
 Added BadPackets A-B check
 
+1.5.1 BETA
+plugin crash fix
+
 
 Todo
 - change flag to output config option to output to console or something
