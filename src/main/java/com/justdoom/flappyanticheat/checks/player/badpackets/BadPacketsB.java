@@ -8,13 +8,12 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 
-@CheckData(name = "BadPackets", type = "B")
 public class BadPacketsB extends Check {
 
-    private boolean wasLastArmAnimation;
+    private boolean wasLastArmAnimation = true;
 
-    public BadPacketsB(PlayerData data) {
-        super(data);
+    public BadPacketsB(){
+        super("BadPackets", "B", false);
     }
 
     @Override

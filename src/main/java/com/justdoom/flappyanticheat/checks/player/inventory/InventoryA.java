@@ -10,8 +10,8 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPac
 @CheckData(name = "Inventory", type = "A")
 public class InventoryA extends Check {
 
-    public InventoryA(PlayerData data) {
-        super(data);
+    public InventoryA(){
+        super("Inventory", "A", false);
     }
 
     @Override

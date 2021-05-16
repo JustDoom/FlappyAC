@@ -13,16 +13,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-@CheckData(name = "Fly", type = "A", experimental = false)
 public class FlyA extends Check {
 
     private float buffer;
     private double lastResult, lastDeltaY;
     private boolean lastLastOnGround, lastOnGround;
-    private Location lastLocation = data.player.getLocation();
+    private Location lastLocation;
 
-    public FlyA(PlayerData data) {
-        super(data);
+    public FlyA(){
+        super("Fly", "A", false);
     }
 
     @Override

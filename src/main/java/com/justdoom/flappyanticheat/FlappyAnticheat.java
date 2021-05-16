@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import com.justdoom.flappyanticheat.commands.FlagClickCommand;
 import com.justdoom.flappyanticheat.commands.FlappyACCommand;
+import com.justdoom.flappyanticheat.customevents.EventTests;
 import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
@@ -12,10 +13,9 @@ import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.settings.PacketEventsSettings;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public final class FlappyAnticheat extends JavaPlugin {
@@ -78,6 +78,8 @@ public final class FlappyAnticheat extends JavaPlugin {
         loadModules();
 
         PacketEvents.get().init();
+
+        Bukkit.getServer().getPluginManager().registerEvents(new EventTests(), this);
     }
 
     @Override
@@ -86,10 +88,10 @@ public final class FlappyAnticheat extends JavaPlugin {
     }
 
     public void loadModules(){
-        //checkManager = new CheckManager(this);
+        checkManager = new CheckManager(this);
         dataManager = new PlayerDataManager();
         fileData = new FileData();
         violationHandler = new ViolationHandler();
-        //checkManager.loadChecks();
+        checkManager.loadChecks();
     }
 }

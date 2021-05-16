@@ -49,6 +49,13 @@ Added BadPackets A-B check
 1.5.1 BETA
 plugin crash fix
 
+1.5.2 BETA
+fix violation double up
+
+1.5.3 BETA
+flag hover message now shows what hack the player is most likely using, useful for groundspoof check (finish for rest of checks/only do for ones that detect multiple hacks)
+
+
 
 Todo
 - change flag to output config option to output to console or something
@@ -64,6 +71,7 @@ Todo
 - lag back feature??? Could be an extension
 - api (flagevent, punishevent, etc)
 - proper 1.8 - 1.16 support possibly
+- say what the hack the player is most likely using
 
 next checks
 - speed

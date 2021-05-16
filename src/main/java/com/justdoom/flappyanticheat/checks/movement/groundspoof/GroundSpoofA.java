@@ -23,15 +23,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@CheckData(name = "GroundSpoof", type = "A", experimental = false)
 public class GroundSpoofA extends Check {
 
     private final double groundY = 0.015625;
 
     private int buffer = 0;
 
-    public GroundSpoofA(PlayerData data) {
-        super(data);
+    public GroundSpoofA(){
+        super("GroundSpoof", "A", false);
     }
 
     @Override
@@ -77,7 +76,13 @@ public class GroundSpoofA extends Check {
                     }
 
                     if (!boat && !shulker) {
-                        fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server, player);
+                        String suspectedHack;
+                        if(packet.getY() % groundY == 0.0){
+                            suspectedHack = "Criticals/Anti Hunger";
+                        } else {
+                            suspectedHack = "NoFall";
+                        }
+                        fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
                     }
                 }
             } else if (buffer > 0) buffer--;
