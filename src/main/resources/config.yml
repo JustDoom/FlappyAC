@@ -35,7 +35,7 @@ checks:
       punishable: true
       punish-vl: 200
       punish-commands:
-        - "kick {player} GroundSpoof A"
+        - "kick {player} FlappyAC > Suspicious Activity"
       vl: 20
   fly:
     a:
@@ -43,7 +43,7 @@ checks:
       punishable: false
       punish-vl: 200
       punish-commands:
-        - "kick {player} Fly A"
+        - "kick {player} FlappyAC > Suspicious Activity"
       vl: 15
   badpackets:
     a:
@@ -51,12 +51,12 @@ checks:
       punishable: true
       punish-vl: 10
       punish-commands:
-        - "kick {player} BadPackets A"
+        - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
     b:
       enabled: true
       punishable: true
       punish-vl: 200
       punish-commands:
-        - "kick {player} BadPackets A"
+        - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
