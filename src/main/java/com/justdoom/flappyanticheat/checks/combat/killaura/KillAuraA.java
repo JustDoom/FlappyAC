@@ -30,7 +30,7 @@ public class KillAuraA extends Check {
         if (packet instanceof PacketPlayInUseEntity && ((PacketPlayInUseEntity) packet).a() == PacketPlayInUseEntity
                 .EnumEntityUseAction.ATTACK) {
             if (!sent) {
-                fail()
+                fail("", player)
             } else {
                 sent = false;
             }
