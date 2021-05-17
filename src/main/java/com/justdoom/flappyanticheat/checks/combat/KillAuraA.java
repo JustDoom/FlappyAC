@@ -1,4 +1,4 @@
-package org.crystalpvp.anticheat.check.combat.killaura;
+package com.justdoom.flappyanticheat.checks.combat;
 
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.PlayerData;
