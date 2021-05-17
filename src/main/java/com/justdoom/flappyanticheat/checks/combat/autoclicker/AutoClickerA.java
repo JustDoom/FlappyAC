@@ -25,7 +25,7 @@ public class AutoClickerA extends Check {
 
 	@Override
 	public void handleCheck(Player player, Packet packet) {
-		double vl = playerData.getCheckVl(this);
+		//double vl = playerData.getCheckVl(this);
 
 		if (packet instanceof PacketPlayInArmAnimation
 				&& !playerData.isDigging() && !playerData.isPlacing() && !playerData.isFakeDigging()
@@ -36,10 +36,7 @@ public class AutoClickerA extends Check {
 			if (swings > 35) {
 				fail("", player);
 			}
-
-			playerData.setLastCps(swings);
 			movements = swings = 0;
-			playerData.setCheckVl(vl, this);
 		}
 	}
 
