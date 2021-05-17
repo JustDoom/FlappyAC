@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.checks.combat;
+package com.justdoom.flappyanticheat.checks.combat.killaura;
 
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.PlayerData;
