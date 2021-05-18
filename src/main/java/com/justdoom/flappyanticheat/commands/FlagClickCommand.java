@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 public class FlagClickCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(command.getName().equalsIgnoreCase("flappyacpunish")){
+        if(command.getName().equalsIgnoreCase("flappyacflagclick")){
             if(args.length == 0){
                 return true;
             } else {

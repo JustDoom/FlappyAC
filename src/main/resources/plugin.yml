@@ -7,7 +7,7 @@ commands:
   flappyanticheat:
     permission: flappyanticheat.commands
     aliases: flappyac
-  flappyacpunish:
+  flappyacflagclick:
     permission: flappyanticheat.commands
 permissions:
   flappyanticheat.alerts:

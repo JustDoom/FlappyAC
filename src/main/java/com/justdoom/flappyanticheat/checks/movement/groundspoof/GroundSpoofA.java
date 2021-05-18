@@ -25,8 +25,6 @@ import java.util.Set;
 
 public class GroundSpoofA extends Check {
 
-    private final double groundY = 0.015625;
-
     private int buffer = 0;
 
     public GroundSpoofA(){
@@ -42,13 +40,15 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
+            double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
 
             if (client != server) {
                 if (++buffer > 1) {
 
-                    //player.sendMessage("C: " + client + "    S: " + server);
-
+                    if(player.getLocation().getY() < 1){
+                        return;
+                    }
                     boolean boat = false;
                     boolean shulker = false;
 

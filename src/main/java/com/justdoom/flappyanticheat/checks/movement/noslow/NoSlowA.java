@@ -9,34 +9,54 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.entityaction.WrappedPacketInEntityAction;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import io.github.retrooper.packetevents.packetwrappers.play.in.helditemslot.WrappedPacketInHeldItemSlot;
+import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 import io.github.retrooper.packetevents.packetwrappers.play.out.helditemslot.WrappedPacketOutHeldItemSlot;
+import org.bukkit.Location;
 
 @CheckData(name = "Fly", type = "A", experimental = false)
 public class NoSlowA extends Check {
 
-    private int buffer;
+    private int hitTicks;
+    private double lastDist;
+    private Location lastLocation;
 
     public NoSlowA(){
-        super("NoSlow", "A", false);
+        super("NoSlow", "A", true);
     }
 
     //doesnt work
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
-        if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
+        if(event.getPacketId() == PacketType.Play.Client.POSITION){
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
-            WrappedPacketInHeldItemSlot packet2 = new WrappedPacketInHeldItemSlot(event.getNMSPacket());
-            if(event.getPlayer().isBlocking() && event.getPlayer().isSprinting()){
-                if (++buffer > 10) {
-                    final int slot = packet2.getCurrentSelectedSlot() == 8 ? 1 : 8;
-                    final WrappedPacketOutHeldItemSlot wrapper = new WrappedPacketOutHeldItemSlot(slot);
-                    PacketEvents.get().getPlayerUtils().sendPacket(event.getPlayer(), wrapper);
-                    buffer /= 2;
+
+            Location currentLoc = new Location(event.getPlayer().getWorld(), packet.getX(), packet.getY(), packet.getZ());
+            Location lastLocation = this.lastLocation;
+            this.lastLocation = currentLoc;
+
+            double dist = test(lastLocation, currentLoc);
+            double lastDist = this.lastDist;
+            this.lastDist = dist;
+
+            if(event.getPlayer().isSprinting() && ++hitTicks <= 2){
+                double accel = Math.abs(dist - lastDist);
+                //event.getPlayer().sendMessage(String.valueOf(accel));
+                if(accel < 0.027){
+                    //event.getPlayer().sendMessage("YEEEEEEEEEEEES");
+                    //fail("test", event.getPlayer());
                 }
-            } else {
-                buffer -= buffer > 0 ? 0.25 : 0;
             }
+
+        } else if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
+            WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(event.getNMSPacket());
+            hitTicks = 0;
         }
+    }
+
+    public double test(Location from, Location to){
+        double dx = to.getX() - from.getX();
+        double dz = to.getZ() - from.getZ();
+        return Math.sqrt(dx * dx + dz * dz);
     }
 }

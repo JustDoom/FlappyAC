@@ -52,9 +52,17 @@ plugin crash fix
 1.5.2 BETA
 fix violation double up
 
-1.5.3 BETA
-flag hover message now shows what hack the player is most likely using, useful for groundspoof check (finish for rest of checks/only do for ones that detect multiple hacks)
-
+1.6.0 BETA
+flag hover message now shows what hack the player is most likely using, useful for groundspoof check
+added custom punish, violation reset and flag events
+change flappyacpunish to flappyacflagclick (back end stuff)
+badpackets a now detects pitch lower than -90
+fixed groundspoof a false when falling into the void
+fixed plugin breaking after trying to punish a player (was calling it async but it didnt like that)
+added a skinblinker check
+experimanetal checks have a * after the flag
+added broadcast punishment option
+added blockplace a-b checks
 
 
 Todo
@@ -63,20 +71,27 @@ Todo
 - More checks
 - Ban wave
 - client brand on join
-- async?
 - viaversion compat
 - checks run on new thread
 - view player profile command (player client brand, violations etc)
 - GUI for enabling checks etc
 - lag back feature??? Could be an extension
-- api (flagevent, punishevent, etc)
 - proper 1.8 - 1.16 support possibly
-- say what the hack the player is most likely using
+- alert interval
+- max ping/min tps option
+- possibly customizable buffer
+- discord integration
+- include ban config for easy switch, could be on discord or with download
 
-next checks
-- speed
-- reach
+
+api todo
+- way to reset all/players violations
+- add checks?
+- api example
+- api documentation
+- add more options to violations reset event
+
 
 false todo
-groundspoof/fly A piston elevator false
+groundspoof/fly A piston elevator false (believe its when your glitched inside piston head)
 groundspoof A on join false

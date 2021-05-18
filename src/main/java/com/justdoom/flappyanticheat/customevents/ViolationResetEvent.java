@@ -1,22 +1,21 @@
 package com.justdoom.flappyanticheat.customevents;
 
-import com.justdoom.flappyanticheat.checks.Check;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PunishEvent extends Event implements Cancellable {
+import java.util.List;
 
-    private final Player player;
+public class ViolationResetEvent extends Event implements Cancellable {
+
+    private static final HandlerList HANDLERS = new HandlerList();
+
     private boolean isCancelled;
-    private Check check;
 
-    public PunishEvent(Player player, Check check) {
+    public ViolationResetEvent() {
         super(true);
-        this.player = player;
         this.isCancelled = false;
-        this.check = check;
     }
 
     @Override
@@ -29,8 +28,6 @@ public class PunishEvent extends Event implements Cancellable {
         this.isCancelled = isCancelled;
     }
 
-    private static final HandlerList HANDLERS = new HandlerList();
-
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -38,13 +35,5 @@ public class PunishEvent extends Event implements Cancellable {
 
     public static HandlerList getHandlerList() {
         return HANDLERS;
-    }
-
-    public Player getPunishedPlayer() {
-        return this.player;
-    }
-
-    public Check getCheck(){
-        return this.check;
     }
 }
