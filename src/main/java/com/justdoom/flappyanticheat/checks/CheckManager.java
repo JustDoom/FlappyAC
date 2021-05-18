@@ -7,6 +7,9 @@ import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
+import com.justdoom.flappyanticheat.checks.combat.killaura.KillAuraA;
+import com.justdoom.flappyanticheat.checks.combat.autoclicker.AutoClickerA;
+import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceB;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -25,6 +28,9 @@ public class CheckManager {
         PacketEvents.get().registerListener(new FlyA());
         PacketEvents.get().registerListener(new BadPacketsA());
         PacketEvents.get().registerListener(new BadPacketsB());
+        PacketEvents.get().registerListener(new NoSlowA());
+        PacketEvents.get().registerListener(new AutoClickerA());
+        PacketEvents.get().registerListener(new KillAuraA());
         PacketEvents.get().registerListener(new SkinBlinkerA());
         PacketEvents.get().registerListener(new SpeedA());
 
