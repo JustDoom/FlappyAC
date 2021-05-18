@@ -2,6 +2,8 @@ package com.justdoom.flappyanticheat.violations;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.customevents.PunishEvent;
+import com.justdoom.flappyanticheat.customevents.ViolationResetEvent;
 import com.justdoom.flappyanticheat.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,14 +18,18 @@ public class ViolationHandler {
         int delay = FlappyAnticheat.getInstance().getConfig().getInt("violation-reset-delay") * 20;
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(FlappyAnticheat.getInstance(), () -> {
-            clearAllViolations();
-            for(Player p: Bukkit.getOnlinePlayers()){
-                if(p.hasPermission("flappyanticheat.alerts")){
-                    p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+            ViolationResetEvent violationResetEvent = new ViolationResetEvent();
+            Bukkit.getPluginManager().callEvent(violationResetEvent);
+            if(!violationResetEvent.isCancelled()) {
+                clearAllViolations();
+                for(Player p: Bukkit.getOnlinePlayers()){
+                    if(p.hasPermission("flappyanticheat.alerts")){
+                        p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                    }
                 }
-            }
-            if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
-                Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+                    Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                }
             }
         }, delay, delay);
     }

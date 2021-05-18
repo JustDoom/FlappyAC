@@ -28,8 +28,6 @@ public class Check extends PacketListenerAbstract {
     public String check, checkType;
     public boolean experimental;
 
-    public CheckData checkData;
-
     public Check(String check, String checkType, boolean experimental) {
 
         this.check = check;
@@ -53,12 +51,16 @@ public class Check extends PacketListenerAbstract {
         flagmsg = flagmsg.replace("{player}", player.getName()).replace("{check}", this.check + " " + checkType).replace("{vl}", String.valueOf(FlappyAnticheat.getInstance().violationHandler.getViolations(this, player)));
         String hover = FlappyAnticheat.getInstance().getConfig().getString("messages.hover").replace("{ping}", String.valueOf(Ping.getPing(player))).replace("{debug}", debug).replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()));
 
+        if(experimental){
+            flagmsg = flagmsg+"&r*";
+        }
+
         TextComponent component = new TextComponent(Color.translate(flagmsg));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(hover)).create()));
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyacpunish " + player.getName()));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyacflagclick " + player.getName()));
 
         FlappyAnticheat.getInstance().dataManager.dataMap.values()
-                .stream().filter(playerData -> player.hasPermission("flappyanticheat.alerts"))
+                .stream().filter(playerData -> player.hasPermission("flappyanticheat.alerts") && !FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(player))
                 .forEach(playerData -> playerData.player.spigot().sendMessage(component));
 
         if (FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
@@ -77,10 +79,13 @@ public class Check extends PacketListenerAbstract {
 
         for(String command: FlappyAnticheat.getInstance().getConfig().getStringList(path + ".punish-commands")) {
             command = command.replace("{player}", player.getName());
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            String finalCommand = command;
+            Bukkit.getScheduler().runTask(FlappyAnticheat.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
         }
-        for(Player p:Bukkit.getOnlinePlayers()){
-            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("messages.punish")).replace("{player}", player.getName()));
+        if(FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".broadcast-punishment")) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("messages.punish")).replace("{player}", player.getName()));
+            }
         }
     }
 

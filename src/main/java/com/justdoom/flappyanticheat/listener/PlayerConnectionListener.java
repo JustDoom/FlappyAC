@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.utils.Color;
 import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.gameprofile.WrappedGameProfile;
 import io.github.retrooper.packetevents.utils.player.ClientVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,6 +29,8 @@ public class PlayerConnectionListener implements Listener {
         flappyAnticheat.dataManager.addPlayer(player.getUniqueId());
 
         ClientVersion clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+        WrappedGameProfile e = PacketEvents.get().getPlayerUtils().getGameProfile(player);
+        //event.getPlayer().sendMessage(String.valueOf(e.getName()));
 
         /**for(Player p: Bukkit.getOnlinePlayers()){
             if(p.hasPermission("flappyanticheat.alerts")){

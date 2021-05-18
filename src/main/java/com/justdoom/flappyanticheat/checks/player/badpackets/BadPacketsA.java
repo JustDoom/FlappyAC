@@ -19,7 +19,8 @@ public class BadPacketsA extends Check {
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
             float pitch = event.getPlayer().getLocation().getPitch();
             if(Math.abs(pitch) > 90F || Math.abs(pitch) < -90F){
-                fail("pitch=" + pitch, event.getPlayer());
+                String suspectedHack = "Old/Bad KillAura (This cannot false)";
+                fail("&7pitch=&2" + pitch + " &7Suspected Hack: &2" + suspectedHack, event.getPlayer());
             }
         }
     }

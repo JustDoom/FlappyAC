@@ -9,9 +9,12 @@ import org.bukkit.event.HandlerList;
 
 public class FlagEvent extends Event implements Cancellable {
 
+    private static final HandlerList HANDLERS = new HandlerList();
+
     private final Player player;
     private boolean isCancelled, isPunishable;
     private Check check;
+    private int vl;
 
     public FlagEvent(Player player, Check check) {
         super(true);
@@ -19,6 +22,7 @@ public class FlagEvent extends Event implements Cancellable {
         this.isCancelled = false;
         this.check = check;
         this.isPunishable = FlappyAnticheat.getInstance().getConfig().getBoolean("checks." + check.check + "." + check.checkType + ".punishable");
+        this.vl = FlappyAnticheat.getInstance().violationHandler.getViolations(check, player);
     }
 
     @Override
@@ -30,8 +34,6 @@ public class FlagEvent extends Event implements Cancellable {
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
     }
-
-    private static final HandlerList HANDLERS = new HandlerList();
 
     @Override
     public HandlerList getHandlers() {
@@ -52,5 +54,10 @@ public class FlagEvent extends Event implements Cancellable {
 
     public boolean isPunishable(){
         return this.isPunishable;
+    }
+
+
+    public int getViolations(){
+        return this.vl;
     }
 }

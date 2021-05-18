@@ -33,6 +33,7 @@ checks:
     a:
       enabled: true
       punishable: true
+      broadcast-punishment: true
       punish-vl: 200
       punish-commands:
         - "kick {player} GroundSpoof A"
@@ -41,6 +42,7 @@ checks:
     a:
       enabled: true
       punishable: false
+      broadcast-punishment: true
       punish-vl: 200
       punish-commands:
         - "kick {player} Fly A"
@@ -49,6 +51,7 @@ checks:
     a:
       enabled: true
       punishable: true
+      broadcast-punishment: true
       punish-vl: 10
       punish-commands:
         - "kick {player} BadPackets A"
@@ -56,7 +59,17 @@ checks:
     b:
       enabled: true
       punishable: true
+      broadcast-punishment: true
       punish-vl: 200
       punish-commands:
         - "kick {player} BadPackets A"
+      vl: 10
+  skinblinker:
+    a:
+      enabled: true
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 100
+      punish-commands:
+        - "kick {player} SkinBlinker A"
       vl: 10
