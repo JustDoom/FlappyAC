@@ -32,6 +32,7 @@ checks:
   groundspoof:
     a:
       enabled: true
+      min-tps: 17.0
       punishable: true
       broadcast-punishment: true
       punish-vl: 200
@@ -41,6 +42,7 @@ checks:
   fly:
     a:
       enabled: true
+      min-tps: 17.0
       punishable: false
       broadcast-punishment: true
       punish-vl: 200
@@ -50,6 +52,7 @@ checks:
   badpackets:
     a:
       enabled: true
+      min-tps: 17.0
       punishable: true
       broadcast-punishment: true
       punish-vl: 10
@@ -58,6 +61,7 @@ checks:
       vl: 10
     b:
       enabled: true
+      min-tps: 17.0
       punishable: true
       broadcast-punishment: true
       punish-vl: 200
@@ -67,9 +71,29 @@ checks:
   skinblinker:
     a:
       enabled: true
+      min-tps: 17.0
       punishable: true
       broadcast-punishment: true
       punish-vl: 100
       punish-commands:
-        - "kick {player} SkinBlinker A"
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+  blockplace:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 100
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+    b:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 100
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10

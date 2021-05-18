@@ -1,6 +1,8 @@
 package com.justdoom.flappyanticheat.checks.movement.speed;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
@@ -19,9 +21,15 @@ public class SpeedA extends Check {
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
+
         if(event.getPacketId() == PacketType.Play.Client.POSITION){
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
             Player player = event.getPlayer();
+
+            String path = ("checks." + check + "." + checkType).toLowerCase();
+            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+                return;
+            }
 
             double deltaX = packet.getX() - player.getLocation().getX();
             double deltaZ = packet.getZ() - player.getLocation().getZ();

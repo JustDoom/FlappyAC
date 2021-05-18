@@ -63,6 +63,7 @@ added a skinblinker check
 experimanetal checks have a * after the flag
 added broadcast punishment option
 added blockplace a-b checks
+fixed fly and groundspoof A false with vines/ladders
 
 
 Todo
@@ -78,7 +79,7 @@ Todo
 - lag back feature??? Could be an extension
 - proper 1.8 - 1.16 support possibly
 - alert interval
-- max ping/min tps option
+- max ping
 - possibly customizable buffer
 - discord integration
 - include ban config for easy switch, could be on discord or with download
@@ -95,3 +96,4 @@ api todo
 false todo
 groundspoof/fly A piston elevator false (believe its when your glitched inside piston head)
 groundspoof A on join false
+groundspoof/fly a https://www.youtube.com/watch?v=YTmjY9Dbk30&ab_channel=Spiriten ladders/trap doors

@@ -4,6 +4,8 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
+import com.justdoom.flappyanticheat.utils.PlayerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
@@ -40,10 +42,15 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
+            String path = ("checks." + check + "." + checkType).toLowerCase();
+            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+                return;
+            }
+
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
 
-            if (client != server) {
+            if (client != server && !PlayerUtil.isOnClimbable(player)) {
                 if (++buffer > 1) {
 
                     if(player.getLocation().getY() < 1){
@@ -67,7 +74,7 @@ public class GroundSpoofA extends Check {
                         }
                     }
 
-                    for (Block block : getNearbyBlocks(new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ()), 2)) {
+                    for (Block block : PlayerUtil.getNearbyBlocks(new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ()), 2)) {
 
                         if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
                             shulker = true;
@@ -87,19 +94,5 @@ public class GroundSpoofA extends Check {
                 }
             } else if (buffer > 0) buffer--;
         }
-    }
-
-    public Set<Block> getNearbyBlocks(Location location, int radius) {
-        Set<Block> blocks = new HashSet<>();
-
-        for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
-            for(int y = location.getBlockY() - radius; y <= location.getBlockY() + radius; y++) {
-                for(int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
-                    blocks.add(location.getWorld().getBlockAt(x, y, z));
-                }
-            }
-        }
-
-        return blocks;
     }
 }

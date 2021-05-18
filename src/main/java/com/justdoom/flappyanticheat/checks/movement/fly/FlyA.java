@@ -1,8 +1,11 @@
 package com.justdoom.flappyanticheat.checks.movement.fly;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
+import com.justdoom.flappyanticheat.utils.PlayerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
@@ -28,6 +31,11 @@ public class FlyA extends Check {
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
+            String path = ("checks." + check + "." + checkType).toLowerCase();
+            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+                return;
+            }
+
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
             Player player = event.getPlayer();
 
@@ -40,7 +48,7 @@ public class FlyA extends Check {
             this.lastOnGround = onGround;
             boolean lastLastOnGround = this.lastLastOnGround;
             this.lastLastOnGround = lastOnGround;
-            if (!lastLastOnGround && !lastOnGround && !onGround && !isInLiquid(player)) {
+            if (!lastLastOnGround && !lastOnGround && !onGround && !PlayerUtil.isInLiquid(player) && !PlayerUtil.isOnClimbable(player)) {
                 double deltaY = (currentLoc.getY() - lastLocation.getY());
                 double lastDeltaY = this.lastDeltaY;
                 this.lastDeltaY = deltaY;
@@ -57,13 +65,6 @@ public class FlyA extends Check {
                 } else buffer -= buffer > 0 ? 1 : 0;
             }
         }
-    }
-
-    public boolean isInLiquid(Player player) {
-        if(player.isInWater() || player.getLocation().getBlock().getType() == Material.LAVA){
-            return true;
-        }
-        return false;
     }
 
     //Not at all taken from Juaga Anticheat, ignore this message ;)

@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.checks.movement.noslow;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
@@ -30,6 +31,11 @@ public class NoSlowA extends Check {
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
         if(event.getPacketId() == PacketType.Play.Client.POSITION){
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
+
+            String path = ("checks." + check + "." + checkType).toLowerCase();
+            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+                return;
+            }
 
             Location currentLoc = new Location(event.getPlayer().getWorld(), packet.getX(), packet.getY(), packet.getZ());
             Location lastLocation = this.lastLocation;

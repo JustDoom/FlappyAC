@@ -3,14 +3,10 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.customevents.FlagEvent;
 import com.justdoom.flappyanticheat.customevents.PunishEvent;
-import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.Color;
-import com.justdoom.flappyanticheat.utils.Ping;
+import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.event.PacketEvent;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
-import io.github.retrooper.packetevents.utils.server.ServerUtils;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -19,8 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Check extends PacketListenerAbstract {
@@ -49,7 +43,7 @@ public class Check extends PacketListenerAbstract {
 
         String flagmsg = FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.failed-check");
         flagmsg = flagmsg.replace("{player}", player.getName()).replace("{check}", this.check + " " + checkType).replace("{vl}", String.valueOf(FlappyAnticheat.getInstance().violationHandler.getViolations(this, player)));
-        String hover = FlappyAnticheat.getInstance().getConfig().getString("messages.hover").replace("{ping}", String.valueOf(Ping.getPing(player))).replace("{debug}", debug).replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()));
+        String hover = FlappyAnticheat.getInstance().getConfig().getString("messages.hover").replace("{ping}", String.valueOf(PlayerUtil.getPing(player))).replace("{debug}", debug).replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()));
 
         if(experimental){
             flagmsg = flagmsg+"&r*";
