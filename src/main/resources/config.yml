@@ -5,6 +5,7 @@ violation-reset-delay: 300
 
 messages:
   flag-to-console: false
+  client-brand: "&2{player}'s &7client is &2{brand}"
   reload: "&7FlappyAC has been reloaded"
   violation-remove-invalid-player: "&7Invalid player name"
   alert-toggle:
@@ -94,6 +95,16 @@ checks:
       punishable: true
       broadcast-punishment: true
       punish-vl: 100
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+  timer:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 200
       punish-commands:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10

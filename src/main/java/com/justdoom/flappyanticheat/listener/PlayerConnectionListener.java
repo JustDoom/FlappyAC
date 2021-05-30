@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.listener;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
+import com.justdoom.flappyanticheat.utils.BrandMessageUtil;
 import com.justdoom.flappyanticheat.utils.Color;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.gameprofile.WrappedGameProfile;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.messaging.Messenger;
 
 public class PlayerConnectionListener implements Listener {
 
@@ -31,6 +33,8 @@ public class PlayerConnectionListener implements Listener {
         ClientVersion clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
         WrappedGameProfile e = PacketEvents.get().getPlayerUtils().getGameProfile(player);
         //event.getPlayer().sendMessage(String.valueOf(e.getName()));
+
+        BrandMessageUtil.addChannel(player, "minecraft:brand");
 
         /**for(Player p: Bukkit.getOnlinePlayers()){
             if(p.hasPermission("flappyanticheat.alerts")){

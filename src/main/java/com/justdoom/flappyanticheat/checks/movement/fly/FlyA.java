@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class FlyA extends Check {
 
-    private float buffer;
+    private double buffer;
     private double lastResult, lastDeltaY;
     private boolean lastLastOnGround, lastOnGround;
     private Location lastLocation;
@@ -39,30 +39,27 @@ public class FlyA extends Check {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
             Player player = event.getPlayer();
 
-            Location currentLoc = new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ());
-            Location lastLocation = this.lastLocation;
-            this.lastLocation = currentLoc;
+            final double deltaY = packet.getY() - player.getLocation().getY();
 
-            boolean onGround = packet.getY() % 0.015625 < 0.0001;
-            boolean lastOnGround = this.lastOnGround;
-            this.lastOnGround = onGround;
-            boolean lastLastOnGround = this.lastLastOnGround;
-            this.lastLastOnGround = lastOnGround;
-            if (!lastLastOnGround && !lastOnGround && !onGround && !PlayerUtil.isInLiquid(player) && !PlayerUtil.isOnClimbable(player)) {
-                double deltaY = (currentLoc.getY() - lastLocation.getY());
-                double lastDeltaY = this.lastDeltaY;
-                this.lastDeltaY = deltaY;
-                double predictedDeltaY = (lastDeltaY - 0.08) * 0.9800000190734863D;
-                double result = currentLoc.getY() - lastLocation.getY() - predictedDeltaY;
+            final double lastDeltaY = this.lastDeltaY;
+            this.lastDeltaY = deltaY;
 
-                double lastResult = this.lastResult;
-                this.lastResult = result;
+            final boolean onGround = packet.isOnGround();
 
-                if (result > 0.1 || (lastResult == 0.0784000015258789 && result == 0.0784000015258789)) {
-                    if (++buffer > 2) {
-                        fail("lastResult=" + lastResult + " result=" + result + " predictedDeltaY=" + predictedDeltaY + " deltaY=" + String.valueOf(currentLoc.getY() - lastLocation.getY()), player);
-                    }
-                } else buffer -= buffer > 0 ? 1 : 0;
+            final double prediction = Math.abs((lastDeltaY - 0.08) * 0.98F) < 0.005 ? -0.08 * 0.98F : (lastDeltaY - 0.08) * 0.98F;
+            final double difference = Math.abs(deltaY - prediction);
+
+            final boolean invalid = difference > 0.079D
+                    && !onGround
+                    && !(packet.getY() % 0.5 == 0 && packet.isOnGround() && lastDeltaY < 0);
+
+            if (invalid) {
+                buffer += buffer < 50 ? 10 : 0;
+                if (buffer > 20) {
+                    fail("diff=%.4f, buffer=%.2f, at=%o", player);
+                }
+            } else {
+                buffer = Math.max(buffer - 0.75, 0);
             }
         }
     }

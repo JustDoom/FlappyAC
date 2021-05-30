@@ -65,24 +65,32 @@ added broadcast punishment option
 added blockplace a-b checks
 fixed fly and groundspoof A false with vines/ladders
 
+1.6.1 BETA
+added timer check
+added a client brand message on join
+disabled fly A check temporarily
+changed the /flappyac command message
+
 
 Todo
+- better fly check
+
 - change flag to output config option to output to console or something
 
 - More checks
 - Ban wave
-- client brand on join
 - viaversion compat
-- checks run on new thread
+- checks run on new thread (does packetevents do this?)
 - view player profile command (player client brand, violations etc)
 - GUI for enabling checks etc
 - lag back feature??? Could be an extension
 - proper 1.8 - 1.16 support possibly
 - alert interval
-- max ping
+- max ping (add with pingspoof check)
 - possibly customizable buffer
 - discord integration
 - include ban config for easy switch, could be on discord or with download
+- maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
 
 
 api todo
@@ -96,4 +104,7 @@ api todo
 false todo
 groundspoof/fly A piston elevator false (believe its when your glitched inside piston head)
 groundspoof A on join false
-groundspoof/fly a https://www.youtube.com/watch?v=YTmjY9Dbk30&ab_channel=Spiriten ladders/trap doors
+fly a in fire while jumping sprint
+random fly a falses when running/jumping
+fix badpackets B false with worldguard
+random badpackets b falses

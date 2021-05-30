@@ -8,12 +8,15 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class SpeedA extends Check {
 
     private int onGroundTime = 0;
     private boolean lastOnGround;
+
+    private double deltaXZ, pastDeltaXZ;
 
     public SpeedA(){
         super("Speed", "A", true);
@@ -32,6 +35,17 @@ public class SpeedA extends Check {
             }
 
             double deltaX = packet.getX() - player.getLocation().getX();
+            double deltaZ = packet.getZ() - player.getLocation().getZ();
+            deltaXZ = Math.hypot(deltaX, deltaZ);
+            double pastDeltaXZ = this.pastDeltaXZ;
+            this.pastDeltaXZ = deltaXZ;
+            double acceleration = deltaXZ - pastDeltaXZ;
+
+            if (acceleration > 0.65) {
+                fail(" deltaXZ=" + deltaXZ + " pastDeltaXZ=" + pastDeltaXZ + " acceleration=" + acceleration, player);
+            }
+
+            /**double deltaX = packet.getX() - player.getLocation().getX();
             double deltaZ = packet.getZ() - player.getLocation().getZ();
 
             double deltaXZ = Math.hypot(deltaX, deltaZ);

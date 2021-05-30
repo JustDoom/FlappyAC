@@ -5,23 +5,23 @@ import com.justdoom.flappyanticheat.checks.Check;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 
-public class InventoryA extends Check {
+public class InventoryA extends Check implements Listener {
 
     public InventoryA(){
         super("Inventory", "A", true);
     }
 
-    @Override
-    public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
-
-        if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
-            //WrappedPacketIn packet = new WrappedPacketInFlying(e.getNMSPacket());
-
-            String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
-                return;
-            }
-        }
+    @EventHandler
+    public void onBlockPlace(InventoryMoveItemEvent event) {
+        //Player player = (Player) event.getDestination().get;
+        //player.sendMessage("e");
     }
 }

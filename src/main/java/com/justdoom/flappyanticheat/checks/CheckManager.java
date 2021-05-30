@@ -5,11 +5,14 @@ import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
 import com.justdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
+import com.justdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceB;
+import com.justdoom.flappyanticheat.checks.player.inventory.InventoryA;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
+import com.justdoom.flappyanticheat.checks.player.timer.TimerA;
 import io.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 
@@ -23,14 +26,17 @@ public class CheckManager {
 
     public void loadChecks(){
         PacketEvents.get().registerListener(new GroundSpoofA());
-        PacketEvents.get().registerListener(new FlyA());
+        //PacketEvents.get().registerListener(new FlyA());
         PacketEvents.get().registerListener(new BadPacketsA());
         PacketEvents.get().registerListener(new BadPacketsB());
         //PacketEvents.get().registerListener(new NoSlowA());
         PacketEvents.get().registerListener(new SkinBlinkerA());
         PacketEvents.get().registerListener(new SpeedA());
+        PacketEvents.get().registerListener(new AntiCactusA());
+        PacketEvents.get().registerListener(new TimerA());
 
         Bukkit.getPluginManager().registerEvents(new BlockPlaceA(), plugin);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceB(), plugin);
+        //Bukkit.getPluginManager().registerEvents(new InventoryA(), plugin);
     }
 }

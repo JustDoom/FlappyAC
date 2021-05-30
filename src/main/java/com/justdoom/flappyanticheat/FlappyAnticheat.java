@@ -7,6 +7,7 @@ import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
+import com.justdoom.flappyanticheat.utils.BrandMessageUtil;
 import com.justdoom.flappyanticheat.utils.UpdateChecker;
 import com.justdoom.flappyanticheat.violations.ViolationHandler;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -14,6 +15,7 @@ import io.github.retrooper.packetevents.settings.PacketEventsSettings;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.Messenger;
 
 import java.util.concurrent.Callable;
 
@@ -41,7 +43,8 @@ public final class FlappyAnticheat extends JavaPlugin {
         settings
                 .fallbackServerVersion(ServerVersion.v_1_16_5)
                 .compatInjector(false)
-                .checkForUpdates(false);
+                .checkForUpdates(false)
+                .bStats(true);
         PacketEvents.get().loadAsyncNewThread();
     }
 
@@ -67,6 +70,9 @@ public final class FlappyAnticheat extends JavaPlugin {
                 return getConfig().getString("language", "en");
             }
         }));
+
+        Messenger messenger = Bukkit.getMessenger();
+        messenger.registerIncomingPluginChannel(FlappyAnticheat.getInstance(), "minecraft:brand", new BrandMessageUtil());
 
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
 

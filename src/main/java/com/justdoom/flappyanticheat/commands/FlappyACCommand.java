@@ -13,7 +13,7 @@ public class FlappyACCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("flappyanticheat")){
             if(args.length == 0){
-                sender.sendMessage("Please do /flappyac help got help");
+                sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + "&7Please do \"/flappyac help\" for the help command"));
             } else if (args[0].equalsIgnoreCase("reload")) {
                 FlappyAnticheat.getInstance().reloadConfig();
                 sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.reload")));

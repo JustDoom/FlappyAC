@@ -29,6 +29,8 @@ public class GroundSpoofA extends Check {
 
     private int buffer = 0;
 
+    private boolean justJoined = true;
+
     public GroundSpoofA(){
         super("GroundSpoof", "A", false);
     }
@@ -36,7 +38,6 @@ public class GroundSpoofA extends Check {
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent e) {
         Player player = e.getPlayer();
-        PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(player.getUniqueId());
 
         if (e.getPacketId() == PacketType.Play.Client.POSITION || e.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
@@ -44,6 +45,10 @@ public class GroundSpoofA extends Check {
 
             String path = ("checks." + check + "." + checkType).toLowerCase();
             if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+                return;
+            }
+
+            if(justJoined){
                 return;
             }
 
