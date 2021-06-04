@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
+import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
@@ -21,10 +22,8 @@ public class BadPacketsB extends Check {
 
         if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY){
 
-            String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
-            }
 
             if(!wasLastArmAnimation){
                 fail("&7ArmAnimation=&2false", event.getPlayer());

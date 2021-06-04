@@ -2,13 +2,13 @@ package com.justdoom.flappyanticheat.checks.movement.speed;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class SpeedA extends Check {
@@ -16,76 +16,55 @@ public class SpeedA extends Check {
     private int onGroundTime = 0;
     private boolean lastOnGround;
 
-    private double deltaXZ, pastDeltaXZ;
+    private double lastDist;
 
-    public SpeedA(){
+    public SpeedA() {
         super("Speed", "A", true);
     }
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
 
-        if(event.getPacketId() == PacketType.Play.Client.POSITION){
+        if (event.getPacketId() == PacketType.Play.Client.POSITION) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
             Player player = event.getPlayer();
 
-            String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+            if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
-            }
 
-            double deltaX = packet.getX() - player.getLocation().getX();
-            double deltaZ = packet.getZ() - player.getLocation().getZ();
-            deltaXZ = Math.hypot(deltaX, deltaZ);
-            double pastDeltaXZ = this.pastDeltaXZ;
-            this.pastDeltaXZ = deltaXZ;
-            double acceleration = deltaXZ - pastDeltaXZ;
+            Location to = new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ());
+            float friction = 0.91f;
 
-            if (acceleration > 0.65) {
-                fail(" deltaXZ=" + deltaXZ + " pastDeltaXZ=" + pastDeltaXZ + " acceleration=" + acceleration, player);
-            }
-
-            /**double deltaX = packet.getX() - player.getLocation().getX();
-            double deltaZ = packet.getZ() - player.getLocation().getZ();
-
-            double deltaXZ = Math.hypot(deltaX, deltaZ);
-
-            boolean onGround = packet.isOnGround();
-            boolean lastOnGround = this.lastOnGround;
-            this.lastOnGround = onGround;
-
-            if(deltaXZ > 0.4) {
-                //player.sendMessage(String.valueOf(deltaXZ));
-            }
-
-            /**double distX = packet.getX() - player.getLocation().getX();
-            double distZ = packet.getZ() - player.getLocation().getZ();
-            double dist = (distX * distX) + (distZ * distZ);
+            double distX = to.getX() - player.getLocation().getX();
+            double distZ = to.getZ() - player.getLocation().getZ();
+            double dist = Math.sqrt((distX * distX) + (distZ * distZ));
             double lastDist = this.lastDist;
             this.lastDist = dist;
-
             boolean onGround = packet.isOnGround();
             boolean lastOnGround = this.lastOnGround;
             this.lastOnGround = onGround;
-
-            float friction = 0.91F;
             double shiftedLastDist = lastDist * friction;
             double equalness = dist - shiftedLastDist;
-            double scaledEqualness = equalness * 138;
+
 
             if(!onGround && !lastOnGround){
-                if(scaledEqualness >= 1.0){
-                    Bukkit.broadcastMessage(String.valueOf(scaledEqualness));
+                if(equalness > 0.027){
+                    fail("e=" + equalness, player);
                 }
             }
+        }
+    }
 
-            if(packet.isOnGround()){
-                onGroundTime++;
-            }
+    private float getFriction(Block block) {
+        if(block == null) { return 0.6f * 0.91f; }
 
-            if(onGroundTime >= 15){
-                //double expected = thisMove / data.getGroundTime() + baseMove;
-            }**/
+        switch (block.getType()) {
+            case SLIME_BLOCK:
+                return 0.8f * 0.91f;
+            case ICE:
+                return 0.98f * 0.91f;
+            default:
+                return 0.6f * 0.91f;
         }
     }
 }

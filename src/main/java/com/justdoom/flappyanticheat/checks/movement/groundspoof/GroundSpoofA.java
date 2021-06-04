@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
+import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
@@ -43,14 +44,8 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
-            String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || justJoined || player.getLocation().getY() < 1)
                 return;
-            }
-
-            if(justJoined){
-                return;
-            }
 
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
@@ -58,9 +53,6 @@ public class GroundSpoofA extends Check {
             if (client != server && !PlayerUtil.isOnClimbable(player)) {
                 if (++buffer > 1) {
 
-                    if(player.getLocation().getY() < 1){
-                        return;
-                    }
                     boolean boat = false;
                     boolean shulker = false;
 

@@ -24,8 +24,4 @@ public class PlayerData {
 
         this.checkManager = new CheckManager(FlappyAnticheat.getInstance());
     }
-
-    public float getPitch(){
-        return player.getLocation().getPitch();
-    }
 }

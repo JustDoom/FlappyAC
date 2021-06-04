@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckData;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
+import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
@@ -31,10 +32,8 @@ public class FlyA extends Check {
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
-            String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
-            }
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
             Player player = event.getPlayer();
@@ -63,7 +62,4 @@ public class FlyA extends Check {
             }
         }
     }
-
-    //Not at all taken from Juaga Anticheat, ignore this message ;)
-    //Got stuck with a bug, had most of this code myself anyway
 }

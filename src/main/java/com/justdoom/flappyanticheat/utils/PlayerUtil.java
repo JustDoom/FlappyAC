@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -56,5 +58,9 @@ public class PlayerUtil {
         }
 
         return blocks;
+    }
+
+    public static boolean isFlying(Player player){
+        return player.isFlying();
     }
 }

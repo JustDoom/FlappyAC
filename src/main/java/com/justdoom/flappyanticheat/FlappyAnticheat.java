@@ -36,6 +36,8 @@ public final class FlappyAnticheat extends JavaPlugin {
         instance = this;
     }
 
+    //Load PacketEvents
+
     @Override
     public void onLoad(){
         PacketEvents.create(this);
@@ -43,13 +45,14 @@ public final class FlappyAnticheat extends JavaPlugin {
         settings
                 .fallbackServerVersion(ServerVersion.v_1_16_5)
                 .compatInjector(false)
-                .checkForUpdates(false)
-                .bStats(true);
+                .checkForUpdates(false);
         PacketEvents.get().loadAsyncNewThread();
     }
 
     @Override
     public void onEnable() {
+        //Check for updates
+
         (new UpdateChecker(this, 92180)).getVersion(version -> {
             if (!getConfig().getBoolean("disable-update-checker"))
                 if (getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -61,6 +64,8 @@ public final class FlappyAnticheat extends JavaPlugin {
 
         saveDefaultConfig();
 
+        //Load metrics
+
         int pluginId = 11300;
         Metrics metrics = new Metrics(this, pluginId);
 
@@ -71,22 +76,37 @@ public final class FlappyAnticheat extends JavaPlugin {
             }
         }));
 
+        //Register incoming plugin channel for client brand
+
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(FlappyAnticheat.getInstance(), "minecraft:brand", new BrandMessageUtil());
 
+        //Register the PlayerConnectionListener class
+
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
+
+        //Register commands
 
         this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
         this.getCommand("flappyacflagclick").setExecutor(new FlagClickCommand());
+
+        //Register tab completion
+
         this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
 
+        //Load modules
+
         loadModules();
+
+        //Initialize PacketEvents
 
         PacketEvents.get().init();
     }
 
     @Override
     public void onDisable() {
+        //Disable PacketEvents
+
         PacketEvents.get().terminate();
     }
 
