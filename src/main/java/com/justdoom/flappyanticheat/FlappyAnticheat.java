@@ -5,7 +5,7 @@ import com.justdoom.flappyanticheat.commands.FlagClickCommand;
 import com.justdoom.flappyanticheat.commands.FlappyACCommand;
 import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
-import com.justdoom.flappyanticheat.events.tabcomplete.FlappyAnticheatTabCompletion;
+import com.justdoom.flappyanticheat.commands.tabcomplete.FlappyAnticheatTabCompletion;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.utils.BrandMessageUtil;
 import com.justdoom.flappyanticheat.utils.UpdateChecker;
@@ -30,7 +30,6 @@ public final class FlappyAnticheat extends JavaPlugin {
     public ViolationHandler violationHandler;
     public PlayerDataManager dataManager;
     public FileData fileData;
-    private CheckManager checkManager;
 
     public FlappyAnticheat(){
         instance = this;
@@ -81,24 +80,17 @@ public final class FlappyAnticheat extends JavaPlugin {
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(FlappyAnticheat.getInstance(), "minecraft:brand", new BrandMessageUtil());
 
-        //Register the PlayerConnectionListener class
-
+        //Register events
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
 
         //Register commands
-
         this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
         this.getCommand("flappyacflagclick").setExecutor(new FlagClickCommand());
 
-        //Register tab completion
-
+        //Register Tab completion
         this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
 
-        //Load modules
-
         loadModules();
-
-        //Initialize PacketEvents
 
         PacketEvents.get().init();
     }
@@ -111,7 +103,7 @@ public final class FlappyAnticheat extends JavaPlugin {
     }
 
     public void loadModules(){
-        checkManager = new CheckManager(this);
+        CheckManager checkManager = new CheckManager(this);
         dataManager = new PlayerDataManager();
         fileData = new FileData();
         violationHandler = new ViolationHandler();

@@ -8,7 +8,7 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.Wrapped
 public class ForcefieldA extends Check {
 
     private long lastFlying; //when the last flying packet was sent
-    private int preVL; //for prevent falses
+    private int buffer; //for prevent falses
 
     public ForcefieldA() {
         super("Forcefield", "A", false);
@@ -27,12 +27,12 @@ public class ForcefieldA extends Check {
             WrappedPacketInUseEntity wrapper = new WrappedPacketInUseEntity(event.getNMSPacket());
             if(wrapper.getAction() == WrappedPacketInUseEntity.EntityUseAction.ATTACK) {
                 if((System.currentTimeMillis() - this.lastFlying) < 10L) /** this value should be around 40**/ {
-                    if(++this.preVL > 5) {
+                    if(++this.buffer > 5) {
                         fail("dF=" +(System.currentTimeMillis() - this.lastFlying),event.getPlayer());
                     }
 
 
-                }else preVL -= preVL > 0 ? 0.25 : 0;
+                }else buffer -= buffer > 0 ? 0.25 : 0;
             }
         }
     }

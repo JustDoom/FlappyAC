@@ -3,8 +3,6 @@ version: ${project.version}
 main: com.justdoom.flappyanticheat.FlappyAnticheat
 api-version: 1.16
 load: POSTWORLD
-softdepend:
-  - packetevents
 commands:
   flappyanticheat:
     permission: flappyanticheat.commands

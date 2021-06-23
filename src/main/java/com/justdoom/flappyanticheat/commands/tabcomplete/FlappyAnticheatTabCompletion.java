@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.events.tabcomplete;
+package com.justdoom.flappyanticheat.commands.tabcomplete;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -20,7 +20,7 @@ public class ViolationHandler {
         Bukkit.getScheduler().runTaskTimerAsynchronously(FlappyAnticheat.getInstance(), () -> {
             ViolationResetEvent violationResetEvent = new ViolationResetEvent();
             Bukkit.getPluginManager().callEvent(violationResetEvent);
-            if(!violationResetEvent.isCancelled()) {
+            if(!violationResetEvent.isCancelled() && Bukkit.getOnlinePlayers().size() > 0) {
                 clearAllViolations();
                 for(Player p: Bukkit.getOnlinePlayers()){
                     if(p.hasPermission("flappyanticheat.alerts")){

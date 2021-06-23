@@ -2,6 +2,7 @@ package com.justdoom.flappyanticheat.checks;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.combat.forcefield.ForcefieldA;
+import com.justdoom.flappyanticheat.checks.combat.range.RangeA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
 import com.justdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
@@ -32,13 +33,15 @@ public class CheckManager {
         PacketEvents.get().registerListener(new BadPacketsB());
         //PacketEvents.get().registerListener(new NoSlowA());
         PacketEvents.get().registerListener(new SkinBlinkerA());
-        PacketEvents.get().registerListener(new SpeedA());
+        //PacketEvents.get().registerListener(new SpeedA());
         PacketEvents.get().registerListener(new AntiCactusA());
         PacketEvents.get().registerListener(new TimerA());
         PacketEvents.get().registerListener(new ForcefieldA());
+        PacketEvents.get().registerListener(new RangeA());
 
         Bukkit.getPluginManager().registerEvents(new BlockPlaceA(), plugin);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceB(), plugin);
+        Bukkit.getPluginManager().registerEvents(new SpeedA(), plugin);
         //Bukkit.getPluginManager().registerEvents(new InventoryA(), plugin);
     }
 }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GroundSpoofA extends Check {
 
@@ -44,8 +45,13 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
-            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || justJoined || player.getLocation().getY() < 1)
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1)
                 return;
+
+            if(justJoined){
+                justJoined = false;
+                return;
+            }
 
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
@@ -56,10 +62,10 @@ public class GroundSpoofA extends Check {
                     boolean boat = false;
                     boolean shulker = false;
 
-                    List<Entity> nearby = new ArrayList<Entity>();
-                    sync(() -> player.getNearbyEntities(1.5, 10, 1.5));
+                    AtomicReference<List<Entity>> nearby = new AtomicReference<>();
+                    sync(() -> nearby.set(player.getNearbyEntities(1.5, 10, 1.5)));
 
-                    for (Entity entity : nearby) {
+                    for (Entity entity : nearby.get()) {
                         if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
                             boat = true;
                             break;
