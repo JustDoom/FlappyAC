@@ -71,39 +71,43 @@ added a client brand message on join
 disabled fly A check temporarily
 changed the /flappyac command message
 
-1.?.? BETA
+1.6.2 BETA
 Cleaned up some code
+Added a ForceField check. Thanks to https://www.spigotmc.org/members/1155839 for the check
+Added a speed check
+Stopped violation resets from running with no players online and spamming the console
 
 
 Todo
+- add speed and forcefield to config
+
 - better fly check
 
 - change flag to output config option to output to console or something
 
 - More checks
 - Ban wave
-- viaversion compat
-- checks run on new thread (does packetevents do this?)
-- view player profile command (player client brand, violations etc)
+- ViaVersion compat
+- Checks run on new thread (does packetevents do this?)
+- View player profile command (player client brand, violations etc)
 - GUI for enabling checks etc
-- lag back feature??? Could be an extension
-- proper 1.8 - 1.16 support possibly
-- alert interval
-- max ping (add with pingspoof check)
-- possibly customizable buffer
-- discord integration
-- stop certain client brands joining
-- include ban config for easy switch, could be on discord or with download
-- maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
-- make violation resets only happen when at least one player is online
-- better way to get values from config
+- Lag back feature/cancel??? Could be an extension
+- Proper 1.8 - 1.17 support possibly
+- Alert interval
+- Max ping (add with pingspoof check)
+- Possibly customizable buffer
+- Discord integration
+- Stop certain client brands joining
+- Include ban config for easy switch, could be on discord or with download
+- Maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
+- Better way to get values from config
+- 1.17 support
 
 
 
 api todo
 - way to reset all/players violations
-- add checks?
-- api example
+- way to add checks?
 - api documentation
 - add more options to violations reset event
 
@@ -111,7 +115,7 @@ api todo
 false todo
 groundspoof/fly A piston elevator false (believe its when your glitched inside piston head)
 groundspoof A on join false
-fly a in fire while jumping sprint
-random fly a falses when running/jumping
 fix badpackets B false with worldguard
 random badpackets b falses
+speed a false with slime launching
+speed a false with eating and jumping up blocks

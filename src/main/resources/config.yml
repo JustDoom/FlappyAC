@@ -40,16 +40,6 @@ checks:
       punish-commands:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 20
-  fly:
-    a:
-      enabled: true
-      min-tps: 17.0
-      punishable: false
-      broadcast-punishment: true
-      punish-vl: 200
-      punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
-      vl: 15
   badpackets:
     a:
       enabled: true
@@ -99,6 +89,26 @@ checks:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
   timer:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+  speed:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+  forcefield:
     a:
       enabled: true
       min-tps: 17.0
