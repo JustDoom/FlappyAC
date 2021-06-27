@@ -14,9 +14,13 @@ public class FlappyACCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("flappyanticheat")){
             if(args.length == 0){
                 sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + "&7Please do \"/flappyac help\" for the help command"));
+
+            //Reload
             } else if (args[0].equalsIgnoreCase("reload")) {
                 FlappyAnticheat.getInstance().reloadConfig();
                 sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.reload")));
+
+            //Reset Violations
             } else if (args[0].equalsIgnoreCase("resetviolations")) {
                 if(args.length >= 2){
                     if(Bukkit.getPlayerExact(args[1]) != null) {
@@ -43,6 +47,8 @@ public class FlappyACCommand implements CommandExecutor {
                         Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
                     }
                 }
+
+                //Alerts toggle
             } else if (args[0].equalsIgnoreCase("alerts")) {
                 if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(((Player) sender).getPlayer())){
                     FlappyAnticheat.getInstance().dataManager.disabledAlertsAdd(((Player) sender).getPlayer());
@@ -50,6 +56,13 @@ public class FlappyACCommand implements CommandExecutor {
                 } else {
                     FlappyAnticheat.getInstance().dataManager.disabledAlertsRemove(((Player) sender).getPlayer());
                     sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.alert-toggle.enable")));
+                }
+
+                //Player profile
+            } else if (args[0].equalsIgnoreCase("profile")){
+                if(args.length > 1){
+                    Player targetPlayer = Bukkit.getPlayer(args[1]);
+                    //String clientBrand =
                 }
             }
         }

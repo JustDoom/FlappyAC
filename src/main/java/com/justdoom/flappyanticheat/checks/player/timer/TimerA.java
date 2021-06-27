@@ -10,10 +10,14 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class TimerA extends Check {
 
-    private long lastTime;
-    private double balance;
+    private Map<UUID, Long> lastTime = new HashMap<>();
+    private Map<UUID, Double> balance = new HashMap<>();
 
     public TimerA() {
         super("Timer", "A", true);
@@ -22,7 +26,7 @@ public class TimerA extends Check {
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent e) {
         Player player = e.getPlayer();
-        PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(player.getUniqueId());
+        UUID uuid = player.getUniqueId();
 
         if (e.getPacketId() == PacketType.Play.Client.POSITION || e.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
@@ -30,20 +34,23 @@ public class TimerA extends Check {
                 return;
 
             long time = System.currentTimeMillis();
-            long lastTime = this.lastTime != 0 ? this.lastTime : time - 50;
-            this.lastTime = time;
+            long lastTime = this.lastTime.getOrDefault(uuid, 0L) != 0 ? this.lastTime.getOrDefault(uuid, 0L) : time - 50;
+            this.lastTime.put(uuid, time);
 
             long rate = time - lastTime;
 
-            balance += 50.0;
-            balance -= rate;
+            double balanceOrDefault = this.balance.getOrDefault(uuid, 0.0);
+            this.balance.put(uuid, balanceOrDefault += 50.0);
+            balanceOrDefault = this.balance.getOrDefault(uuid, 0.0);
+            this.balance.put(uuid, balanceOrDefault -= rate);
 
-            if(balance >= 10.0){
+            if(this.balance.getOrDefault(uuid, 0.0) >= 10.0){
                 fail("balance=" + balance, player);
-                balance = 0.0;
+                this.balance.put(uuid, 0.0);
             }
         } else if (e.getPacketId() == PacketType.Play.Server.POSITION){
-            balance -= 50.0;
+            double balanceOrDefault = this.balance.getOrDefault(uuid, 0.0);
+            this.balance.put(uuid, balanceOrDefault -= 50.0);
         }
     }
 }

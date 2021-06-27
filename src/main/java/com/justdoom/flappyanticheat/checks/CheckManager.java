@@ -33,7 +33,6 @@ public class CheckManager {
         PacketEvents.get().registerListener(new BadPacketsB());
         //PacketEvents.get().registerListener(new NoSlowA());
         PacketEvents.get().registerListener(new SkinBlinkerA());
-        //PacketEvents.get().registerListener(new SpeedA());
         PacketEvents.get().registerListener(new AntiCactusA());
         PacketEvents.get().registerListener(new TimerA());
         PacketEvents.get().registerListener(new ForcefieldA());

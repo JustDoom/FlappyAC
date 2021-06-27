@@ -104,9 +104,9 @@ public final class FlappyAnticheat extends JavaPlugin {
 
     public void loadModules(){
         CheckManager checkManager = new CheckManager(this);
+        checkManager.loadChecks();
         dataManager = new PlayerDataManager();
         fileData = new FileData();
         violationHandler = new ViolationHandler();
-        checkManager.loadChecks();
     }
 }

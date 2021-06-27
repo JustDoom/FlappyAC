@@ -19,15 +19,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SpeedA extends Check implements Listener {
 
-    private double buffer;
-    private boolean lastOnGround;
+    private Map<UUID, Double> buffer = new HashMap<>();
+    private Map<UUID, Boolean> lastOnGround = new HashMap<>();
 
-    private double lastDist;
+    private Map<UUID, Double> lastDist = new HashMap<>();
 
     public SpeedA() {
         super("Speed", "A", false);
@@ -36,8 +39,7 @@ public class SpeedA extends Check implements Listener {
     @EventHandler
     public void onPacketPlayReceive(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-
-
+        UUID uuid = player.getUniqueId();
 
         if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
@@ -48,35 +50,24 @@ public class SpeedA extends Check implements Listener {
         double distX = to.getX() - player.getLocation().getX();
         double distZ = to.getZ() - player.getLocation().getZ();
         double dist = Math.sqrt((distX * distX) + (distZ * distZ));
-        double lastDist = this.lastDist;
-        this.lastDist = dist;
+        double lastDist = this.lastDist.getOrDefault(uuid, 0.0);
+
+        this.lastDist.put(uuid, dist);
         boolean onGround = player.isOnGround();
-        boolean lastOnGround = this.lastOnGround;
-        this.lastOnGround = onGround;
+        boolean lastOnGround = this.lastOnGround.getOrDefault(uuid, true);
+        this.lastOnGround.put(uuid, onGround);
         double shiftedLastDist = lastDist * friction;
         double equalness = dist - shiftedLastDist;
 
-        if (!onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && ++buffer > 2) {
+        double bufferOrDefault = this.buffer.getOrDefault(uuid, 0.0);
+
+        if (!PlayerUtil.isOnClimbable(player) && !onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && this.buffer.put(uuid, ++bufferOrDefault) > 2) {
             if (equalness > 0.027) {
                 Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("e=" + equalness, player));
             }
-        } else if(buffer > 0) {
-            buffer -= 0.5;
-        }
-    }
-
-    private float getFriction(Block block) {
-        if (block == null) {
-            return 0.6f * 0.91f;
-        }
-
-        switch (block.getType()) {
-            case SLIME_BLOCK:
-                return 0.8f * 0.91f;
-            case ICE:
-                return 0.98f * 0.91f;
-            default:
-                return 0.6f * 0.91f;
+        } else if(this.buffer.getOrDefault(uuid, 0.0) > 0) {
+            bufferOrDefault = this.buffer.getOrDefault(uuid, 0.0);
+            this.buffer.put(uuid, bufferOrDefault -= 0.5);
         }
     }
 }

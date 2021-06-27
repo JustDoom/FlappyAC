@@ -77,6 +77,9 @@ Added a ForceField check. Thanks to https://www.spigotmc.org/members/1155839 for
 Added a speed check
 Stopped violation resets from running with no players online and spamming the console
 
+1.6.3 BETA
+Fixed Speed A false on climbables
+
 
 Todo
 - add speed and forcefield to config
@@ -102,6 +105,8 @@ Todo
 - Maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
 - Better way to get values from config
 - 1.17 support
+- disable op bypass?
+- worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
 
 
 
@@ -118,4 +123,8 @@ groundspoof A on join false
 fix badpackets B false with worldguard
 random badpackets b falses
 speed a false with slime launching
-speed a false with eating and jumping up blocks
+speed a false (with eating?) and jumping up blocks
+speed a false when jumping side to side
+blockplace B false with placing blocks with offhand
+groundspoof A false when dead body falls into void
+speed A false when taking damage?
