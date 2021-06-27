@@ -30,7 +30,7 @@ public class BlockPlaceB extends Check implements Listener {
         if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
 
-        if (block.getType() != hand.getType()) {
+        if (block.getType() != hand.getType() && block.getType() != player.getInventory().getItemInOffHand().getType()) {
 
             Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("hand=" + hand.getType() + " placed=" + block.getType(), player));
         }

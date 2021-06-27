@@ -31,7 +31,7 @@ public class GroundSpoofA extends Check {
 
     private int buffer = 0;
 
-    private boolean justJoined = true;
+    private int justJoined = 0;
 
     public GroundSpoofA(){
         super("GroundSpoof", "A", false);
@@ -45,11 +45,11 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
-            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1)
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead())
                 return;
 
-            if(justJoined){
-                justJoined = false;
+            if(justJoined < 100){
+                justJoined += 1;
                 return;
             }
 
@@ -61,6 +61,7 @@ public class GroundSpoofA extends Check {
 
                     boolean boat = false;
                     boolean shulker = false;
+                    boolean pistonHead = false;
 
                     AtomicReference<List<Entity>> nearby = new AtomicReference<>();
                     sync(() -> nearby.set(player.getNearbyEntities(1.5, 10, 1.5)));
@@ -83,9 +84,14 @@ public class GroundSpoofA extends Check {
                             shulker = true;
                             break;
                         }
+
+                        if (block.getType() == Material.PISTON_HEAD) {
+                            pistonHead = true;
+                            break;
+                        }
                     }
 
-                    if (!boat && !shulker) {
+                    if (!boat && !shulker && !pistonHead) {
                         String suspectedHack;
                         if(packet.getY() % groundY == 0.0){
                             suspectedHack = "Criticals/Anti Hunger";

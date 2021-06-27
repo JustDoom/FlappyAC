@@ -57,7 +57,7 @@ public class RangeA extends Check {
                             fail("d=" + (float) distance, data.player);
                         }
                     }else this.preVL *= 0.975;
-                    Bukkit.broadcastMessage("distance=" + distance);
+                    //Bukkit.broadcastMessage("distance=" + distance);
 
 
                 }

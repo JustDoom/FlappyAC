@@ -79,6 +79,13 @@ Stopped violation resets from running with no players online and spamming the co
 
 1.6.3 BETA
 Fixed Speed A false on climbables
+Fixed false with Speed A and Timer A when multiple people are moving/running (oops)
+Fixed piston false with GroundSpoof and Speed A (I think)
+Fixed groundspoof A false when dead body falls into void
+Fixed blockplace B false with placing blocks with offhand
+Fixed BlockPlace B false when right clicking entities
+Fixed false with GroundSpoof A on join
+
 
 
 Todo
@@ -118,13 +125,9 @@ api todo
 
 
 false todo
-groundspoof/fly A piston elevator false (believe its when your glitched inside piston head)
 groundspoof A on join false
-fix badpackets B false with worldguard
-random badpackets b falses
+fix badpackets B false with worldguard?
 speed a false with slime launching
 speed a false (with eating?) and jumping up blocks
 speed a false when jumping side to side
-blockplace B false with placing blocks with offhand
-groundspoof A false when dead body falls into void
-speed A false when taking damage?
+speed A false when taking damage in the air?

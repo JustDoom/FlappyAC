@@ -10,6 +10,7 @@ import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -62,7 +63,17 @@ public class SpeedA extends Check implements Listener {
         double bufferOrDefault = this.buffer.getOrDefault(uuid, 0.0);
 
         if (!PlayerUtil.isOnClimbable(player) && !onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && this.buffer.put(uuid, ++bufferOrDefault) > 2) {
-            if (equalness > 0.027) {
+
+            boolean pistonHead = false;
+
+            for (Block block : PlayerUtil.getNearbyBlocks(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()), 2)) {
+                if (block.getType() == Material.PISTON_HEAD) {
+                    pistonHead = true;
+                    break;
+                }
+            }
+
+            if (equalness > 0.027 && !pistonHead) {
                 Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("e=" + equalness, player));
             }
         } else if(this.buffer.getOrDefault(uuid, 0.0) > 0) {
