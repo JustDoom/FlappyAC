@@ -6,7 +6,7 @@
 
     <groupId>com.justdoom</groupId>
     <artifactId>FlappyAnticheat</artifactId>
-    <version>1.6.2-BETA</version>
+    <version>1.6.3-BETA</version>
     <packaging>jar</packaging>
 
     <name>FlappyAnticheat</name>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents</artifactId>
-            <version>v1.8-pre-15</version>
+            <version>v1.8-pre-16</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

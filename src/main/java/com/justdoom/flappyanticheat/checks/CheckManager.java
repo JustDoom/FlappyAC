@@ -36,7 +36,7 @@ public class CheckManager {
         PacketEvents.get().registerListener(new AntiCactusA());
         PacketEvents.get().registerListener(new TimerA());
         PacketEvents.get().registerListener(new ForcefieldA());
-        PacketEvents.get().registerListener(new RangeA());
+        //PacketEvents.get().registerListener(new RangeA());
 
         Bukkit.getPluginManager().registerEvents(new BlockPlaceA(), plugin);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceB(), plugin);
