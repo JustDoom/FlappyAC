@@ -24,7 +24,7 @@ public class RangeA extends Check {
 
     private List<BoundingBox> rayBB(PlayerData data, int ticks) {
         List<BoundingBox> toReturn = new ArrayList<>();
-        if (data.pastVictimBoxes.size() > ticks) {
+        if (data.pastVictimBoxes.size() > 4) {
             for (int range = 0; range < 2; range++) {
                 toReturn.add(data.pastVictimBoxes.get(ticks + range));
             }
