@@ -76,6 +76,7 @@ public class Check extends PacketListenerAbstract {
             String finalCommand = command;
             Bukkit.getScheduler().runTask(FlappyAnticheat.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
         }
+
         if(FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".broadcast-punishment")) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("messages.punish")).replace("{player}", player.getName()));

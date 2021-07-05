@@ -80,7 +80,8 @@ checks:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
     b:
-      enabled: true
+      #this check currently falses a fair bit so disabled by default
+      enabled: false
       min-tps: 17.0
       punishable: true
       broadcast-punishment: true
@@ -109,6 +110,16 @@ checks:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
   forcefield:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 200
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 10
+  reach:
     a:
       enabled: true
       min-tps: 17.0

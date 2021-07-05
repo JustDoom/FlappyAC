@@ -1,8 +1,12 @@
 package com.justdoom.flappyanticheat.customevents;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import java.util.Collection;
+import java.util.List;
 
 public class ViolationResetEvent extends Event implements Cancellable {
 

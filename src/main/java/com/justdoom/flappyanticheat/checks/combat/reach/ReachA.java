@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.checks.combat.range;
+package com.justdoom.flappyanticheat.checks.combat.reach;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
@@ -8,7 +8,6 @@ import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PacketPlaySendEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -16,7 +15,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RangeA extends Check {
+public class ReachA extends Check {
 
     private long lastKP;
     private int preVL;
@@ -35,8 +34,8 @@ public class RangeA extends Check {
 
     }
 
-    public RangeA() {
-        super("Range", "A", false);
+    public ReachA() {
+        super("Reach", "A", false);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class RangeA extends Check {
                         if(this.preVL++ > 4) {
                             fail("d=" + (float) distance, data.player);
                         }
-                    }else this.preVL *= 0.975;
+                    } else this.preVL *= 0.975;
                     //Bukkit.broadcastMessage("distance=" + distance);
 
 

@@ -86,13 +86,13 @@ Fixed blockplace B false with placing blocks with offhand
 Fixed BlockPlace B false when right clicking entities
 Fixed false with GroundSpoof A on join
 
+1.6.4 BETA
+Disabled BadPackets B by default because too many falses when attacking entities legit
+Added a Reach check
+
 
 
 Todo
-- add speed and forcefield to config
-
-- better fly check
-
 - change flag to output config option to output to console or something
 
 - More checks
@@ -112,9 +112,10 @@ Todo
 - Maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
 - Better way to get values from config
 - 1.17 support
-- disable op bypass?
+- disable op bypass option?
 - worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
-
+- fix alerts toggle not working (works again????)
+- make flag output to console in compacted messages (Player flagged Speed A 1000 times)
 
 
 api todo
@@ -129,5 +130,5 @@ groundspoof A on join false
 fix badpackets B false with worldguard?
 speed a false with slime launching
 speed a false (with eating?) and jumping up blocks
-speed a false when jumping side to side
+speed a false when jumping side to side?
 speed A false when taking damage in the air?
