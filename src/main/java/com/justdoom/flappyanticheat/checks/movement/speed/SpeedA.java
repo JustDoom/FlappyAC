@@ -34,7 +34,7 @@ public class SpeedA extends Check implements Listener {
     private Map<UUID, Double> lastDist = new HashMap<>();
 
     public SpeedA() {
-        super("Speed", "A", false);
+        super("Speed", "A", true);
     }
 
     @EventHandler

@@ -10,19 +10,26 @@ import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class FlyA extends Check {
 
-    private double buffer;
-    private double lastResult, lastDeltaY;
-    private boolean lastLastOnGround, lastOnGround;
-    private Location lastLocation;
+    private Map<UUID, Double> airTicks = new HashMap<>();
+    private Map<UUID, Double> buffer = new HashMap<>();
+    private Map<UUID, Double> lastDeltaY = new HashMap<>();
+
+    private Map<UUID, Boolean> inAir = new HashMap<>();
 
     public FlyA(){
         super("Fly", "A", false);
@@ -30,36 +37,64 @@ public class FlyA extends Check {
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
+
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        double airTicks = this.airTicks.getOrDefault(uuid, 0.0);
+        boolean inAir = this.inAir.getOrDefault(uuid, false);
+
+        airTicks = inAir ? airTicks + 1 : 0;
+
+        this.airTicks.put(uuid, airTicks);
+
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
+
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
+
+            if (player.isFlying()) return;
 
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
 
-            WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
-            Player player = event.getPlayer();
+            for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(),
+                    player.getLocation().getX(), player.getLocation().getY() - 1, player.getLocation().getZ()), 1)) {
+                if (block.getType() != Material.AIR) {
+                    this.inAir.put(uuid, false);
+                    break;
+                } else {
+                    this.inAir.put(uuid, true);
+                }
+            }
 
-            final double deltaY = packet.getY() - player.getLocation().getY();
+            final double deltaY = packet.getPosition().getY() - player.getLocation().getY();
 
-            final double lastDeltaY = this.lastDeltaY;
-            this.lastDeltaY = deltaY;
+            final double lastDeltaY = this.lastDeltaY.getOrDefault(uuid, 0.0);
+            this.lastDeltaY.put(uuid, deltaY);
 
-            final boolean onGround = packet.isOnGround();
-
-            final double prediction = Math.abs((lastDeltaY - 0.08) * 0.98F) < 0.005 ? -0.08 * 0.98F : (lastDeltaY - 0.08) * 0.98F;
+            //i dont believe you need all of the extra? also, math.abs is causing falses :///
+            final double prediction = ((lastDeltaY - 0.08) * 0.98F); //< 0.005 ? -0.08 * 0.98F : (lastDeltaY - 0.08) * 0.98F;
             final double difference = Math.abs(deltaY - prediction);
 
-            final boolean invalid = difference > 0.079D
-                    && !onGround
-                    && !(packet.getY() % 0.5 == 0 && packet.isOnGround() && lastDeltaY < 0);
+            final boolean invalid = difference > 0.01D //0.079D
+                    && airTicks > 6
+                    //was able to replace this all due to my new air block check LMFAO.
+                    //note: this is not accurate if youre inside an enclosed space/near blocks. simply a quick fix i made
+                    ;
+
+            double buffer = this.buffer.getOrDefault(uuid, 0.0);
 
             if (invalid) {
                 buffer += buffer < 50 ? 10 : 0;
                 if (buffer > 20) {
+                    //event.getPlayer().sendMessage("fly " + prediction + " " + deltaY + " invalid? " + invalid);
                     fail("diff=%.4f, buffer=%.2f, at=%o", player);
                 }
             } else {
                 buffer = Math.max(buffer - 0.75, 0);
             }
+
+            this.buffer.put(uuid, buffer);
         }
     }
 }

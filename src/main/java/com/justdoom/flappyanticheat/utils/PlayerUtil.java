@@ -7,6 +7,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -48,6 +50,24 @@ public class PlayerUtil {
         return false;
     }
 
+    //im sorry for this, but this is the best botch i have LMFAO
+    //since i cant use the regular method and not expand vertical radius, just remove the radius in a new util ;)
+    // - Spiriten
+
+    public static Set<Block> getNearbyBlocksHorizontally(Location location, int radius) {
+        Set<Block> blocks = new HashSet<>();
+
+        for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
+            for(int y = location.getBlockY(); y <= location.getBlockY(); y++) {
+                for(int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
+                    blocks.add(location.getWorld().getBlockAt(x, y, z));
+                }
+            }
+        }
+
+        return blocks;
+    }
+
     public static Set<Block> getNearbyBlocks(Location location, int radius) {
         Set<Block> blocks = new HashSet<>();
 
@@ -70,5 +90,13 @@ public class PlayerUtil {
         double x = Math.min(Math.pow(attacker.getX() - origin.getMinX(),2.0), Math.pow(attacker.getX() - origin.getMaxX(),2.0));
         double z = Math.min(Math.pow(attacker.getZ() - origin.getMinZ(),2.0), Math.pow(attacker.getZ() - origin.getMaxZ(),2.0));
         return Math.sqrt(x + z);
+    }
+
+    public static int getPotionLevel(Player player, PotionEffectType effect) {
+        final int effectId = effect.getId();
+
+        if (!player.hasPotionEffect(effect)) return 0;
+
+        return player.getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().getId() == effectId).map(PotionEffect::getAmplifier).findAny().orElse(0) + 1;
     }
 }
