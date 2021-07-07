@@ -3,7 +3,9 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.combat.forcefield.ForcefieldA;
 import com.justdoom.flappyanticheat.checks.combat.reach.ReachA;
+import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
+import com.justdoom.flappyanticheat.checks.movement.jump.JumpA;
 import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.justdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
@@ -25,7 +27,8 @@ public class CheckManager {
 
     public void loadChecks(){
         PacketEvents.get().registerListener(new GroundSpoofA());
-        //PacketEvents.get().registerListener(new FlyA());
+        PacketEvents.get().registerListener(new FlyA());
+        PacketEvents.get().registerListener(new JumpA());
         PacketEvents.get().registerListener(new BadPacketsA());
         PacketEvents.get().registerListener(new BadPacketsB());
         //PacketEvents.get().registerListener(new NoSlowA());
