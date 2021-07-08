@@ -1,7 +1,6 @@
 package com.justdoom.flappyanticheat.data;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.utils.Color;
 import org.bukkit.ChatColor;
 
 import java.io.File;

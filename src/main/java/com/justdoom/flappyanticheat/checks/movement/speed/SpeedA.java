@@ -4,27 +4,18 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
-import io.github.retrooper.packetevents.packettype.PacketType;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SpeedA extends Check implements Listener {
 
@@ -60,9 +51,9 @@ public class SpeedA extends Check implements Listener {
         double shiftedLastDist = lastDist * friction;
         double equalness = dist - shiftedLastDist;
 
-        double bufferOrDefault = this.buffer.getOrDefault(uuid, 0.0);
+        double buffer = this.buffer.getOrDefault(uuid, 0.0);
 
-        if (!PlayerUtil.isOnClimbable(player) && !onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && this.buffer.put(uuid, ++bufferOrDefault) > 2) {
+        if (!PlayerUtil.isOnClimbable(player) && !onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && ++buffer > 2) {
 
             boolean pistonHead = false;
 
@@ -76,9 +67,8 @@ public class SpeedA extends Check implements Listener {
             if (equalness > 0.027 && !pistonHead) {
                 Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("e=" + equalness, player));
             }
-        } else if(this.buffer.getOrDefault(uuid, 0.0) > 0) {
-            bufferOrDefault = this.buffer.getOrDefault(uuid, 0.0);
-            this.buffer.put(uuid, bufferOrDefault -= 0.5);
-        }
+        } else buffer = Math.max(buffer - 0.5, 0);
+
+        this.buffer.put(uuid, buffer);
     }
 }
