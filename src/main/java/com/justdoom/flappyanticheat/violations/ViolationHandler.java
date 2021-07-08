@@ -2,13 +2,14 @@ package com.justdoom.flappyanticheat.violations;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.customevents.PunishEvent;
 import com.justdoom.flappyanticheat.customevents.ViolationResetEvent;
 import com.justdoom.flappyanticheat.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class ViolationHandler {
 

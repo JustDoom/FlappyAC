@@ -1,7 +1,6 @@
 package com.justdoom.flappyanticheat.utils;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;

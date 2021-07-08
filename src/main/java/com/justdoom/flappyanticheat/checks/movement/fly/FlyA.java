@@ -1,23 +1,15 @@
 package com.justdoom.flappyanticheat.checks.movement.fly;
 
-import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.checks.CheckData;
-import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
-import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +36,7 @@ public class FlyA extends Check {
         double airTicks = this.airTicks.getOrDefault(uuid, 0.0);
         boolean inAir = this.inAir.getOrDefault(uuid, false);
 
+        //measuring how many ticks the player has an air block below them for
         airTicks = inAir ? airTicks + 1 : 0;
 
         this.airTicks.put(uuid, airTicks);
@@ -52,11 +45,13 @@ public class FlyA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
+            //dont run the check if they have /fly on or are creative flying
             if (player.isFlying()) return;
 
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
 
+            //check if the blocks below the player are air blocks. not entirely accurate.
             for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(),
                     player.getLocation().getX(), player.getLocation().getY() - 1, player.getLocation().getZ()), 1)) {
                 if (block.getType() != Material.AIR) {
@@ -73,11 +68,11 @@ public class FlyA extends Check {
             this.lastDeltaY.put(uuid, deltaY);
 
             //i dont believe you need all of the extra? also, math.abs is causing falses :///
-            final double prediction = ((lastDeltaY - 0.08) * 0.98F); //< 0.005 ? -0.08 * 0.98F : (lastDeltaY - 0.08) * 0.98F;
+            final double prediction = ((lastDeltaY - 0.08) * 0.98F);
             final double difference = Math.abs(deltaY - prediction);
 
-            final boolean invalid = difference > 0.01D //0.079D
-                    && airTicks > 6
+            final boolean invalid = difference > 0.00001D
+                    && airTicks > 8
                     //was able to replace this all due to my new air block check LMFAO.
                     //note: this is not accurate if youre inside an enclosed space/near blocks. simply a quick fix i made
                     ;
@@ -87,7 +82,6 @@ public class FlyA extends Check {
             if (invalid) {
                 buffer += buffer < 50 ? 10 : 0;
                 if (buffer > 20) {
-                    //event.getPlayer().sendMessage("fly " + prediction + " " + deltaY + " invalid? " + invalid);
                     fail("diff=%.4f, buffer=%.2f, at=%o", player);
                 }
             } else {

@@ -140,9 +140,9 @@ checks:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 10
   jump:
-    #Note: this check is highly experimental. i would NOT enable it.
+    #should be stable, but untested
     a:
-      enabled: false
+      enabled: true
       min-tps: 17.0
       punishable: true
       broadcast-punishment: true
