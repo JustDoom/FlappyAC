@@ -23,6 +23,8 @@ public class JumpA extends Check {
     private Map<UUID, Boolean> blockAbove = new HashMap<>();
     private Map<UUID, Boolean> colliding = new HashMap<>();
     private Map<UUID, Boolean> onSlime = new HashMap<>();
+    private Map<UUID, Boolean> onInvalid = new HashMap<>();
+    private Map<UUID, Boolean> stairsDeserveTheDeathSentence = new HashMap<>();
 
     public JumpA(){
         super("Jump", "A", false);
@@ -43,9 +45,9 @@ public class JumpA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
-            if (player.isFlying()) return;
+            if (player.isFlying() || player.isDead() || player.isInsideVehicle()) return;
 
-            //about 0.42 is actual jump height, but account for some desync
+            //about 0.42 is actual off ground jump height, but account for some desync
             //had to skid the potion level util from medusa, sorry
             double jumpSize = 0.43f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1f);
 
@@ -53,7 +55,7 @@ public class JumpA extends Check {
             final double deltaY = packet.getPosition().getY() - lastY;
             final boolean onGround = packet.isOnGround();
 
-            //we use this to check if they actually jumped. if their y changed and if their previous y divide by 1/64th
+            //we use this to check if they actually jumped. if their y changed and if their previous y divided by 1/64th
             //had a remainder of 0
             boolean jumped = deltaY > 0 && lastY % (1D/64) == 0;
 
@@ -81,14 +83,34 @@ public class JumpA extends Check {
                 }
             }
 
-            //check if the player is on a slime block
+            //check if the player is on a slime block or an unsupported block
             for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(), player.getLocation().getX(),
-                    player.getLocation().getY() -1, player.getLocation().getZ()), 1)) {
-                if (block.getType() == Material.SLIME_BLOCK) {
+                    player.getLocation().getY() - 1, player.getLocation().getZ()), 2)) {
+                if ((block.getType().toString().contains("SLIME"))) {
                     this.onSlime.put(uuid, true);
                     break;
                 } else {
                     this.onSlime.put(uuid, false);
+                }
+
+                if ((block.getType().toString().contains("STAIR")) || (block.getType().toString().contains("SLAB")) ||
+                        (block.getType().toString().contains("PISTON")) || (block.getType().toString().contains("FENCE")) ||
+                        (block.getType().toString().contains("WALL"))) {
+                    this.onInvalid.put(uuid, true);
+                    break;
+                } else {
+                    this.onInvalid.put(uuid, false);
+                }
+            }
+
+            //stairs should be removed from the game. all they cause is pain and suffering and pain and hurt and help
+            for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(), player.getLocation().getX(),
+                    player.getLocation().getY(), player.getLocation().getZ()), 2)) {
+                if ((block.getType().toString().contains("STAIR")) || (block.getType().toString().contains("SLAB"))) {
+                    this.stairsDeserveTheDeathSentence.put(uuid, true);
+                    break;
+                } else {
+                    this.stairsDeserveTheDeathSentence.put(uuid, false);
                 }
             }
 
@@ -96,18 +118,22 @@ public class JumpA extends Check {
             boolean blockAbove = this.blockAbove.getOrDefault(uuid, false);
             boolean colliding = this.colliding.getOrDefault(uuid, false);
             boolean onSlime = this.onSlime.getOrDefault(uuid, false);
+            boolean onInvalid = this.onInvalid.getOrDefault(uuid, false);
+            boolean deathSentence = this.stairsDeserveTheDeathSentence.getOrDefault(uuid, false);
 
             //if the player isnt colliding with anything, isnt on slime, or doesnt have a block above then they can flag.
-            boolean canFlag = !colliding && !onSlime && !blockAbove;
+            boolean canFlag = !colliding && !onSlime && !blockAbove && !onInvalid;
 
             //flag the player if theyre under the normal jump size, jumped, and are eligible for flag.
             if (deltaY < (jumpSize - 0.02) && jumped && canFlag) {
-                fail("",player);
+                fail("low jump" + deltaY,player);
             }
 
-            //flag the player if they go over our jump size limit and havent been on slime blocks for 15 ticks
-            if (deltaY > (onGround ? 0.6 : jumpSize) && sinceSlimeTicks >= 15) {
-                fail("", player);
+            //so we check if theyre packet onground first. if they are, then we use 0.6 as their jump height. its not
+            //worth going for the exact number. if theyre off the ground, their max jump size is outlines by our jumpsize
+            //double. we also want to make sure theyve been off of slime for atleast 15 ticks
+            if (deltaY > (onGround ? 0.6 : jumpSize) && sinceSlimeTicks >= 15 && !onInvalid && !deathSentence) {
+                fail("high jump" + deltaY , player);
             }
         }
 

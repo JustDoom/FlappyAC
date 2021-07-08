@@ -14,14 +14,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GroundSpoofA extends Check {
 
     private int buffer = 0;
-
-    private int justJoined = 0;
 
     public GroundSpoofA(){
         super("GroundSpoof", "A", false);
@@ -38,10 +39,8 @@ public class GroundSpoofA extends Check {
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead())
                 return;
 
-            if(justJoined < 100){
-                justJoined += 1;
-                return;
-            }
+            if (player.isInsideVehicle()) return;
+
 
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
