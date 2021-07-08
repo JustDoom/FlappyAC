@@ -47,16 +47,15 @@ public class JumpA extends Check {
 
             if (player.isFlying() || player.isDead() || player.isInsideVehicle()) return;
 
-            //about 0.42 is actual off ground jump height, but account for some desync
-            //had to skid the potion level util from medusa, sorry
-            double jumpSize = 0.43f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1f);
+            //about 0.42 is actual off ground jump height, desync.. does not affect jump height, you cant jump 100 blocks with 1,000 ping
+            double jumpSize = 0.42f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1f);
 
             double lastY = player.getLocation().getY();
             final double deltaY = packet.getPosition().getY() - lastY;
             final boolean onGround = packet.isOnGround();
 
             //we use this to check if they actually jumped. if their y changed and if their previous y divided by 1/64th
-            //had a remainder of 0
+            //had a remainder of 0..
             boolean jumped = deltaY > 0 && lastY % (1D/64) == 0;
 
             //this is probably really intensive, but theres no current better method
