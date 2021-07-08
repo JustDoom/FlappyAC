@@ -9,6 +9,8 @@ import com.justdoom.flappyanticheat.checks.movement.jump.JumpA;
 import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.justdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsD;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceB;
@@ -31,6 +33,8 @@ public class CheckManager {
         PacketEvents.get().registerListener(new JumpA());
         PacketEvents.get().registerListener(new BadPacketsA());
         PacketEvents.get().registerListener(new BadPacketsB());
+        PacketEvents.get().registerListener(new BadPacketsC());
+        PacketEvents.get().registerListener(new BadPacketsD());
         //PacketEvents.get().registerListener(new NoSlowA());
         PacketEvents.get().registerListener(new SkinBlinkerA());
         PacketEvents.get().registerListener(new AntiCactusA());

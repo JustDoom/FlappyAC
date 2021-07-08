@@ -90,32 +90,39 @@ Fixed false with GroundSpoof A on join
 Disabled BadPackets B by default because too many falses when attacking entities legit
 Added a Reach check
 
+1.7.0 BETA
+Added back Fly A
+Added Jump A
+Made Speed A experimental as there are too many small falses
 
 
 Todo
-- change flag to output config option to output to console or something
-
 - More checks
-- Ban wave
-- ViaVersion compat
 - Checks run on new thread (does packetevents do this?)
-- View player profile command (player client brand, violations etc)
-- GUI for enabling checks etc
 - Lag back feature/cancel??? Could be an extension
-- Proper 1.8 - 1.17 support possibly
 - Alert interval
 - Max ping (add with pingspoof check)
 - Possibly customizable buffer
-- Discord integration
-- Stop certain client brands joining
 - Include ban config for easy switch, could be on discord or with download
 - Maybe create a website that lets you edit the config easily (change from kick punishments to ban punishments quickly)
-- Better way to get values from config
-- 1.17 support
-- disable op bypass option?
-- worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
 - fix alerts toggle not working (works again????)
+
+Full release goals
+- More checks
+- Rewrite the base and some checks (make new branch)
+- change flag to output config option to output to console or something
+- ViaVersion compat
+- Proper 1.8 - 1.17 support
+- 1.17 support
+- Discord integration
+- View player profile command (player client brand, violations etc)
+- Ban wave
+- GUI for enabling checks etc
+- Stop certain client brands joining
 - make flag output to console in compacted messages (Player flagged Speed A 1000 times)
+- worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
+- Better way to get values from config
+- Proper FlappyPlayer class and Position, Velocity, Rotation etc processors
 
 
 api todo

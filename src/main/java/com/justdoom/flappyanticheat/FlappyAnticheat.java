@@ -14,6 +14,7 @@ import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.settings.PacketEventsSettings;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
 
@@ -93,6 +94,12 @@ public final class FlappyAnticheat extends JavaPlugin {
         loadModules();
 
         PacketEvents.get().init();
+
+        System.out.println("yesy");
+
+
+        FileConfiguration configuration = FlappyAnticheat.getInstance().getConfig();
+        System.out.println(configuration.getString("prefix"));
     }
 
     @Override
