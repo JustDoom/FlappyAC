@@ -94,6 +94,11 @@ Added a Reach check
 Added back Fly A
 Added Jump A
 Made Speed A experimental as there are too many small falses
+Added BadPackets C - D
+Added a better way to get values from config which should reduce resource usage
+
+Thanks to Sprit for the Jump and Fly check
+
 
 
 Todo
@@ -121,7 +126,6 @@ Full release goals
 - Stop certain client brands joining
 - make flag output to console in compacted messages (Player flagged Speed A 1000 times)
 - worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
-- Better way to get values from config
 - Proper FlappyPlayer class and Position, Velocity, Rotation etc processors
 
 

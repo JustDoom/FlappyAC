@@ -15,7 +15,7 @@ public class ViolationHandler {
     private Map<UUID, Map<Check, Integer>> violations = new HashMap<>();
 
     public ViolationHandler(){
-        int delay = FlappyAnticheat.getInstance().getConfig().getInt("violation-reset-delay") * 20;
+        int delay = FlappyAnticheat.getInstance().config.configuration.getInt("violation-reset-delay") * 20;
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(FlappyAnticheat.getInstance(), () -> {
             ViolationResetEvent violationResetEvent = new ViolationResetEvent();
@@ -24,11 +24,11 @@ public class ViolationHandler {
                 clearAllViolations();
                 for(Player p: Bukkit.getOnlinePlayers()){
                     if(p.hasPermission("flappyanticheat.alerts")){
-                        p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                        p.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.all")));
                     }
                 }
-                if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
-                    Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                if(FlappyAnticheat.getInstance().config.configuration.getBoolean("messages.flag-to-console")) {
+                    Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.all")));
                 }
             }
         }, delay, delay);
@@ -37,11 +37,11 @@ public class ViolationHandler {
     public void addViolation(Check check, Player p){
         String path = "checks." + check.check.toLowerCase() + "." + check.checkType.toLowerCase();
 
-        if(!FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".enabled")){
+        if(!FlappyAnticheat.getInstance().config.configuration.getBoolean(path + ".enabled")){
             return;
         }
 
-        int violation = FlappyAnticheat.getInstance().getConfig().getInt( path + ".vl");
+        int violation = FlappyAnticheat.getInstance().config.configuration.getInt( path + ".vl");
         Map<Check, Integer> vl = new HashMap<>();
         if (this.violations.containsKey(p.getUniqueId())) {
             vl = this.violations.get(p.getUniqueId());
@@ -52,8 +52,8 @@ public class ViolationHandler {
             vl.put(check, vl.get(check) + violation);
         }
         this.violations.put(p.getUniqueId(), vl);
-        if(getViolations(check, p) >= FlappyAnticheat.getInstance().getConfig().getInt(path + ".punish-vl")){
-            if(FlappyAnticheat.getInstance().getConfig().getBoolean(path + ".punishable")){
+        if(getViolations(check, p) >= FlappyAnticheat.getInstance().config.configuration.getInt(path + ".punish-vl")){
+            if(FlappyAnticheat.getInstance().config.configuration.getBoolean(path + ".punishable")){
                 check.punish(p, path);
                 FlappyAnticheat.getInstance().fileData.addToFile("punishments.txt", "\n" + p.getName() + " has been punished for " + check.check.toLowerCase() + " " + check.checkType.toLowerCase());
             }

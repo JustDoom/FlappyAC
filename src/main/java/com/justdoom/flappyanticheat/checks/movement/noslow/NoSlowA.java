@@ -33,7 +33,7 @@ public class NoSlowA extends Check {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
             String path = ("checks." + check + "." + checkType).toLowerCase();
-            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().getConfig().getDouble(path + ".min-tps")){
+            if(PacketEvents.get().getServerUtils().getTPS() <= FlappyAnticheat.getInstance().config.configuration.getDouble(path + ".min-tps")){
                 return;
             }
 

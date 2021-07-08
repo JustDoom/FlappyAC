@@ -13,7 +13,7 @@ public class FlagClickCommand implements CommandExecutor {
             if(args.length == 0){
                 return true;
             } else {
-                for(String commands:FlappyAnticheat.getInstance().getConfig().getStringList("messages.commands")){
+                for(String commands:FlappyAnticheat.getInstance().config.configuration.getStringList("messages.commands")){
                     Bukkit.dispatchCommand(sender, commands.replace("{player}", args[0]));
 
                 }

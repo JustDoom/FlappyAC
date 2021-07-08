@@ -43,7 +43,7 @@ public class PlayerConnectionListener implements Listener {
             }
         }
 
-        if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
+        if(FlappyAnticheat.getInstance().config.configuration.getBoolean("messages.flag-to-console")) {
             Bukkit.getConsoleSender().sendMessage(String.valueOf(clientVersion));
         }**/
     }

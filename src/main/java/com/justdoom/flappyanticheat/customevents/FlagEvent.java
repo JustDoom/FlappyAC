@@ -21,7 +21,7 @@ public class FlagEvent extends Event implements Cancellable {
         this.player = player;
         this.isCancelled = false;
         this.check = check;
-        this.isPunishable = FlappyAnticheat.getInstance().getConfig().getBoolean("checks." + check.check + "." + check.checkType + ".punishable");
+        this.isPunishable = FlappyAnticheat.getInstance().config.configuration.getBoolean("checks." + check.check + "." + check.checkType + ".punishable");
         this.vl = FlappyAnticheat.getInstance().violationHandler.getViolations(check, player);
     }
 

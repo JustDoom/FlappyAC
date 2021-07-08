@@ -13,12 +13,12 @@ public class FlappyACCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("flappyanticheat")){
             if(args.length == 0){
-                sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + "&7Please do \"/flappyac help\" for the help command"));
+                sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + "&7Please do \"/flappyac help\" for the help command"));
 
             //Reload
             } else if (args[0].equalsIgnoreCase("reload")) {
-                FlappyAnticheat.getInstance().reloadConfig();
-                sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.reload")));
+                FlappyAnticheat.getInstance().config.reloadConfig();
+                sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.reload")));
 
             //Reset Violations
             } else if (args[0].equalsIgnoreCase("resetviolations")) {
@@ -27,24 +27,24 @@ public class FlappyACCommand implements CommandExecutor {
                         FlappyAnticheat.getInstance().violationHandler.clearViolations(Bukkit.getPlayerExact(args[1]));
                         for(Player p: Bukkit.getOnlinePlayers()){
                             if(p.hasPermission("flappyanticheat.alerts")){
-                                p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.player").replace("{player}", args[1])));
+                                p.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.player").replace("{player}", args[1])));
                             }
                         }
-                        if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
-                            Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.player").replace("{player}", args[1])));
+                        if(FlappyAnticheat.getInstance().config.configuration.getBoolean("messages.flag-to-console")) {
+                            Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.player").replace("{player}", args[1])));
                         }
                     } else {
-                        sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-remove-invalid-player")));
+                        sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-remove-invalid-player")));
                     }
                 } else {
                     FlappyAnticheat.getInstance().violationHandler.clearAllViolations();
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.hasPermission("flappyanticheat.alerts")) {
-                            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                            p.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.all")));
                         }
                     }
-                    if(FlappyAnticheat.getInstance().getConfig().getBoolean("messages.flag-to-console")) {
-                        Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.violation-reset.all")));
+                    if(FlappyAnticheat.getInstance().config.configuration.getBoolean("messages.flag-to-console")) {
+                        Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.violation-reset.all")));
                     }
                 }
 
@@ -52,10 +52,10 @@ public class FlappyACCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("alerts")) {
                 if(!FlappyAnticheat.getInstance().dataManager.alertsDisabled.contains(((Player) sender).getPlayer())){
                     FlappyAnticheat.getInstance().dataManager.disabledAlertsAdd(((Player) sender).getPlayer());
-                    sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.alert-toggle.disable")));
+                    sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.alert-toggle.disable")));
                 } else {
                     FlappyAnticheat.getInstance().dataManager.disabledAlertsRemove(((Player) sender).getPlayer());
-                    sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().getConfig().getString("prefix") + FlappyAnticheat.getInstance().getConfig().getString("messages.alert-toggle.enable")));
+                    sender.sendMessage(Color.translate(FlappyAnticheat.getInstance().config.configuration.getString("prefix") + FlappyAnticheat.getInstance().config.configuration.getString("messages.alert-toggle.enable")));
                 }
 
                 //Player profile

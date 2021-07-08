@@ -1,8 +1,17 @@
 package com.justdoom.flappyanticheat;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
 public class ConfigCache {
 
+    public FileConfiguration configuration;
+
     public ConfigCache(){
-        System.out.println(FlappyAnticheat.getInstance().getConfig());
+        configuration = FlappyAnticheat.getInstance().getConfig();
+    }
+
+    public void reloadConfig(){
+        FlappyAnticheat.getInstance().reloadConfig();
+        configuration = FlappyAnticheat.getInstance().getConfig();
     }
 }

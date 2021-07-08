@@ -31,6 +31,7 @@ public final class FlappyAnticheat extends JavaPlugin {
     public ViolationHandler violationHandler;
     public PlayerDataManager dataManager;
     public FileData fileData;
+    public ConfigCache config;
 
     public FlappyAnticheat(){
         instance = this;
@@ -51,10 +52,12 @@ public final class FlappyAnticheat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        loadModules();
+
         //Check for updates
 
         (new UpdateChecker(this, 92180)).getVersion(version -> {
-            if (!getConfig().getBoolean("disable-update-checker"))
+            if (!config.configuration.getBoolean("disable-update-checker"))
                 if (getDescription().getVersion().equalsIgnoreCase(version)) {
                     getLogger().info("There is not a new update available.");
                 } else {
@@ -91,15 +94,7 @@ public final class FlappyAnticheat extends JavaPlugin {
         //Register Tab completion
         this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
 
-        loadModules();
-
         PacketEvents.get().init();
-
-        System.out.println("yesy");
-
-
-        FileConfiguration configuration = FlappyAnticheat.getInstance().getConfig();
-        System.out.println(configuration.getString("prefix"));
     }
 
     @Override
@@ -110,6 +105,7 @@ public final class FlappyAnticheat extends JavaPlugin {
     }
 
     public void loadModules(){
+        config = new ConfigCache();
         CheckManager checkManager = new CheckManager(this);
         checkManager.loadChecks();
         dataManager = new PlayerDataManager();
