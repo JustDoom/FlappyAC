@@ -1,20 +1,15 @@
 package com.justdoom.flappyanticheat.listener;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.utils.BrandMessageUtil;
-import com.justdoom.flappyanticheat.utils.Color;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.gameprofile.WrappedGameProfile;
 import io.github.retrooper.packetevents.utils.player.ClientVersion;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.messaging.Messenger;
 
 public class PlayerConnectionListener implements Listener {
 

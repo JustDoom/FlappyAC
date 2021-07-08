@@ -1,7 +1,6 @@
 package com.justdoom.flappyanticheat.data;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
@@ -9,7 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class PlayerData {
 
