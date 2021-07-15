@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.utils;
+package com.justdoom.flappyanticheat.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
-public class PlayerUtil {
+public final class PlayerUtil {
 
     public static int getPing(Player player) {
         try {

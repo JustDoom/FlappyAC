@@ -1,25 +1,21 @@
 package com.justdoom.flappyanticheat;
 
 import com.justdoom.flappyanticheat.checks.CheckManager;
-import com.justdoom.flappyanticheat.commands.FlagClickCommand;
-import com.justdoom.flappyanticheat.commands.FlappyACCommand;
-import com.justdoom.flappyanticheat.commands.tabcomplete.FlappyAnticheatTabCompletion;
-import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
+import com.justdoom.flappyanticheat.listener.NetworkListener;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
-import com.justdoom.flappyanticheat.utils.BrandMessageUtil;
-import com.justdoom.flappyanticheat.utils.UpdateChecker;
-import com.justdoom.flappyanticheat.violations.ViolationHandler;
+import com.justdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.settings.PacketEventsSettings;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
+import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.Messenger;
 
-import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+@Getter
 public final class FlappyAnticheat extends JavaPlugin {
 
     private static FlappyAnticheat instance;
@@ -28,71 +24,36 @@ public final class FlappyAnticheat extends JavaPlugin {
         return instance;
     }
 
-    public ViolationHandler violationHandler;
-    public PlayerDataManager dataManager;
-    public FileData fileData;
-    public ConfigCache config;
-
     public FlappyAnticheat(){
         instance = this;
     }
 
-    //Load PacketEvents
+    public PlayerDataManager dataManager;
+
+    private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
+    private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
 
     @Override
     public void onLoad(){
+        //Load PacketEvents
         PacketEvents.create(this);
         PacketEventsSettings settings = PacketEvents.get().getSettings();
         settings
-                .fallbackServerVersion(ServerVersion.v_1_16_5)
+                .fallbackServerVersion(ServerVersion.v_1_17_1)
                 .compatInjector(false)
-                .checkForUpdates(false);
+                .checkForUpdates(false)
+                .bStats(true);
         PacketEvents.get().loadAsyncNewThread();
     }
 
     @Override
     public void onEnable() {
-        loadModules();
+        dataManager = new PlayerDataManager();
+        CheckManager.setup();
 
-        //Check for updates
+        Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), this);
 
-        (new UpdateChecker(this, 92180)).getVersion(version -> {
-            if (!config.configuration.getBoolean("disable-update-checker"))
-                if (getDescription().getVersion().equalsIgnoreCase(version)) {
-                    getLogger().info("There is not a new update available.");
-                } else {
-                    getLogger().info("There is a new update available.");
-                }
-        });
-
-        saveDefaultConfig();
-
-        //Load metrics
-
-        int pluginId = 11300;
-        Metrics metrics = new Metrics(this, pluginId);
-
-        metrics.addCustomChart(new Metrics.SimplePie("used_language", new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return getConfig().getString("language", "en");
-            }
-        }));
-
-        //Register incoming plugin channel for client brand
-
-        Messenger messenger = Bukkit.getMessenger();
-        messenger.registerIncomingPluginChannel(FlappyAnticheat.getInstance(), "minecraft:brand", new BrandMessageUtil());
-
-        //Register events
-        this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
-
-        //Register commands
-        this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
-        this.getCommand("flappyacflagclick").setExecutor(new FlagClickCommand());
-
-        //Register Tab completion
-        this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
+        PacketEvents.get().registerListener(new NetworkListener());
 
         PacketEvents.get().init();
     }
@@ -100,16 +61,6 @@ public final class FlappyAnticheat extends JavaPlugin {
     @Override
     public void onDisable() {
         //Disable PacketEvents
-
         PacketEvents.get().terminate();
-    }
-
-    public void loadModules(){
-        config = new ConfigCache();
-        CheckManager checkManager = new CheckManager(this);
-        checkManager.loadChecks();
-        dataManager = new PlayerDataManager();
-        fileData = new FileData();
-        violationHandler = new ViolationHandler();
     }
 }

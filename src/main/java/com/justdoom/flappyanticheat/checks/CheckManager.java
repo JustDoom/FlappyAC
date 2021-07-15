@@ -1,50 +1,41 @@
 package com.justdoom.flappyanticheat.checks;
 
-import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.checks.combat.forcefield.ForcefieldA;
-import com.justdoom.flappyanticheat.checks.combat.reach.ReachA;
-import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
-import com.justdoom.flappyanticheat.checks.movement.jump.JumpA;
-import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
-import com.justdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
-import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
-import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
-import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
-import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsD;
-import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceA;
-import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceB;
-import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
-import com.justdoom.flappyanticheat.checks.player.timer.TimerA;
-import io.github.retrooper.packetevents.PacketEvents;
-import org.bukkit.Bukkit;
+import com.justdoom.flappyanticheat.data.FlappyPlayer;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheckManager {
 
-    private final FlappyAnticheat plugin;
+    public static final Class<?>[] CHECKS = new Class[]{
+            GroundSpoofA.class
+    };
 
-    public CheckManager(FlappyAnticheat plugin) {
-        this.plugin = plugin;
+    private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
+
+    public static List<Check> loadChecks(final FlappyPlayer player) {
+        List<Check> checkList = new ArrayList<>();
+        for (Constructor<?> constructor : CONSTRUCTORS) {
+            try {
+                System.out.println("check loaded");
+                checkList.add((Check) constructor.newInstance(player));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return checkList;
     }
 
-    public void loadChecks(){
-        PacketEvents.get().registerListener(new GroundSpoofA());
-        PacketEvents.get().registerListener(new FlyA());
-        PacketEvents.get().registerListener(new JumpA());
-        PacketEvents.get().registerListener(new BadPacketsA());
-        PacketEvents.get().registerListener(new BadPacketsB());
-        PacketEvents.get().registerListener(new BadPacketsC());
-        PacketEvents.get().registerListener(new BadPacketsD());
-        //PacketEvents.get().registerListener(new NoSlowA());
-        PacketEvents.get().registerListener(new SkinBlinkerA());
-        PacketEvents.get().registerListener(new AntiCactusA());
-        PacketEvents.get().registerListener(new TimerA());
-        PacketEvents.get().registerListener(new ForcefieldA());
-        PacketEvents.get().registerListener(new ReachA());
-
-        Bukkit.getPluginManager().registerEvents(new BlockPlaceA(), plugin);
-        Bukkit.getPluginManager().registerEvents(new BlockPlaceB(), plugin);
-        Bukkit.getPluginManager().registerEvents(new SpeedA(), plugin);
-        //Bukkit.getPluginManager().registerEvents(new InventoryA(), plugin);
+    public static void setup() {
+        for (Class<?> clazz : CHECKS) {
+            try {
+                CONSTRUCTORS.add(clazz.getConstructor(FlappyPlayer.class));
+            } catch (NoSuchMethodException exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 }

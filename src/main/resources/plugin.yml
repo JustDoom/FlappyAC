@@ -1,18 +1,6 @@
 name: FlappyAnticheat
 version: ${project.version}
 main: com.justdoom.flappyanticheat.FlappyAnticheat
-api-version: 1.16
+api-version: 1.17
 load: POSTWORLD
-commands:
-  flappyanticheat:
-    permission: flappyanticheat.commands
-    aliases: flappyac
-  flappyacflagclick:
-    permission: flappyanticheat.commands
 permissions:
-  flappyanticheat.alerts:
-    default: op
-  flappyanticheat.commands:
-    default: op
-  flappyanticheat.bypass:
-    default: op

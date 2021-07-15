@@ -7,10 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface CheckData {
-
-    String name() default "Dg";
-    String type () default "NONE";
-    boolean experimental() default true;
-
+public @interface CheckInfo {
+    String check();
+    String checkType();
+    boolean experimental();
 }

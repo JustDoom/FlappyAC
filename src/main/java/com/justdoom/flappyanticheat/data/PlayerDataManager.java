@@ -9,15 +9,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerDataManager {
 
-    public Map<UUID, PlayerData> dataMap = new ConcurrentHashMap<>();
+    public Map<Player, FlappyPlayer> dataMap = new ConcurrentHashMap<>();
 
     public ArrayList<Player> alertsDisabled = new ArrayList<Player>();
 
-    public void addPlayer(UUID uuid) {
-        dataMap.put(uuid, new PlayerData(uuid));
+    public void addPlayer(Player player) {
+        dataMap.put(player, new FlappyPlayer(player));
     }
 
-    public boolean containsPlayer(PlayerData data){
+    public boolean containsPlayer(FlappyPlayer data){
         if(dataMap.containsValue(data)){
             return true;
         } else {
@@ -25,12 +25,12 @@ public class PlayerDataManager {
         }
     }
 
-    public void removePlayer(UUID uuid) {
-        dataMap.remove(uuid);
+    public void removePlayer(Player player) {
+        dataMap.remove(player);
     }
 
-    public PlayerData getData(UUID uuid) {
-        return dataMap.get(uuid);
+    public FlappyPlayer getData(Player player) {
+        return dataMap.get(player);
     }
 
     public void disabledAlertsAdd(Player player){

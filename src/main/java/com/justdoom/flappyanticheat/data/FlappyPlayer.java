@@ -1,46 +1,29 @@
 package com.justdoom.flappyanticheat.data;
 
+import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.checks.CheckManager;
+import com.justdoom.flappyanticheat.data.processor.PositionProcessor;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+@Getter
+@Setter
 public class FlappyPlayer {
 
-    private static Map<String, FlappyPlayer> flappyPlayers = new HashMap<String, FlappyPlayer>();
+    private Player player;
 
-    private final Player player;
+    private List<Check> checks = CheckManager.loadChecks(this);
 
-    public Player getPlayer() {
-        return player;
-    }
+    private PositionProcessor positionProcessor;
 
-    private FlappyPlayer(Player player) {
+    public FlappyPlayer(Player player){
+
         this.player = player;
-        flappyPlayers.put(player.getName(), this);
-    }
 
-    // Return a running instance (or create a new one)
-    public static FlappyPlayer getInstance(Player player) {
-        if (flappyPlayers == null) {
-            return new FlappyPlayer(player);
-        }
-        if (!flappyPlayers.containsKey(player.getName())) {
-            return new FlappyPlayer(player);
-        } else if (flappyPlayers.containsKey(player.getName())) {
-            return flappyPlayers.get(player.getName());
-        } else {
-            return null;
-        }
-    }
-
-    // Remove an Instance
-    public static boolean removeInstance(Player player) {
-        if (flappyPlayers.containsKey(player.getName())) {
-            flappyPlayers.remove(player.getName());
-            return true;
-        } else {
-            return false;
-        }
+        this.positionProcessor = new PositionProcessor(this);
     }
 }
