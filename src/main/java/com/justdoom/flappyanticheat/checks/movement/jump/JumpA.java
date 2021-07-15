@@ -45,13 +45,13 @@ public class JumpA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
-            if (player.isFlying() || player.isDead() || player.isInsideVehicle()) return;
+            if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding()) return;
 
             //0.42 is not the real jump height of the player. if youre gonna make it false atleast use the right number.
             //vehicle desync may false this, thats why it was originally 0.43. it seems like izibane likes false flags
             //though, so ill go along with it
             //0.41999998688697815 is our exact value.
-            double jumpSize = 0.41999998688697815f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1f);
+            double jumpSize = 0.41999998688697815f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.11f);
 
             double lastY = player.getLocation().getY();
             final double deltaY = packet.getPosition().getY() - lastY;
@@ -137,6 +137,8 @@ public class JumpA extends Check {
             if (deltaY > (onGround ? 0.6 : jumpSize) && sinceSlimeTicks >= 15 && !onInvalid && !deathSentence) {
                 fail("high jump" + deltaY , player);
             }
+
+            System.out.println(deltaY);
         }
 
         boolean onSlime = this.onSlime.getOrDefault(uuid, false);

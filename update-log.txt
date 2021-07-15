@@ -99,6 +99,10 @@ Added a better way to get values from config which should reduce resource usage
 
 Thanks to Sprit for the Jump and Fly check
 
+1.7.1 BETA
+Fixed BlockPlace B false when using flint and steel
+Fixed Speed/Fly/Jump A false when using an elytra
+
 
 
 Todo

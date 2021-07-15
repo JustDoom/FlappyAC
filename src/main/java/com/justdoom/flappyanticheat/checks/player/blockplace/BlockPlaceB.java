@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +28,9 @@ public class BlockPlaceB extends Check implements Listener {
         ItemStack hand = player.getItemInHand();
 
         if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
+            return;
+
+        if(hand.getType() == Material.FLINT_AND_STEEL)
             return;
 
         if (block.getType() != hand.getType() && block.getType() != player.getInventory().getItemInOffHand().getType()) {

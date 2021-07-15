@@ -25,8 +25,8 @@ public class PlayerConnectionListener implements Listener {
 
         flappyAnticheat.dataManager.addPlayer(player.getUniqueId());
 
-        ClientVersion clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
-        WrappedGameProfile e = PacketEvents.get().getPlayerUtils().getGameProfile(player);
+        //ClientVersion clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+        //WrappedGameProfile e = PacketEvents.get().getPlayerUtils().getGameProfile(player);
         //event.getPlayer().sendMessage(String.valueOf(e.getName()));
 
         BrandMessageUtil.addChannel(player, "minecraft:brand");

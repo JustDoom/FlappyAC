@@ -46,7 +46,7 @@ public class FlyA extends Check {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
             //dont run the check if they have /fly on or are creative flying
-            if (player.isFlying()) return;
+            if (player.isFlying() || player.isGliding()) return;
 
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;

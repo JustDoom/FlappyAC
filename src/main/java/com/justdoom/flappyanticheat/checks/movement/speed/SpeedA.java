@@ -36,6 +36,8 @@ public class SpeedA extends Check implements Listener {
         if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
 
+        if(player.isGliding()) return;
+
         Location to = new Location(player.getWorld(), event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
         float friction = 0.91f;
 
