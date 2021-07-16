@@ -8,7 +8,7 @@ public class PositionProcessor {
 
     private FlappyPlayer player;
 
-    private boolean onGround, lastOnGround;
+    private boolean onGround, lastOnGround, inAir;
 
     private double x, y, z, lastX, lastY, lastZ;
 
