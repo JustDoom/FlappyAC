@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
+import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
 import org.bukkit.Location;
@@ -29,6 +30,8 @@ public class GroundSpoofA extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        if(player.getExemptManager().isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
         double groundY = 0.015625;
         boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;
@@ -69,7 +72,7 @@ public class GroundSpoofA extends Check {
                 }
 
                 if (!boat && !shulker && !pistonHead) {
-                    fail();
+                    fail("Server: " + server + " Client: " + client);
                 }
             }
         } else if (buffer > 0) buffer--;

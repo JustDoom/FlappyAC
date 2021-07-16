@@ -101,6 +101,20 @@ Thanks to Sprit for the Jump and Fly check
 
 
 
+
+
+
+1.0.0
+
+
+
+
+
+
+
+
+
+
 Todo
 - More checks
 - Checks run on new thread (does packetevents do this?)

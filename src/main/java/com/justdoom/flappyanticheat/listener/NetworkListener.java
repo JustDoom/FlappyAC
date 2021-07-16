@@ -10,7 +10,7 @@ public class NetworkListener extends PacketListenerAbstract {
 
     @Override
     public void onPacketPlayReceive(final PacketPlayReceiveEvent event){
-        FlappyPlayer player = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer());
+        FlappyPlayer player = FlappyAnticheat.getInstance().getDataManager().getData(event.getPlayer());
 
         if(player == null) return;
 

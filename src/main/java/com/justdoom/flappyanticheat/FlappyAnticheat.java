@@ -28,7 +28,7 @@ public final class FlappyAnticheat extends JavaPlugin {
         instance = this;
     }
 
-    public PlayerDataManager dataManager;
+    private PlayerDataManager dataManager;
 
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
