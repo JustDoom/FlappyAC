@@ -97,4 +97,18 @@ public final class PlayerUtil {
 
         return player.getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().getId() == effectId).map(PotionEffect::getAmplifier).findAny().orElse(0) + 1;
     }
+
+    public static Set<Block> getNearbyBlocksConfigurable(Location location, int radiusX, int radiusY, int radiusZ) {
+        Set<Block> blocks = new HashSet<>();
+
+        for(int x = location.getBlockX() - radiusX; x <= location.getBlockX() + radiusX; x++) {
+            for(int y = location.getBlockY() - radiusY; y <= location.getBlockY() + radiusY; y++) {
+                for(int z = location.getBlockZ() - radiusZ; z <= location.getBlockZ() + radiusZ; z++) {
+                    blocks.add(location.getWorld().getBlockAt(x, y, z));
+                }
+            }
+        }
+
+        return blocks;
+    }
 }

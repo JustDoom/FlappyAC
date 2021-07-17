@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.checks;
 
+import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 
@@ -10,7 +11,8 @@ import java.util.List;
 public class CheckManager {
 
     public static final Class<?>[] CHECKS = new Class[]{
-            GroundSpoofA.class
+            GroundSpoofA.class,
+            FlyA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

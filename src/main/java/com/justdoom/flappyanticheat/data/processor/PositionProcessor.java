@@ -1,7 +1,11 @@
 package com.justdoom.flappyanticheat.data.processor;
 
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
+import com.justdoom.flappyanticheat.util.PlayerUtil;
 import lombok.Getter;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 @Getter
 public class PositionProcessor {
@@ -28,6 +32,13 @@ public class PositionProcessor {
         this.z = z;
 
         this.onGround = onGround;
+
+        for (Block block : PlayerUtil.getNearbyBlocksConfigurable(new Location(player.getPlayer().getWorld(), player.getPositionProcessor().getX(), player.getPositionProcessor().getY() - 1, player.getPositionProcessor().getZ()), 1, 0, 1)) {
+            if (block.getType() != Material.AIR) {
+                inAir = false;
+                break;
+            }
+        }
     }
 
     public boolean isOnGround() {
