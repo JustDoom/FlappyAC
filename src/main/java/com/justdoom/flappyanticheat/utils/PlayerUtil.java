@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -20,7 +21,7 @@ import java.util.logging.Level;
 public class PlayerUtil {
 
     public static int getPing(Player player) {
-        try {
+        /**try {
             Method handle = player.getClass().getMethod("getHandle");
             Object nmsHandle = handle.invoke(player);
             Field pingField = nmsHandle.getClass().getField("ping");
@@ -29,7 +30,7 @@ public class PlayerUtil {
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException
                 | NoSuchFieldException e) {
             Bukkit.getLogger().log(Level.SEVERE, "Exception while trying to get player ping.", e);
-        }
+        }**/
 
         return -1;
     }
@@ -96,5 +97,19 @@ public class PlayerUtil {
         if (!player.hasPotionEffect(effect)) return 0;
 
         return player.getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getType().getId() == effectId).map(PotionEffect::getAmplifier).findAny().orElse(0) + 1;
+    }
+
+    public static Set<Block> getNearbyBlocksConfigurable(Location location, int radiusX, int radiusY, int radiusZ) {
+        Set<Block> blocks = new HashSet<>();
+
+        for(int x = location.getBlockX() - radiusX; x <= location.getBlockX() + radiusX; x++) {
+            for(int y = location.getBlockY() - radiusY; y <= location.getBlockY() + radiusY; y++) {
+                for(int z = location.getBlockZ() - radiusZ; z <= location.getBlockZ() + radiusZ; z++) {
+                    blocks.add(location.getWorld().getBlockAt(x, y, z));
+                }
+            }
+        }
+
+        return blocks;
     }
 }

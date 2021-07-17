@@ -102,7 +102,13 @@ Thanks to Sprit for the Jump and Fly check
 1.7.1 BETA
 Fixed BlockPlace B false when using flint and steel
 Fixed Speed/Fly/Jump A false when using an elytra
+Fixed falses with Jump A with the Jump Boost effect
 
+1.7.2 BETA
+Removed debug message
+Added Fly B
+Fixed a groundspoof A bypass
+Fixed issue with 1.17.1 servers
 
 
 Todo

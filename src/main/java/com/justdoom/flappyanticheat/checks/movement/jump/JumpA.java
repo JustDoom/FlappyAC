@@ -137,8 +137,6 @@ public class JumpA extends Check {
             if (deltaY > (onGround ? 0.6 : jumpSize) && sinceSlimeTicks >= 15 && !onInvalid && !deathSentence) {
                 fail("high jump" + deltaY , player);
             }
-
-            System.out.println(deltaY);
         }
 
         boolean onSlime = this.onSlime.getOrDefault(uuid, false);

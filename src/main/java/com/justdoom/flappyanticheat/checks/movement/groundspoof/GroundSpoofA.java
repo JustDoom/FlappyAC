@@ -24,6 +24,9 @@ public class GroundSpoofA extends Check {
 
     private int buffer = 0;
 
+    private Map<UUID, Boolean> lastInAir = new HashMap<>();
+    private Map<UUID, Boolean> lastOnGround = new HashMap<>();
+    
     public GroundSpoofA(){
         super("GroundSpoof", "A", false);
     }
@@ -36,11 +39,15 @@ public class GroundSpoofA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
-            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead())
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead()){
+                System.out.println("Exempt noob");
                 return;
+            }
 
-            if (player.isInsideVehicle()) return;
-
+            if (player.isInsideVehicle()){
+                System.out.println("Inside vehicle");
+                return;
+            }
 
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
@@ -91,6 +98,30 @@ public class GroundSpoofA extends Check {
                     }
                 }
             } else if (buffer > 0) buffer--;
+
+            boolean inAir = true;
+
+            boolean lastInAir = this.lastInAir.getOrDefault(player.getUniqueId(), false);
+
+            for (Block block : PlayerUtil.getNearbyBlocksConfigurable(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() -1, player.getLocation().getZ()), 1, 0, 1)) {
+                if (block.getType() != Material.AIR) {
+                    inAir = false;
+                    break;
+                }
+            }
+
+            boolean lastOnGround = this.lastOnGround.getOrDefault(player.getUniqueId(), true);
+
+            //check if they have packet on ground, are in the air, and were last in the air.
+            if (packet.isOnGround() && lastOnGround && inAir && lastInAir) {
+                String suspectedHack = "NoFall";
+
+                fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
+
+            }
+
+            this.lastOnGround.put(player.getUniqueId(), packet.isOnGround());
+            this.lastInAir.put(player.getUniqueId(), inAir);
         }
     }
 }
