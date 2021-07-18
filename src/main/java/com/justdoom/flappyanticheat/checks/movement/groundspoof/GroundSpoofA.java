@@ -40,19 +40,17 @@ public class GroundSpoofA extends Check {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
 
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead()){
-                System.out.println("Exempt noob");
                 return;
             }
 
             if (player.isInsideVehicle()){
-                System.out.println("Inside vehicle");
                 return;
             }
 
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
 
-            if (client != server && !PlayerUtil.isOnClimbable(player)) {
+            if (client && !server && !PlayerUtil.isOnClimbable(player)) {
                 if (++buffer > 1) {
 
                     boolean boat = false;
@@ -97,7 +95,7 @@ public class GroundSpoofA extends Check {
                         fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
                     }
                 }
-            } else if (buffer > 0) buffer--;
+            } else if (buffer > 0) buffer-=0.5;
 
             boolean inAir = true;
 
