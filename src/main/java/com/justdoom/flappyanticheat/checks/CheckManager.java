@@ -17,6 +17,7 @@ import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceA;
 import com.justdoom.flappyanticheat.checks.player.blockplace.BlockPlaceB;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
 import com.justdoom.flappyanticheat.checks.player.timer.TimerA;
+import com.justdoom.flappyanticheat.checks.player.timer.TimerB;
 import io.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 
@@ -29,7 +30,7 @@ public class CheckManager {
     }
 
     public void loadChecks(){
-        PacketEvents.get().registerListener(new GroundSpoofA());
+        Bukkit.getPluginManager().registerEvents(new GroundSpoofA(), plugin);
         PacketEvents.get().registerListener(new FlyA());
         PacketEvents.get().registerListener(new FlyB());
         PacketEvents.get().registerListener(new JumpA());
@@ -41,6 +42,7 @@ public class CheckManager {
         PacketEvents.get().registerListener(new SkinBlinkerA());
         PacketEvents.get().registerListener(new AntiCactusA());
         PacketEvents.get().registerListener(new TimerA());
+        PacketEvents.get().registerListener(new TimerB());
         PacketEvents.get().registerListener(new ForcefieldA());
         PacketEvents.get().registerListener(new ReachA());
 
