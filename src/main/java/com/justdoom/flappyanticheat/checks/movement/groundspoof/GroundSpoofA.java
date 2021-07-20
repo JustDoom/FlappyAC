@@ -29,50 +29,102 @@ public class GroundSpoofA extends Check implements Listener {
 
     private int buffer = 0;
 
-    private boolean isLastOnGround;
-
     public GroundSpoofA() {
         super("GroundSpoof", "A", false);
     }
 
-    @EventHandler
-    public void check(PlayerMoveEvent e) {
+    private Map<UUID, Boolean> lastInAir = new HashMap<>();
+    private Map<UUID, Boolean> lastOnGround = new HashMap<>();
+
+    @Override
+    public void onPacketPlayReceive(PacketPlayReceiveEvent e) {
         Player player = e.getPlayer();
 
-        if (player.getLocation().getY() < 1
-                || player.isDead() 
-                || player.isInsideVehicle()) {
-            return;
+        if (e.getPacketId() == PacketType.Play.Client.POSITION || e.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
+
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
+
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()) || player.getLocation().getY() < 1 || player.isDead()){
+                return;
+            }
+
+            if (player.isInsideVehicle()){
+                return;
+            }
+
+            double groundY = 0.015625;
+            boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
+
+            if (client && !server && !PlayerUtil.isOnClimbable(player)) {
+                if (++buffer > 1) {
+
+                    boolean boat = false;
+                    boolean shulker = false;
+                    boolean pistonHead = false;
+
+                    AtomicReference<List<Entity>> nearby = new AtomicReference<>();
+                    sync(() -> nearby.set(player.getNearbyEntities(1.5, 10, 1.5)));
+
+                    for (Entity entity : nearby.get()) {
+                        if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
+                            boat = true;
+                            break;
+                        }
+
+                        if (entity.getType() == EntityType.SHULKER && player.getLocation().getY() > entity.getBoundingBox().getMinY()) {
+                            shulker = true;
+                            break;
+                        }
+                    }
+
+                    for (Block block : PlayerUtil.getNearbyBlocks(new Location(player.getWorld(), packet.getX(), packet.getY(), packet.getZ()), 2)) {
+
+                        if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
+                            shulker = true;
+                            break;
+                        }
+
+                        if (block.getType() == Material.PISTON_HEAD) {
+                            pistonHead = true;
+                            break;
+                        }
+                    }
+
+                    if (!boat && !shulker && !pistonHead) {
+                        String suspectedHack;
+                        if(packet.getY() % groundY == 0.0){
+                            suspectedHack = "Criticals/Anti Hunger";
+                        } else {
+                            suspectedHack = "NoFall";
+                        }
+                        fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
+                    }
+                }
+            } else if (buffer > 0) buffer-=0.5;
+
+            boolean inAir = true;
+
+            boolean lastInAir = this.lastInAir.getOrDefault(player.getUniqueId(), false);
+
+            for (Block block : PlayerUtil.getNearbyBlocksConfigurable(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() -1, player.getLocation().getZ()), 1, 0, 1)) {
+                if (block.getType() != Material.AIR) {
+                    inAir = false;
+                    break;
+                }
+            }
+
+            boolean lastOnGround = this.lastOnGround.getOrDefault(player.getUniqueId(), true);
+
+            //check if they have packet on ground, are in the air, and were last in the air.
+            if (packet.isOnGround() && lastOnGround && inAir && lastInAir) {
+                String suspectedHack = "NoFall";
+
+                fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
+
+            }
+
+            this.lastOnGround.put(player.getUniqueId(), packet.isOnGround());
+            this.lastInAir.put(player.getUniqueId(), inAir);
         }
-
-        double groundY = 0.015625;
-        boolean client = player.isOnGround(), server = e.getTo().getY() % groundY < 0.0001;
-
-        if (client && !server && !e.getFrom().getBlock().getType().name().contains("LADDER")
-                && !e.getTo().getBlock().getType().name().contains("LADDER")
-                && !e.getFrom().getBlock().getType().name().contains("VINE")
-                && !e.getTo().getBlock().getType().name().contains("VINE")) {
-
-            boolean boat = false;
-            boolean shulker = false;
-            boolean pistonHead = false;
-            // TODO Implement better pistons
-            for (Entity entity : player.getNearbyEntities(1.5, 2, 1.5)) {
-                if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
-                    boat = true;
-                    break;
-                }
-
-                if (entity.getType() == EntityType.SHULKER) {
-                    shulker = true;
-                    break;
-                }
-            }
-
-            if (!boat && !shulker && !pistonHead && ++buffer > 1) {
-                Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("mod=" + e.getTo().getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server, player));
-            }
-        } else if (buffer > 0)
-            buffer -= 0.5;
     }
 }

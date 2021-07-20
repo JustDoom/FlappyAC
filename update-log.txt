@@ -110,6 +110,10 @@ Added Fly B
 Fixed a groundspoof A bypass
 Fixed issue with 1.17.1 servers
 
+1.7.3 BETA
+Added Timer B
+Added Fly B to config - oops
+
 
 Todo
 - More checks
