@@ -102,8 +102,6 @@ Thanks to Sprit for the Jump and Fly check
 
 
 
-
-
 1.0.0
 
 
@@ -128,7 +126,7 @@ Todo
 
 Full release goals
 - More checks
-- Rewrite the base and some checks (make new branch)
+- Rewrite the base and some checks (make new branch) - doing
 - change flag to output config option to output to console or something
 - ViaVersion compat
 - Proper 1.8 - 1.17 support

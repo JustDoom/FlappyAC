@@ -2,6 +2,7 @@ package com.justdoom.flappyanticheat.packet;
 
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.NMSPacket;
+import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import lombok.Getter;
 
 @Getter
@@ -17,5 +18,13 @@ public class Packet {
 
     public boolean isPosition(){
         return packetId == PacketType.Play.Client.POSITION;
+    }
+
+    public boolean isLook(){
+        return packetId == PacketType.Play.Client.LOOK;
+    }
+
+    public boolean isPositionLook(){
+        return packetId == PacketType.Play.Client.POSITION_LOOK;
     }
 }

@@ -23,7 +23,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0-SNAPSHOT</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -39,6 +39,10 @@
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/versions/16/</exclude>
+                                        <exclude>com/cryptomorin/xseries/XBiome*</exclude>
+                                        <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
+                                        <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -46,11 +50,19 @@
                             <relocations>
                                 <relocation>
                                     <pattern>io.github.retrooper.packetevents</pattern>
-                                    <shadedPattern>io.github.retrooper.customplugin.packetevents</shadedPattern> <!--relocate packetevents package. choose something unique!-->
+                                    <shadedPattern>io.github.retrooper.flappyac.packetevents</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.spongepowered.configurate-yaml</pattern>
-                                    <shadedPattern>shade.org.spongepowered.configurate-yaml</shadedPattern> <!--relocate packetevents package. choose something unique!-->
+                                    <shadedPattern>shade.org.spongepowered.configurate-yaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.yaml.snakeyaml</pattern>
+                                    <shadedPattern>shade.org.yaml.snakeyaml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.cryptomorin.xseries</pattern>
+                                    <shadedPattern>com.imjustdoom.flappyanticheat.utils</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -61,8 +73,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -89,7 +101,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -108,6 +120,16 @@
             <artifactId>lombok</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.29</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cryptomorin</groupId>
+            <artifactId>XSeries</artifactId>
+            <version>8.3.0</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.util;
 
+import io.github.retrooper.packetevents.utils.boundingbox.BoundingBox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,7 +8,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
@@ -34,9 +34,15 @@ public final class PlayerUtil {
         return -1;
     }
 
-    public static boolean isInLiquid(Player player) {
-        if(player.isInWater() || player.getLocation().getBlock().getType() == Material.LAVA){
-            return true;
+    public boolean isInLiquid(final Player player) {
+        final double expand = 0.31;
+        final Location location = player.getLocation();
+        for (double x = -expand; x <= expand; x += expand) {
+            for (double z = -expand; z <= expand; z += expand) {
+                if (player.getWorld().getBlockAt(location.clone().add(x, -0.5001, z)).isLiquid()) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -68,6 +74,8 @@ public final class PlayerUtil {
 
     public static Set<Block> getNearbyBlocks(Location location, int radius) {
         Set<Block> blocks = new HashSet<>();
+
+        location = location.clone();
 
         for(int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
             for(int y = location.getBlockY() - radius; y <= location.getBlockY() + radius; y++) {

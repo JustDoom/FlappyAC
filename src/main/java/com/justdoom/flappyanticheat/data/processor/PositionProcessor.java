@@ -14,24 +14,42 @@ public class PositionProcessor {
 
     private boolean onGround, lastOnGround, inAir;
 
-    private double x, y, z, lastX, lastY, lastZ;
+    private double x, y, z, deltaX, deltaY, deltaZ, lastX, lastY, lastZ, fallHeight, lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight;
 
     public PositionProcessor(FlappyPlayer player){
         this.player = player;
     }
 
     public void handle(double x, double y, double z, boolean onGround){
-        this.lastX = this.x;
-        this.lastY = this.y;
-        this.lastZ = this.z;
+        lastX = this.x;
+        lastY = this.y;
+        lastZ = this.z;
 
-        this.lastOnGround = this.onGround;
+        lastOnGround = this.onGround;
 
         this.x = x;
         this.y = y;
         this.z = z;
 
         this.onGround = onGround;
+
+        deltaX = this.x - lastX;
+        deltaY = this.y - lastY;
+        deltaZ = this.z - lastZ;
+
+        playerLastHeight = playerHeight;
+        playerHeight = player.getPlayer().getFallDistance();
+
+        lastLastFallHeight = lastFallHeight;
+        lastFallHeight = fallHeight;
+
+        if (deltaY < 0.0){
+            fallHeight -= deltaY;
+        }
+
+        if (lastOnGround){
+            fallHeight = 0.0;
+        }
 
         for (Block block : PlayerUtil.getNearbyBlocksConfigurable(new Location(player.getPlayer().getWorld(), player.getPositionProcessor().getX(), player.getPositionProcessor().getY() - 1, player.getPositionProcessor().getZ()), 1, 0, 1)) {
             if (block.getType() != Material.AIR) {

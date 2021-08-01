@@ -1,10 +1,12 @@
 package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
+import com.justdoom.flappyanticheat.util.MathsUtil;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,14 +34,16 @@ public class GroundSpoofA extends Check {
     @Override
     public void handle(Packet packet) {
 
-        if(player.getExemptManager().isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+        if(!packet.isPosition()
+                && !packet.isLook()
+                && !packet.isPositionLook()
+                || player.getExemptManager().isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
         double groundY = 0.015625;
-        boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;
+        boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;;
 
         if (client != server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
             if (++buffer > 1) {
-
                 boolean boat = false;
                 boolean shulker = false;
                 boolean pistonHead = false;
@@ -60,21 +65,23 @@ public class GroundSpoofA extends Check {
 
                 for (Block block : PlayerUtil.getNearbyBlocks(new Location(player.getPlayer().getWorld(), player.getPositionProcessor().getX(), player.getPositionProcessor().getY(), player.getPositionProcessor().getZ()), 2)) {
 
-                    if (Tag.SHULKER_BOXES.isTagged(block.getType())) {
+                    //TODO: exempt all types of shulker boxes
+                    if(block.getType() == XMaterial.SHULKER_BOX.parseMaterial()){
                         shulker = true;
                         break;
                     }
 
-                    if (block.getType() == Material.PISTON_HEAD) {
+                    if (block.getType() == XMaterial.PISTON_HEAD.parseMaterial()) {
                         pistonHead = true;
                         break;
                     }
                 }
 
                 if (!boat && !shulker && !pistonHead) {
+
                     fail("Server: " + server + " Client: " + client);
                 }
             }
-        } else if (buffer > 0) buffer--;
+        } else if (buffer > 0) buffer-=0.5;
     }
 }

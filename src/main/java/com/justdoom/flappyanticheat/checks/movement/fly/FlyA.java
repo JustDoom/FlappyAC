@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.checks.movement.fly;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@CheckInfo(check = "Fly", checkType = "A", experimental = false)
 public class FlyA extends Check {
 
     private double stableY;

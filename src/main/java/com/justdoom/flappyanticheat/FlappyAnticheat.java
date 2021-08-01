@@ -16,7 +16,9 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -67,7 +69,7 @@ public final class FlappyAnticheat extends JavaPlugin {
         }
 
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Path.of(getDataFolder() + "/config.yml")) // Set where we will load and save to
+                .path(Paths.get(getDataFolder() + "/config.yml")) // Set where we will load and save to
                 .build();
 
         try {
