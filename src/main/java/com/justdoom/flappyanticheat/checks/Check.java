@@ -7,6 +7,7 @@ import com.justdoom.flappyanticheat.packet.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -14,13 +15,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 
 import java.util.Arrays;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 @Setter
 public abstract class Check {
 
-    public String check, checkType;
+    public String check, checkType, description;
     public boolean experimental;
 
     public FlappyPlayer player;
@@ -35,6 +37,7 @@ public abstract class Check {
         this.check = checkData.check();
         this.checkType = checkData.checkType();
         this.experimental = checkData.experimental();
+        this.description = checkData.description();
     }
 
     public abstract void handle(final Packet packet);
@@ -47,14 +50,19 @@ public abstract class Check {
         return player.getExemptManager().isExempt(exemptTypes);
     }
 
-    public void fail(String ... info){
+    public void fail(String info){
 
-        String msg = "You are hacking " + check + checkType;
+        String msg = description + "\nYou are hacking " + check + " " + checkType;
 
         TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&', msg));
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', Arrays.toString(info))).create()));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', info)).create()));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
-        player.getPlayer().spigot().sendMessage(component);
+        Executors.newSingleThreadExecutor().execute(() -> Bukkit.getOnlinePlayers()
+                .stream()
+                .filter(send -> send.hasPermission("flappyac.alerts"))
+                .forEach(send -> send.spigot().sendMessage(component)));
     }
 
     public void sync(Runnable runnable) {

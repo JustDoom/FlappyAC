@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.checks.movement.groundspoof;
+package com.justdoom.flappyanticheat.checks.movement.nofall;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.checks.Check;
@@ -6,28 +6,21 @@ import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
-import com.justdoom.flappyanticheat.util.MathsUtil;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
-@CheckInfo(check = "GroundSpoof", checkType = "A", experimental = false)
-public class GroundSpoofA extends Check {
+@CheckInfo(check = "NoFall", checkType = "A", experimental = false, description = "Checks if the player says it's on the ground but isn't")
+public class NoFallA extends Check {
 
     private int buffer = 0;
 
-    public GroundSpoofA(FlappyPlayer player) {
+    public NoFallA(FlappyPlayer player) {
         super(player);
     }
 
@@ -37,16 +30,14 @@ public class GroundSpoofA extends Check {
         if(!packet.isPosition()
                 && !packet.isLook()
                 && !packet.isPositionLook()
-                || player.getExemptManager().isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
         double groundY = 0.015625;
         boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;;
 
-        if (client != server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
+        if (!client && server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
             if (++buffer > 1) {
-                boolean boat = false;
-                boolean shulker = false;
-                boolean pistonHead = false;
+                boolean boat = false, shulker = false, pistonHead = false;
 
                 AtomicReference<List<Entity>> nearby = new AtomicReference<>();
                 sync(() -> nearby.set(player.getPlayer().getNearbyEntities(1.5, 10, 1.5)));

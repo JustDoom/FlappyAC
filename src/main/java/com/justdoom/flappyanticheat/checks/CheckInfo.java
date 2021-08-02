@@ -11,4 +11,5 @@ public @interface CheckInfo {
     String check();
     String checkType();
     boolean experimental();
+    String description();
 }

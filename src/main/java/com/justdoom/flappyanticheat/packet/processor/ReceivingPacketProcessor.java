@@ -13,6 +13,8 @@ public class ReceivingPacketProcessor {
             player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround());
         }
 
+        if(player.getPlayer().hasPermission("flappyac.bypass")) return;
+
         player.getChecks().forEach(check -> check.handle(packet));
     }
 }

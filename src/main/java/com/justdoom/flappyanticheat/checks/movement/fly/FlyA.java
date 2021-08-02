@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@CheckInfo(check = "Fly", checkType = "A", experimental = false)
+@CheckInfo(check = "Fly", checkType = "A", experimental = false, description = "Fly")
 public class FlyA extends Check {
 
     private double stableY;
@@ -29,11 +29,7 @@ public class FlyA extends Check {
 
     public void handle(final Packet packet) {
 
-        if (!packet.isPosition()) {
-            return;
-        }
-
-        if (isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
+        if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
 
         if (player.getPositionProcessor().getY() == player.getPositionProcessor().getLastY() && player.getPositionProcessor().isInAir()) {
             this.stableY++;
@@ -41,6 +37,6 @@ public class FlyA extends Check {
             this.stableY = 0.0D;
         }
         if (this.stableY > 2.0D)
-            fail();
+            fail("");
     }
 }

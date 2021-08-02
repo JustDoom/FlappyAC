@@ -4,3 +4,8 @@ main: com.justdoom.flappyanticheat.FlappyAnticheat
 api-version: 1.13
 load: POSTWORLD
 permissions:
+  flappyac.bypass:
+    description: Allows bypassing
+
+  flappyac.alerts:
+    description: Allows viewing of alerts
