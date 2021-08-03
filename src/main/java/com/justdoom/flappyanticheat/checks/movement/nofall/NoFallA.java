@@ -35,7 +35,7 @@ public class NoFallA extends Check {
         double groundY = 0.015625;
         boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;;
 
-        if (!client && server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
+        if (client && !server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
             if (++buffer > 1) {
                 boolean boat = false, shulker = false, pistonHead = false;
 
@@ -70,7 +70,7 @@ public class NoFallA extends Check {
 
                 if (!boat && !shulker && !pistonHead) {
 
-                    fail("Server: " + server + " Client: " + client);
+                    fail("");
                 }
             }
         } else if (buffer > 0) buffer-=0.5;

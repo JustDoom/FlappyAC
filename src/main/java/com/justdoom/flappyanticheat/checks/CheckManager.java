@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.checks;
 
+import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
@@ -12,7 +13,8 @@ public class CheckManager {
 
     public static final Class<?>[] CHECKS = new Class[]{
             NoFallA.class,
-            FlyA.class
+            FlyA.class,
+            CrititcalsA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

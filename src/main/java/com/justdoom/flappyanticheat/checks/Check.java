@@ -52,11 +52,11 @@ public abstract class Check {
 
     public void fail(String info){
 
-        String msg = description + "\nYou are hacking " + check + " " + checkType;
+        String msg = "You are hacking " + check + " " + checkType;
 
         TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&', msg));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', info)).create()));
+                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', description + "\n" + info)).create()));
         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
         Executors.newSingleThreadExecutor().execute(() -> Bukkit.getOnlinePlayers()
