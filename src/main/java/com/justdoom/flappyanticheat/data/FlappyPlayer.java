@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.data;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import com.justdoom.flappyanticheat.data.processor.PositionProcessor;
+import com.justdoom.flappyanticheat.data.processor.SettingProcessor;
 import com.justdoom.flappyanticheat.exempt.ExemptManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class FlappyPlayer {
     private List<Check> checks = CheckManager.loadChecks(this);
 
     private PositionProcessor positionProcessor;
+    private SettingProcessor settingProcessor;
     private ExemptManager exemptManager;
 
     public FlappyPlayer(Player player){
@@ -27,6 +29,7 @@ public class FlappyPlayer {
         this.player = player;
 
         this.positionProcessor = new PositionProcessor(this);
+        this.settingProcessor = new SettingProcessor(this);
         this.exemptManager = new ExemptManager(this);
     }
 }
