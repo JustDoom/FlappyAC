@@ -30,4 +30,8 @@ public class Packet {
     public boolean isSetting() {
         return packetId == PacketType.Play.Client.SETTINGS;
     }
+
+    public boolean isBlockPlace() {
+        return packetId == PacketType.Play.Client.BLOCK_PLACE;
+    }
 }

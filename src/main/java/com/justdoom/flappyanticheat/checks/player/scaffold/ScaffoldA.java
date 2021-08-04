@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
+import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -23,7 +24,11 @@ public class ScaffoldA extends Check {
 
     @Override
     public void handle(Packet packet) {
-        /**Block block = new Block();
+
+        if(!packet.isBlockPlace()
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+
+        Block block = player.getActionProcessor().getLastBlockPlaced();
         boolean placedOnAir = true;
 
         List<Material> blockFace = new ArrayList<Material>() {{
@@ -42,7 +47,7 @@ public class ScaffoldA extends Check {
             }
         }
         if (placedOnAir) {
-            Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("faces=" + blockFace));
-        }**/
+            Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.INSTANCE.getPlugin(), () -> fail("faces=" + blockFace));
+        }
     }
 }
