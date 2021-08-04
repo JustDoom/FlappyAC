@@ -24,9 +24,9 @@ public abstract class Check {
 
     public String check, checkType, description;
     public boolean experimental;
+    private int maxVl, vl;
 
     public FlappyPlayer player;
-
     public CheckInfo checkData;
 
     public Check(FlappyPlayer player) {
@@ -52,7 +52,9 @@ public abstract class Check {
 
     public void fail(String info){
 
-        String msg = "You are hacking " + check + " " + checkType;
+        vl++;
+
+        String msg = "You are hacking " + check + " " + checkType + " || " + vl + "/" + maxVl;
 
         TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&', msg));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
