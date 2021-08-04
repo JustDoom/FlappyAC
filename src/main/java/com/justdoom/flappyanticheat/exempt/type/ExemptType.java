@@ -1,6 +1,5 @@
 package com.justdoom.flappyanticheat.exempt.type;
 
-import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;

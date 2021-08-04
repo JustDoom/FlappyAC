@@ -1,14 +1,13 @@
 package com.justdoom.flappyanticheat.data;
 
 import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.checks.CheckManager;
+import com.justdoom.flappyanticheat.manager.CheckManager;
 import com.justdoom.flappyanticheat.data.processor.ActionProcessor;
 import com.justdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.justdoom.flappyanticheat.data.processor.SettingProcessor;
 import com.justdoom.flappyanticheat.exempt.ExemptManager;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.List;

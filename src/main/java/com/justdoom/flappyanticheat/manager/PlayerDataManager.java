@@ -1,10 +1,10 @@
-package com.justdoom.flappyanticheat.data;
+package com.justdoom.flappyanticheat.manager;
 
+import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerDataManager {

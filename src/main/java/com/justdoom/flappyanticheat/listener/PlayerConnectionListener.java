@@ -1,7 +1,6 @@
 package com.justdoom.flappyanticheat.listener;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

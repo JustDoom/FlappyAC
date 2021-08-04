@@ -1,12 +1,12 @@
-package com.justdoom.flappyanticheat.checks;
+package com.justdoom.flappyanticheat.manager;
 
+import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
 import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldA;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
-import javafx.scene.control.Skin;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -15,11 +15,16 @@ import java.util.List;
 public class CheckManager {
 
     public static final Class<?>[] CHECKS = new Class[]{
+            //Movement
             NoFallA.class,
             FlyA.class,
+            ScaffoldA.class,
+
+            //Combat
             CrititcalsA.class,
-            SkinBlinkerA.class,
-            ScaffoldA.class
+
+            //Player
+            SkinBlinkerA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

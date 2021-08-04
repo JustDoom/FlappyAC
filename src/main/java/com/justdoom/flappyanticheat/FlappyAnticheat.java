@@ -1,23 +1,18 @@
 package com.justdoom.flappyanticheat;
 
-import com.justdoom.flappyanticheat.checks.CheckManager;
-import com.justdoom.flappyanticheat.data.PlayerDataManager;
+import com.justdoom.flappyanticheat.manager.CheckManager;
+import com.justdoom.flappyanticheat.manager.PlayerDataManager;
 import com.justdoom.flappyanticheat.listener.NetworkListener;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import com.justdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.settings.PacketEventsSettings;
-import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

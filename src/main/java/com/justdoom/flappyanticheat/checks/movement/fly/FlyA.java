@@ -5,18 +5,6 @@ import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
-import com.justdoom.flappyanticheat.util.PlayerUtil;
-import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
-import io.github.retrooper.packetevents.packettype.PacketType;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @CheckInfo(check = "Fly", checkType = "A", experimental = false, description = "Fly")
 public class FlyA extends Check {
