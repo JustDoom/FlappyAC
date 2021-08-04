@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
+import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldA;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import javafx.scene.control.Skin;
@@ -17,7 +18,8 @@ public class CheckManager {
             NoFallA.class,
             FlyA.class,
             CrititcalsA.class,
-            SkinBlinkerA.class
+            SkinBlinkerA.class,
+            ScaffoldA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

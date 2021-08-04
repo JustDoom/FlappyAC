@@ -10,11 +10,11 @@ public class NetworkListener extends PacketListenerAbstract {
 
     @Override
     public void onPacketPlayReceive(final PacketPlayReceiveEvent event){
-        FlappyPlayer player = FlappyAnticheat.getInstance().getDataManager().getData(event.getPlayer());
+        FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(event.getPlayer());
 
         if(player == null) return;
 
-        FlappyAnticheat.getInstance().getPacketExecutor().execute(() -> FlappyAnticheat.getInstance().getReceivingPacketProcessor()
+        FlappyAnticheat.INSTANCE.getPacketExecutor().execute(() -> FlappyAnticheat.INSTANCE.getReceivingPacketProcessor()
                 .handle(player, new Packet(event.getNMSPacket(), event.getPacketId())));
     }
 

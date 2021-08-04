@@ -67,8 +67,8 @@ public abstract class Check {
 
     public void sync(Runnable runnable) {
         AtomicBoolean waiting = new AtomicBoolean(true);
-        if (FlappyAnticheat.getInstance().isEnabled()) {
-            Bukkit.getScheduler().runTask(FlappyAnticheat.getInstance(), () -> {
+        if (FlappyAnticheat.INSTANCE.getPlugin().isEnabled()) {
+            Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> {
                 runnable.run();
                 waiting.set(false);
             });

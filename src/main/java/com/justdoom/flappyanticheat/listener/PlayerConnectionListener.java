@@ -8,8 +8,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerConnectionListener implements Listener {
 
+    //Use async login?
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
-        FlappyAnticheat.getInstance().getDataManager().addPlayer(event.getPlayer());
+        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
     }
 }

@@ -1,6 +1,6 @@
 name: FlappyAnticheat
 version: ${project.version}
-main: com.justdoom.flappyanticheat.FlappyAnticheat
+main: com.justdoom.flappyanticheat.FlappyAnticheatPlugin
 api-version: 1.13
 load: POSTWORLD
 permissions:

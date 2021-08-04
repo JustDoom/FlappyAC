@@ -23,17 +23,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Getter
-public final class FlappyAnticheat extends JavaPlugin {
+public enum FlappyAnticheat {
+    INSTANCE;
 
-    private static FlappyAnticheat instance;
-
-    public static FlappyAnticheat getInstance() {
-        return instance;
-    }
-
-    public FlappyAnticheat(){
-        instance = this;
-    }
+    private FlappyAnticheatPlugin plugin;
 
     private PlayerDataManager dataManager;
 
@@ -42,39 +35,26 @@ public final class FlappyAnticheat extends JavaPlugin {
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
 
-    @Override
-    public void onLoad(){
-        //Load PacketEvents
-        PacketEvents.create(this);
-        PacketEventsSettings settings = PacketEvents.get().getSettings();
-        settings
-                .fallbackServerVersion(ServerVersion.v_1_17_1)
-                .compatInjector(false)
-                .checkForUpdates(false)
-                .bStats(true);
-        PacketEvents.get().loadAsyncNewThread();
-    }
-
-    @Override
-    public void onEnable() {
+    public void start(final FlappyAnticheatPlugin plugin) {
+        this.plugin = plugin;
 
         try {
-            if(!FileUtil.doesFileExist(getDataFolder().getPath()))
-                FileUtil.createDirectory(getDataFolder().getPath());
+            if(!FileUtil.doesFileExist(plugin.getDataFolder().getPath()))
+                FileUtil.createDirectory(plugin.getDataFolder().getPath());
 
-            if(!FileUtil.doesFileExist(getDataFolder() + "/config.yml"))
-                FileUtil.addConfig(getDataFolder() + "/config.yml");
+            if(!FileUtil.doesFileExist(plugin.getDataFolder() + "/config.yml"))
+                FileUtil.addConfig(plugin.getDataFolder() + "/config.yml");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Paths.get(getDataFolder() + "/config.yml")) // Set where we will load and save to
+                .path(Paths.get(plugin.getDataFolder() + "/config.yml")) // Set where we will load and save to
                 .build();
 
         try {
             configFile = loader.load();
-            getLogger().info("Config has been loaded");
+            plugin.getLogger().info("Config has been loaded");
         } catch (IOException e) {
             System.err.println("An error occurred while loading this configuration: " + e.getMessage());
             if (e.getCause() != null) {
@@ -87,16 +67,11 @@ public final class FlappyAnticheat extends JavaPlugin {
         dataManager = new PlayerDataManager();
         CheckManager.setup();
 
-        Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
 
         PacketEvents.get().registerListener(new NetworkListener());
-
-        PacketEvents.get().init();
     }
 
-    @Override
-    public void onDisable() {
-        //Disable PacketEvents
-        PacketEvents.get().terminate();
+    public void stop(final FlappyAnticheatPlugin plugin) {
     }
 }
