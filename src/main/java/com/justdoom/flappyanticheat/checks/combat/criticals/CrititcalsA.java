@@ -7,7 +7,7 @@ import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
 
-@CheckInfo(check = "Criticals", checkType = "A", experimental = false, description = "Checks if the player says it's on the ground but isn't")
+@CheckInfo(check = "Criticals", checkType = "A", experimental = false, description = "Checks if the player says it's falling but isn't")
 public class CrititcalsA extends Check {
 
     private int buffer = 0;
