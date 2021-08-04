@@ -70,7 +70,7 @@ public class NoFallA extends Check {
 
                 if (!boat && !shulker && !pistonHead) {
 
-                    fail("");
+                    fail("No Info");
                 }
             }
         } else if (buffer > 0) buffer-=0.5;

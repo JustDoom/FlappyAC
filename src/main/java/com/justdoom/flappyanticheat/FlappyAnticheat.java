@@ -30,7 +30,7 @@ public enum FlappyAnticheat {
 
     private PlayerDataManager dataManager;
 
-    public CommentedConfigurationNode configFile;
+    private CommentedConfigurationNode configFile;
 
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
