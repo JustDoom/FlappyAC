@@ -12,9 +12,9 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
@@ -23,12 +23,11 @@ public abstract class Check {
 
     public String check, checkType, description;
     public boolean experimental;
-    private int maxVl, vl;
-
     public FlappyPlayer player;
     public CheckInfo checkData;
+    private int maxVl, vl;
 
-    public Check(FlappyPlayer player) {
+    public Check(final FlappyPlayer player) {
         this.player = player;
 
         this.checkData = getClass().getAnnotation(CheckInfo.class);
@@ -51,44 +50,50 @@ public abstract class Check {
         return player.getExemptManager().isExempt(exemptTypes);
     }
 
-    public void fail(String info){
-
+    public void fail(final String info) {
         vl++;
 
-        TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
-                FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix")
-                + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
-                .replace("{player}", player.getPlayer().getName())
-                .replace("{check}", check + checkType))
-                .replace("{vl}", String.valueOf(vl))
-                .replace("{maxvl}", String.valueOf(maxVl)));
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString())).create()));
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
+        FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
+            final TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
+                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix")
+                            + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
+                            .replace("{player}", player.getPlayer().getName())
+                            .replace("{check}", check + checkType))
+                    .replace("{vl}", String.valueOf(vl))
+                    .replace("{maxvl}", String.valueOf(maxVl)));
 
-        Executors.newSingleThreadExecutor().execute(() -> Bukkit.getOnlinePlayers()
-                .stream()
-                .filter(send -> send.hasPermission("flappyac.alerts"))
-                .forEach(send -> send.spigot().sendMessage(component)));
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',
+                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString())).create()));
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
-        if(vl >= maxVl){
+
+            for (final Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("flappyac.alerts")) {
+                    player.spigot().sendMessage(component);
+                }
+            }
+        });
+
+        if (vl >= maxVl) {
             //TODO: punish
         }
     }
 
-    public void loadConfigOptions(){
-        ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
+    public void loadConfigOptions() {
+        final ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
         maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
     }
 
-    public void sync(Runnable runnable) {
-        AtomicBoolean waiting = new AtomicBoolean(true);
+    public void sync(final Runnable runnable) {
+        final AtomicBoolean waiting = new AtomicBoolean(true);
+
         if (FlappyAnticheat.INSTANCE.getPlugin().isEnabled()) {
             Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> {
                 runnable.run();
                 waiting.set(false);
             });
         }
+
         while (waiting.get()) {
         }
     }

@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.packet.processor;
 
+import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
@@ -20,8 +21,10 @@ public class ReceivingPacketProcessor {
             player.getSettingProcessor().handle(wrapper);
         }
 
-        if(player.getPlayer().hasPermission("flappyac.bypass")) return;
+        if (player.getPlayer().hasPermission("flappyac.bypass")) return;
 
-        player.getChecks().forEach(check -> check.handle(packet));
+        for (final Check check : player.getChecks()) {
+            check.handle(packet);
+        }
     }
 }
