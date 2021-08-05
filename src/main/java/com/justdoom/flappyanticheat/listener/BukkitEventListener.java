@@ -9,9 +9,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BukkitEventListener implements Listener {
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event){
-        FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(event.getPlayer());
+    public void onBlockPlace(final BlockPlaceEvent event) {
+        final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(event.getPlayer());
 
-        if(player != null) player.getActionProcessor().handleBlockPlace(event.getBlockPlaced());
+        if (player != null) player.getActionProcessor().handleBlockPlace(event.getBlockPlaced());
     }
 }
