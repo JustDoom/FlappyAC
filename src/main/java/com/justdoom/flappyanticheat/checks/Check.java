@@ -74,7 +74,7 @@ public abstract class Check {
 
     public void loadConfigOptions(){
         ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
-        maxVl = config.node("checks." + check.toLowerCase() + "." + checkType.toLowerCase() + ".punish=vl").getInt();
+        maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
     }
 
     public void sync(Runnable runnable) {

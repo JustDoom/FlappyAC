@@ -16,14 +16,15 @@ import java.util.List;
 @Setter
 public class FlappyPlayer {
 
-    private Player player;
+    private final Player player;
 
-    private List<Check> checks = CheckManager.loadChecks(this);
+    private final long joinTime = System.currentTimeMillis();
+    private final List<Check> checks = CheckManager.loadChecks(this);
 
-    private PositionProcessor positionProcessor;
-    private SettingProcessor settingProcessor;
-    private ActionProcessor actionProcessor;
-    private ExemptManager exemptManager;
+    private final PositionProcessor positionProcessor;
+    private final SettingProcessor settingProcessor;
+    private final ActionProcessor actionProcessor;
+    private final ExemptManager exemptManager;
 
     public FlappyPlayer(Player player){
 

@@ -30,7 +30,7 @@ public class NoFallA extends Check {
         if(!packet.isPosition()
                 && !packet.isLook()
                 && !packet.isPositionLook()
-                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)) return;
 
         double groundY = 0.015625;
         boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;;

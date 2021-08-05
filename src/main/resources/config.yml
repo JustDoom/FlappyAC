@@ -1,11 +1,65 @@
+messages:
+
+
 checks:
+  #-------------------------
+  #       Movement
+  #-------------------------
   nofall:
     a:
       enabled: true
       min-tps: 17.0
       punishable: true
       broadcast-punishment: true
-      vl: 20
-      punish-vl: 200
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+  fly:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+
+  #-------------------------
+  #         Combat
+  #-------------------------
+  criticals:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+
+  #-------------------------
+  #         Player
+  #-------------------------
+  scaffold:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+  skinblinker:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
       punish-commands:
         - "kick {player} FlappyAC > Suspicious Activity"

@@ -12,6 +12,8 @@ public enum ExemptType {
 
     GAMEMODE(player -> player.getPlayer().getGameMode() == GameMode.SPECTATOR || player.getPlayer().getGameMode() == GameMode.CREATIVE),
 
+    JOINED(player -> System.currentTimeMillis() - player.getJoinTime() < 5000L),
+
     TPS(player -> PacketEvents.get().getServerUtils().getTPS() < 18.5);
 
     private final Function<FlappyPlayer, Boolean> exception;
