@@ -55,11 +55,15 @@ public abstract class Check {
 
         vl++;
 
-        String msg = "You are hacking " + check + " " + checkType + " || " + vl + "/" + maxVl;
-
-        TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&', msg));
+        TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
+                FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix")
+                + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
+                .replace("{player}", player.getPlayer().getName())
+                .replace("{check}", check + checkType))
+                .replace("{vl}", String.valueOf(vl))
+                .replace("{maxvl}", String.valueOf(maxVl)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', description + "\n" + info)).create()));
+                new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString())).create()));
         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
         Executors.newSingleThreadExecutor().execute(() -> Bukkit.getOnlinePlayers()
