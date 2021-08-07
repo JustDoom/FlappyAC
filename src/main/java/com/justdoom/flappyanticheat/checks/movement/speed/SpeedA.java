@@ -2,6 +2,7 @@ package com.justdoom.flappyanticheat.checks.movement.speed;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
 import org.bukkit.Bukkit;
@@ -19,11 +20,6 @@ import java.util.UUID;
 
 public class SpeedA extends Check implements Listener {
 
-    private Map<UUID, Double> buffer = new HashMap<>();
-    private Map<UUID, Boolean> lastOnGround = new HashMap<>();
-
-    private Map<UUID, Double> lastDist = new HashMap<>();
-
     public SpeedA() {
         super("Speed", "A", true);
     }
@@ -31,46 +27,46 @@ public class SpeedA extends Check implements Listener {
     @EventHandler
     public void onPacketPlayReceive(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer().getUniqueId());
+
+        //pos stuff
+        data.lastOnGround = data.onGround;
+        data.onGround = player.isOnGround();
+
+        data.lastDeltaXZ = data.deltaXZ;
+
+        double deltaX, deltaZ;
+        deltaX = event.getTo().getX() - event.getFrom().getX();
+        deltaZ = event.getTo().getZ() - event.getFrom().getZ();
+        data.deltaXZ = Math.hypot(deltaX, deltaZ);
+
+        //velocity stuff
+        double velocityX, velocityZ;
+        velocityX = player.getVelocity().getX();
+        velocityZ = player.getVelocity().getZ();
+        data.velocityXZ = Math.hypot(velocityX, velocityZ);
+
+        data.entities = player.getNearbyEntities(1.5, 10, 1.5);
 
         if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
 
         if(player.isGliding()) return;
 
-        Location to = new Location(player.getWorld(), event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
-        float friction = 0.91f;
 
-        double distX = to.getX() - player.getLocation().getX();
-        double distZ = to.getZ() - player.getLocation().getZ();
-        double dist = Math.sqrt((distX * distX) + (distZ * distZ));
-        double lastDist = this.lastDist.getOrDefault(uuid, 0.0);
+        //Thanks to sprit for this check
+        if (!data.onGround && !data.lastOnGround && !(data.entities.size() > 0)) {
+            double prediction = data.lastDeltaXZ * 0.91F + 0.0259F;
+            double accuracy = (data.deltaXZ - prediction);
 
-        this.lastDist.put(uuid, dist);
-        boolean onGround = player.isOnGround();
-        boolean lastOnGround = this.lastOnGround.getOrDefault(uuid, true);
-        this.lastOnGround.put(uuid, onGround);
-        double shiftedLastDist = lastDist * friction;
-        double equalness = dist - shiftedLastDist;
-
-        double buffer = this.buffer.getOrDefault(uuid, 0.0);
-
-        if (!PlayerUtil.isOnClimbable(player) && !onGround && !lastOnGround && !(player.getNearbyEntities(1.5, 10, 1.5).size() > 0) && ++buffer > 2) {
-
-            boolean pistonHead = false;
-
-            for (Block block : PlayerUtil.getNearbyBlocks(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()), 2)) {
-                if (block.getType() == Material.PISTON_HEAD) {
-                    pistonHead = true;
-                    break;
+            if (accuracy > 0.001 && data.deltaXZ > 0.1) {
+                if (Math.abs(data.velocityXZ - data.deltaXZ) > 0.04) {
+                    Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("exp=" + prediction + " got=" + data.deltaXZ + " vel=" +
+                            data.velocityXZ, player));
+                } else {
+                    Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("exp=" + prediction + " got=" + data.deltaXZ, player));
                 }
             }
-
-            if (equalness > 0.027 && !pistonHead) {
-                Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("e=" + equalness, player));
-            }
-        } else buffer = Math.max(buffer - 0.5, 0);
-
-        this.buffer.put(uuid, buffer);
+        }
     }
 }

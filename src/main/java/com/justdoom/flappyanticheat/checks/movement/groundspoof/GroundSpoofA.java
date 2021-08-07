@@ -2,12 +2,12 @@ package com.justdoom.flappyanticheat.checks.movement.groundspoof;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -15,9 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GroundSpoofA extends Check implements Listener {
+public class GroundSpoofA extends Check {
 
     private int buffer = 0;
 
@@ -52,6 +50,8 @@ public class GroundSpoofA extends Check implements Listener {
                 return;
             }
 
+            PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(player.getUniqueId());
+
             double groundY = 0.015625;
             boolean client = packet.isOnGround(), server = packet.getY() % groundY < 0.0001;
 
@@ -63,7 +63,7 @@ public class GroundSpoofA extends Check implements Listener {
                     boolean pistonHead = false;
 
                     AtomicReference<List<Entity>> nearby = new AtomicReference<>();
-                    sync(() -> nearby.set(player.getNearbyEntities(1.5, 10, 1.5)));
+                    sync(() -> nearby.set(data.entities));
 
                     for (Entity entity : nearby.get()) {
                         if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {

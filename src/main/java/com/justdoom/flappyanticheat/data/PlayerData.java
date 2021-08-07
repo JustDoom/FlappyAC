@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.data;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.CheckManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,6 +20,12 @@ public class PlayerData {
     public final List<BoundingBox> pastVictimBoxes;
     public LivingEntity vicitm;
     public int ping;
+
+    public boolean lastOnGround, onGround;
+
+    public List<Entity> entities;
+
+    public double lastDeltaXZ, deltaXZ, velocityXZ;
 
     public CheckManager checkManager;
 

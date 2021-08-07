@@ -30,7 +30,7 @@ public class CheckManager {
     }
 
     public void loadChecks(){
-        Bukkit.getPluginManager().registerEvents(new GroundSpoofA(), plugin);
+        PacketEvents.get().registerListener(new GroundSpoofA());
         PacketEvents.get().registerListener(new FlyA());
         PacketEvents.get().registerListener(new FlyB());
         PacketEvents.get().registerListener(new JumpA());
