@@ -114,6 +114,9 @@ Fixed issue with 1.17.1 servers
 Added Timer B
 Added Fly B to config - oops
 
+1.7.4 BETA
+Improved speed A - Thanks to sprit
+
 
 Todo
 - More checks
