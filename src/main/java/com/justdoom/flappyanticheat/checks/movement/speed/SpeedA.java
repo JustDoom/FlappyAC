@@ -56,10 +56,10 @@ public class SpeedA extends Check implements Listener {
 
         //Thanks to sprit for this check - modified it to fit with the base, its usually much better :/
         if (!data.onGround && !data.lastOnGround && !(data.entities.size() > 0)) {
-            double prediction = data.lastDeltaXZ * 0.91F + 0.0259F;
+            double prediction = data.lastDeltaXZ * 0.91F + 0.026F;
             double accuracy = (data.deltaXZ - prediction);
 
-            if (accuracy > 0.001 && data.deltaXZ > 0.1) {
+            if (accuracy > 0 && data.deltaXZ > 0.1) {
                 if (Math.abs(data.velocityXZ - data.deltaXZ) > 0.04) {
                     Bukkit.getScheduler().runTaskAsynchronously(FlappyAnticheat.getInstance(), () -> fail("exp=" + prediction + " got=" + data.deltaXZ + " vel=" +
                             data.velocityXZ, player));
