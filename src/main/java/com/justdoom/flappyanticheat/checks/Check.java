@@ -4,6 +4,8 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.event.PacketEvent;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
@@ -50,7 +52,7 @@ public abstract class Check {
         return data.getExemptManager().isExempt(exemptTypes);
     }
 
-    public void fail(final String info) {
+    public void fail(final String debug) {
         vl++;
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
@@ -63,7 +65,13 @@ public abstract class Check {
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',
-                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString())).create()));
+                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString()
+                            .replace("{description}", description)
+                            .replace("{debug}", debug)
+                            .replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
+                            .replace("{ping}", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
+                    )).create()));
+
             //TODO: make click command more secure
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
@@ -82,19 +90,5 @@ public abstract class Check {
     public void loadConfigOptions() {
         final ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
         maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
-    }
-
-    public void sync(final Runnable runnable) {
-        final AtomicBoolean waiting = new AtomicBoolean(true);
-
-        if (FlappyAnticheat.INSTANCE.getPlugin().isEnabled()) {
-            Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> {
-                runnable.run();
-                waiting.set(false);
-            });
-        }
-
-        while (waiting.get()) {
-        }
     }
 }
