@@ -23,12 +23,12 @@ public abstract class Check {
 
     public String check, checkType, description;
     public boolean experimental;
-    public FlappyPlayer player;
+    public FlappyPlayer data;
     public CheckInfo checkData;
     private int maxVl, vl;
 
-    public Check(final FlappyPlayer player) {
-        this.player = player;
+    public Check(final FlappyPlayer data) {
+        this.data = data;
 
         this.checkData = getClass().getAnnotation(CheckInfo.class);
 
@@ -43,11 +43,11 @@ public abstract class Check {
     public abstract void handle(final Packet packet);
 
     protected boolean isExempt(final ExemptType exemptType) {
-        return player.getExemptManager().isExempt(exemptType);
+        return data.getExemptManager().isExempt(exemptType);
     }
 
     protected boolean isExempt(final ExemptType... exemptTypes) {
-        return player.getExemptManager().isExempt(exemptTypes);
+        return data.getExemptManager().isExempt(exemptTypes);
     }
 
     public void fail(final String info) {
@@ -55,22 +55,22 @@ public abstract class Check {
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
             final TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
-                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix")
+                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix").getString()
                             + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
-                            .replace("{player}", player.getPlayer().getName())
+                            .replace("{player}", data.getPlayer().getName())
                             .replace("{check}", check + checkType))
                     .replace("{vl}", String.valueOf(vl))
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',
                     FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString())).create()));
+            //TODO: make click command more secure
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
 
             for (final Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("flappyac.alerts")) {
-                    player.spigot().sendMessage(component);
-                }
+                if (!player.hasPermission("flappyac.alerts")) continue;
+                player.spigot().sendMessage(component);
             }
         });
 

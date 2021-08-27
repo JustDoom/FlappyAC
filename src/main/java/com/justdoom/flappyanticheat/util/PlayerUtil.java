@@ -1,19 +1,23 @@
 package com.justdoom.flappyanticheat.util;
 
-import io.github.retrooper.packetevents.utils.boundingbox.BoundingBox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -81,18 +85,48 @@ public final class PlayerUtil {
         return Math.sqrt(x + z);
     }
 
-    public static Set<Block> getNearbyBlocksConfigurable(final Location location, final int radiusX, final int radiusY, final int radiusZ) {
-        final Set<Block> blocks = new HashSet<>();
+    //From AntiHaxerMan
+    public static List<Entity> getEntitiesWithinRadius(final Location location, final double radius) {
+        try {
+            final double expander = 16.0D;
 
-        for (int x = location.getBlockX() - radiusX; x <= location.getBlockX() + radiusX; x++) {
-            for (int y = location.getBlockY() - radiusY; y <= location.getBlockY() + radiusY; y++) {
-                for (int z = location.getBlockZ() - radiusZ; z <= location.getBlockZ() + radiusZ; z++) {
-                    blocks.add(location.getWorld().getBlockAt(x, y, z));
+            final double x = location.getX();
+            final double z = location.getZ();
+
+            final int minX = (int) Math.floor((x - radius) / expander);
+            final int maxX = (int) Math.floor((x + radius) / expander);
+
+            final int minZ = (int) Math.floor((z - radius) / expander);
+            final int maxZ = (int) Math.floor((z + radius) / expander);
+
+            final World world = location.getWorld();
+
+            final List<Entity> entities = new LinkedList<>();
+
+            for (int xVal = minX; xVal <= maxX; xVal++) {
+
+                for (int zVal = minZ; zVal <= maxZ; zVal++) {
+
+                    if (!world.isChunkLoaded(xVal, zVal)) continue;
+
+                    for (final Entity entity : world.getChunkAt(xVal, zVal).getEntities()) {
+                        //We have to do this due to stupidness
+                        if (entity == null) break;
+
+                        //Make sure the entity is within the radius specified
+                        if (entity.getLocation().distanceSquared(location) > radius * radius) continue;
+
+                        entities.add(entity);
+                    }
                 }
             }
+
+            return entities;
+        } catch (final Throwable t) {
+            // I know stfu
         }
 
-        return blocks;
+        return null;
     }
 
     public boolean isInLiquid(final Player player) {

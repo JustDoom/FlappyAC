@@ -9,13 +9,14 @@ public class ActionProcessor {
 
     private FlappyPlayer player;
 
-    private Block lastBlockPlaced;
+    private Block lastBlockPlaced, blockPlacedAgainst;
 
     public ActionProcessor(FlappyPlayer player){
         this.player = player;
     }
 
-    public void handleBlockPlace(Block blockPlaced){
+    public void handleBlockPlace(Block blockPlaced, Block blockAgainst){
         lastBlockPlaced = blockPlaced;
+        blockPlacedAgainst = blockAgainst;
     }
 }

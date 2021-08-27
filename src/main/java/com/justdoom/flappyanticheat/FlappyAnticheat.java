@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat;
 
+import com.justdoom.flappyanticheat.listener.BukkitEventListener;
 import com.justdoom.flappyanticheat.listener.NetworkListener;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.manager.CheckManager;
@@ -65,6 +66,7 @@ public enum FlappyAnticheat {
         CheckManager.setup();
 
         Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
+        Bukkit.getPluginManager().registerEvents(new BukkitEventListener(), plugin);
 
         PacketEvents.get().registerListener(new NetworkListener());
     }

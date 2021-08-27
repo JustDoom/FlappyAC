@@ -14,7 +14,15 @@ public enum ExemptType {
 
     JOINED(player -> System.currentTimeMillis() - player.getJoinTime() < 5000L),
 
-    TPS(player -> PacketEvents.get().getServerUtils().getTPS() < 18.5);
+    TPS(player -> PacketEvents.get().getServerUtils().getTPS() < 18.5),
+
+    LIQUID(data -> data.getPositionProcessor().isInLiquid()),
+
+    SHULKER(data -> data.getPositionProcessor().isNearShulker()),
+
+    PISTON(data -> data.getPositionProcessor().isNearPiston()),
+
+    VEHICLE(data -> data.getPositionProcessor().isNearVehicle());
 
     private final Function<FlappyPlayer, Boolean> exception;
 

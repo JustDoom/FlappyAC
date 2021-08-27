@@ -12,6 +12,6 @@ public class BukkitEventListener implements Listener {
     public void onBlockPlace(final BlockPlaceEvent event) {
         final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(event.getPlayer());
 
-        if (player != null) player.getActionProcessor().handleBlockPlace(event.getBlockPlaced());
+        if (player != null) player.getActionProcessor().handleBlockPlace(event.getBlockPlaced(), event.getBlockAgainst());
     }
 }
