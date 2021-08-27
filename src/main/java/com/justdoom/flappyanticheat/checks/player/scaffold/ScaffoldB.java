@@ -8,7 +8,7 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.blockplace.Wrappe
 import io.github.retrooper.packetevents.utils.player.Direction;
 import org.bukkit.block.Block;
 
-@CheckInfo(check = "Scaffold", checkType = "B", experimental = false, description = "Checks if the player is scaffolding downards")
+@CheckInfo(check = "Scaffold", checkType = "B", experimental = false, description = "Checks if the player is scaffolding downwards")
 public class ScaffoldB extends Check {
 
     public ScaffoldB(final FlappyPlayer data){
