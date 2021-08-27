@@ -17,9 +17,9 @@ public class FlyA extends Check {
 
     public void handle(final Packet packet) {
 
-        if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
+        if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE)) return;
 
-        if (player.getPositionProcessor().getY() == player.getPositionProcessor().getLastY() && player.getPositionProcessor().isInAir()) {
+        if (data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY() && data.getPositionProcessor().isInAir()) {
             this.stableY++;
         } else {
             this.stableY = 0.0D;
