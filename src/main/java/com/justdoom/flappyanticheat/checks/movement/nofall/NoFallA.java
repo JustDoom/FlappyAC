@@ -1,19 +1,11 @@
 package com.justdoom.flappyanticheat.checks.movement.nofall;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @CheckInfo(check = "NoFall", checkType = "A", experimental = false, description = "Checks if the player says it's on the ground but isn't")
 public class NoFallA extends Check {

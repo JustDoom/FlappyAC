@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.data.processor;
 
+import com.cryptomorin.xseries.XEntity;
 import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.util.PlayerUtil;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Shulker;
 import org.bukkit.entity.Vehicle;
@@ -174,7 +176,7 @@ public class PositionProcessor {
             }
 
             for (final Entity nearbyEntity : nearbyEntities) {
-                nearVehicle |= nearbyEntity instanceof Vehicle;
+                nearVehicle |= nearbyEntity instanceof Boat;
                 nearShulker |= nearbyEntity instanceof Shulker;
             }
         } catch (final Throwable ignored) {

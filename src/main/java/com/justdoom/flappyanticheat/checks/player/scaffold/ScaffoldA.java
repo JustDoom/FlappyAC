@@ -1,5 +1,6 @@
 package com.justdoom.flappyanticheat.checks.player.scaffold;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
@@ -39,7 +40,9 @@ public class ScaffoldA extends Check {
         }};
 
         for (Material material : blockFace) {
-            if (material != Material.AIR && material != Material.LAVA && material != Material.WATER && material != Material.CAVE_AIR && material != Material.VOID_AIR) {
+            if (material != XMaterial.AIR.parseMaterial() && material != XMaterial.LAVA.parseMaterial()
+                    && material != XMaterial.WATER.parseMaterial() && material != XMaterial.CAVE_AIR.parseMaterial()
+                    && material != XMaterial.VOID_AIR.parseMaterial()) {
                 placedOnAir = false;
                 break;
             }
