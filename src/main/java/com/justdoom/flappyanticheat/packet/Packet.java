@@ -32,6 +32,6 @@ public class Packet {
     }
 
     public boolean isBlockPlace() {
-        return packetId == PacketType.Play.Client.BLOCK_PLACE;
+        return PacketType.Play.Client.Util.isBlockPlace(packetId);
     }
 }
