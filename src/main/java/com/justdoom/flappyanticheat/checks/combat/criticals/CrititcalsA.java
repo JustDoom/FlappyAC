@@ -12,8 +12,8 @@ public class CrititcalsA extends Check {
 
     private int buffer = 0;
 
-    public CrititcalsA(FlappyPlayer player) {
-        super(player);
+    public CrititcalsA(FlappyPlayer data) {
+        super(data);
     }
 
     @Override
@@ -22,14 +22,14 @@ public class CrititcalsA extends Check {
         if(!packet.isPosition()
                 && !packet.isLook()
                 && !packet.isPositionLook()
-                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
+                ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE)) return;
 
         double groundY = 0.015625;
-        boolean client = player.getPositionProcessor().isOnGround(), server = player.getPositionProcessor().getY() % groundY < 0.0001;;
+        boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
 
-        if (!client && server && !PlayerUtil.isOnClimbable(player.getPlayer())) {
+        if (!client && server && !PlayerUtil.isOnClimbable(data.getPlayer())) {
             if (++buffer > 1) {
-
                 fail("No Info");
             }
         } else if (buffer > 0) buffer-=0.5;
