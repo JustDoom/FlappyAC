@@ -120,6 +120,7 @@ public class PositionProcessor {
                 inAir = true;
                 nearShulker = false;
                 nearVehicle = false;
+                nearPiston = false;
 
                 handleNearbyEntities();
 
