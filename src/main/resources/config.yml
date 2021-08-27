@@ -1,7 +1,7 @@
 messages:
   prefix: "&9FlappyAC "
   output-to-console: false
-  failed-check: '&2{player} &7failed &2{check} &2{vl}&7/&2{maxvl}'
+  failed-check: '&2{player} &7failed &2{check}&7(&2{checkType}&7) &2{vl}&7/&2{maxvl}'
   hover:  |
     &7Description: &2{description}
     &7Debug: &2{debug}
@@ -52,6 +52,15 @@ checks:
   #-------------------------
   scaffold:
     a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+    b:
       enabled: true
       min-tps: 17.0
       punishable: true

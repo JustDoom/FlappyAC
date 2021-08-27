@@ -60,7 +60,8 @@ public abstract class Check {
                     FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix").getString()
                             + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
                             .replace("{player}", data.getPlayer().getName())
-                            .replace("{check}", check + checkType))
+                            .replace("{check}", check)
+                            .replace("{checkType}", checkType))
                     .replace("{vl}", String.valueOf(vl))
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
