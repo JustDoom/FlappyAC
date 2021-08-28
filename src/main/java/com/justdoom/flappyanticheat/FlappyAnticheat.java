@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.listener.NetworkListener;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.justdoom.flappyanticheat.manager.CheckManager;
 import com.justdoom.flappyanticheat.manager.PlayerDataManager;
+import com.justdoom.flappyanticheat.manager.TickManager;
 import com.justdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import com.justdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -28,6 +29,7 @@ public enum FlappyAnticheat {
 
     private CommentedConfigurationNode configFile;
 
+    private final TickManager tickManager = new TickManager();
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
 
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
@@ -62,6 +64,7 @@ public enum FlappyAnticheat {
             return;
         }
 
+        tickManager.start();
         dataManager = new PlayerDataManager();
         CheckManager.setup();
 
@@ -72,5 +75,6 @@ public enum FlappyAnticheat {
     }
 
     public void stop(final FlappyAnticheatPlugin plugin) {
+        tickManager.stop();
     }
 }

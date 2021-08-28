@@ -27,6 +27,8 @@ public class PositionProcessor {
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
             fallHeight, lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight;
 
+    private int airTicks;
+
     private final List<Block> blocks = new ArrayList<>();
     private final List<Block> blocksNear = new ArrayList<>();
     private List<Entity> nearbyEntities = new ArrayList<>();
@@ -156,6 +158,12 @@ public class PositionProcessor {
                 break;
             case 1:
         }
+
+        handleTicks();
+    }
+
+    public void handleTicks(){
+        airTicks = inAir ? airTicks + 1 : 0;
     }
 
     public Block getBlock(final Location location) {
