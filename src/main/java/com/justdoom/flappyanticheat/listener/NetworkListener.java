@@ -31,7 +31,7 @@ public class NetworkListener extends PacketListenerAbstract {
         }
 
         FlappyAnticheat.INSTANCE.getPacketExecutor().execute(() -> FlappyAnticheat.INSTANCE.getReceivingPacketProcessor()
-                .handle(player, new Packet(event.getNMSPacket(), event.getPacketId())));
+                .handle(player, new Packet(Packet.Direction.RECEIVE, event.getNMSPacket(), event.getPacketId())));
     }
 
     // TODO: onReceivePackets

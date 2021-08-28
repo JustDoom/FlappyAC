@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
+import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
 
 public class ReceivingPacketProcessor {
 
@@ -19,6 +20,11 @@ public class ReceivingPacketProcessor {
             final WrappedPacketInSettings wrapper = new WrappedPacketInSettings(packet.getRawPacket());
 
             player.getSettingProcessor().handle(wrapper);
+        }
+
+        if (packet.isIncomingTransaction()) {
+            final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getRawPacket());
+            player.getVelocityProcessor().handleTransaction(wrapper);
         }
 
         if (player.getPlayer().hasPermission("flappyac.bypass")) return;

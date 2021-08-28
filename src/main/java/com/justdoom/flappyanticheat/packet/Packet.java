@@ -7,12 +7,14 @@ import lombok.Getter;
 @Getter
 public class Packet {
 
+    private final Direction direction;
     private final NMSPacket rawPacket;
     private final byte packetId;
 
-    public Packet(NMSPacket rawPacket, byte packetId){
+    public Packet(Direction direction, NMSPacket rawPacket, byte packetId){
         this.rawPacket = rawPacket;
         this.packetId = packetId;
+        this.direction = direction;
     }
 
     public boolean isPosition(){
@@ -34,4 +36,14 @@ public class Packet {
     public boolean isBlockPlace() {
         return PacketType.Play.Client.Util.isBlockPlace(packetId);
     }
+
+    public boolean isIncomingTransaction () {
+        return isReceiving() && packetId == PacketType.Play.Client.TRANSACTION;
+    }
+
+    public boolean isReceiving() {
+        return direction == Direction.RECEIVE;
+    }
+
+    public enum Direction { SEND, RECEIVE }
 }

@@ -25,7 +25,7 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            fallHeight, lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight;
+            fallHeight, lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ;
 
     private int airTicks;
 
@@ -53,10 +53,12 @@ public class PositionProcessor {
         lastDeltaX = deltaX;
         lastDeltaY = deltaY;
         lastDeltaZ = deltaZ;
+        lastDeltaXZ = deltaXZ;
 
         deltaX = this.x - lastX;
         deltaY = this.y - lastY;
         deltaZ = this.z - lastZ;
+        deltaXZ = Math.hypot(deltaX, deltaZ);
 
         playerLastHeight = playerHeight;
         playerHeight = player.getPlayer().getFallDistance();

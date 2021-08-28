@@ -18,7 +18,7 @@ public class VelocityProcessor {
         this.data = data;
     }
 
-    private double velocityX, velocityY, velocityZ, lastVelocityX, lastVelocityY, lastVelocityZ;
+    private double velocityX, velocityY, velocityZ, lastVelocityX, lastVelocityY, lastVelocityZ, velocityXZ, lastVelocityXZ;
     private boolean verifyingVelocity;
     private int maxVelocityTicks, velocityTicks;
     private short transactionID, velocityID;
@@ -28,10 +28,12 @@ public class VelocityProcessor {
         this.lastVelocityX = this.velocityX;
         this.lastVelocityY = this.velocityY;
         this.lastVelocityZ = this.velocityZ;
+        lastVelocityXZ = velocityXZ;
 
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.velocityZ = velocityZ;
+        velocityXZ = Math.hypot(velocityX, velocityZ);
     }
 
     public boolean isTakingVelocity() {
