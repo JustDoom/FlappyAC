@@ -28,7 +28,7 @@ public class SpeedA extends Check{
 
                 //0.029 is probably not entirely accurate, but thats the closest i got from debugging
                 //while in the air the deltaXZ should reduce by 0.91x each run. the 0.0259 is whats leftover from debugging
-                double prediction = data.getPositionProcessor().getLastDeltaXZ() * 0.91F + 0.0259F;
+                double prediction = data.getPositionProcessor().getLastDeltaXZ() * 0.91f + 0.026;
                 double accuracy = (data.getPositionProcessor().getDeltaXZ() - prediction);
 
                 //i could try to go for higher accuracy, but knowing me id mess something up and need a buffer. having no
