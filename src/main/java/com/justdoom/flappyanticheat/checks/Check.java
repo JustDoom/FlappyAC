@@ -82,9 +82,16 @@ public abstract class Check {
                 if (!player.hasPermission("flappyac.alerts") || !FlappyAnticheat.INSTANCE.getAlertManager().hasAlerts(player)) continue;
                 player.spigot().sendMessage(component);
             }
-            if (lagBack){
-                this.data.getPlayer().teleport(new Location(this.data.getPlayer().getWorld(), this.data.getPlayer().getLocation().getX(), this.data.getPlayer().getLocation().getY() - 0.05, this.data.getPlayer().getLocation().getZ()));
-            }
+            /**
+             * Disabled lagBacks for now
+             */
+            /**if (lagBack){
+                Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+                        this.data.getPlayer().teleport(new Location(this.data.getPlayer().getWorld(),
+                                this.data.getPositionProcessor().getLastX(),
+                                this.data.getPositionProcessor().getLastY() - 0.05,
+                                this.data.getPositionProcessor().getLastZ())));
+            }**/
         });
 
         if (vl >= maxVl) {
