@@ -12,7 +12,7 @@ public class AlertsCommand extends FlappyCommand {
         this.plugin.getAlertManager().toggleAlerts(command.getPlayer());
         if (this.plugin.getAlertManager().hasAlerts(command.getPlayer())){
             command.getPlayer().sendMessage(ChatColor.GREEN + "Enabled FlappyAC alerts.");
-        }else {
+        } else {
             command.getPlayer().sendMessage(ChatColor.RED + "Disabled FlappyAC alerts.");
         }
     }

@@ -10,5 +10,6 @@ public class PlayerConnectionListener implements Listener {
     @EventHandler
     public void playerJoin(final PlayerJoinEvent event) {
         FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
+        FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
     }
 }
