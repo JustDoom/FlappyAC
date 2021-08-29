@@ -21,6 +21,10 @@ public class Packet {
         return packetId == PacketType.Play.Client.POSITION;
     }
 
+    public boolean isServerPosition(){
+        return packetId == PacketType.Play.Server.POSITION;
+    }
+
     public boolean isLook(){
         return packetId == PacketType.Play.Client.LOOK;
     }

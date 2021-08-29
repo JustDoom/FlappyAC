@@ -8,6 +8,7 @@ import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldA;
 import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldB;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
+import com.justdoom.flappyanticheat.checks.player.timer.TimerA;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 
 import java.lang.reflect.Constructor;
@@ -28,7 +29,8 @@ public class CheckManager {
             CrititcalsA.class,
 
             //Player
-            SkinBlinkerA.class
+            SkinBlinkerA.class,
+            TimerA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
