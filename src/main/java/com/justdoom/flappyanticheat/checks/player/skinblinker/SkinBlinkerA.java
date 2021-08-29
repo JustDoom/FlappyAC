@@ -27,7 +27,7 @@ public class SkinBlinkerA extends Check {
                 || data.getPlayer().isSneaking()
                 || data.getPlayer().isBlocking())
                 && lastSkin != data.getSettingProcessor().getSkin()) {
-            fail("&7last=&2" + lastSkin + " &7current=&2" + data.getSettingProcessor().getSkin());
+            fail("&7last=&2" + lastSkin + " &7current=&2" + data.getSettingProcessor().getSkin(), false);
         }
     }
 }

@@ -6,6 +6,7 @@ import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FlappyAnticheatPlugin extends JavaPlugin {
+    public static FlappyAnticheatPlugin clazz;
 
     @Override
     public void onLoad(){
@@ -22,6 +23,7 @@ public class FlappyAnticheatPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        clazz = this;
         PacketEvents.get().init();
         FlappyAnticheat.INSTANCE.start(this);
     }

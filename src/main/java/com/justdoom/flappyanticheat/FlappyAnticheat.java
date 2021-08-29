@@ -1,8 +1,12 @@
 package com.justdoom.flappyanticheat;
 
+import com.justdoom.flappyanticheat.command.framework.CommandFramework;
+import com.justdoom.flappyanticheat.command.impl.FlappyCommand;
+import com.justdoom.flappyanticheat.command.impl.sub.AlertsCommand;
 import com.justdoom.flappyanticheat.listener.BukkitEventListener;
 import com.justdoom.flappyanticheat.listener.NetworkListener;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
+import com.justdoom.flappyanticheat.manager.AlertManager;
 import com.justdoom.flappyanticheat.manager.CheckManager;
 import com.justdoom.flappyanticheat.manager.PlayerDataManager;
 import com.justdoom.flappyanticheat.manager.TickManager;
@@ -28,8 +32,10 @@ public enum FlappyAnticheat {
     private PlayerDataManager dataManager;
 
     private CommentedConfigurationNode configFile;
+    private CommandFramework commandFramework;
 
     private final TickManager tickManager = new TickManager();
+    private AlertManager alertManager;
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
 
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
@@ -66,12 +72,23 @@ public enum FlappyAnticheat {
 
         tickManager.start();
         dataManager = new PlayerDataManager();
+        commandFramework = new CommandFramework(plugin);
+        this.alertManager = new AlertManager();
+        loadCommands();
         CheckManager.setup();
 
         Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new BukkitEventListener(), plugin);
 
         PacketEvents.get().registerListener(new NetworkListener());
+    }
+
+    public void loadCommands(){
+        /**
+         * For each command you have to create a new instance for it.
+         */
+        new FlappyCommand();
+        new AlertsCommand();
     }
 
     public void stop(final FlappyAnticheatPlugin plugin) {

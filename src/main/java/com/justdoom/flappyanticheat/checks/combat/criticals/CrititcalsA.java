@@ -30,7 +30,7 @@ public class CrititcalsA extends Check {
 
         if (!client && server && !PlayerUtil.isOnClimbable(data.getPlayer())) {
             if (++buffer > 1) {
-                fail("No Info");
+                fail("No Info", false);
             }
         } else if (buffer > 0) buffer-=0.5;
     }

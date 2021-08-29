@@ -48,7 +48,7 @@ public class ScaffoldA extends Check {
             }
         }
         if (placedOnAir) {
-            fail("faces=" + blockFace);
+            fail("faces=" + blockFace, false);
         }
     }
 }
