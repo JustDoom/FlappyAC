@@ -11,8 +11,6 @@ public class PlayerDataManager {
 
     public Map<Player, FlappyPlayer> dataMap = new ConcurrentHashMap<>();
 
-    public ArrayList<Player> alertsDisabled = new ArrayList<Player>();
-
     public void addPlayer(Player player) {
         dataMap.put(player, new FlappyPlayer(player));
     }
@@ -31,13 +29,5 @@ public class PlayerDataManager {
 
     public FlappyPlayer getData(Player player) {
         return dataMap.get(player);
-    }
-
-    public void disabledAlertsAdd(Player player){
-        alertsDisabled.add(player);
-    }
-
-    public void disabledAlertsRemove(Player player){
-        alertsDisabled.remove(player);
     }
 }

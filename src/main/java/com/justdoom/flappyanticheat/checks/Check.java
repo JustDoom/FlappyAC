@@ -18,6 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
@@ -77,9 +78,10 @@ public abstract class Check {
             //TODO: make click command more secure
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
-
-            for (final Player player : Bukkit.getOnlinePlayers()) {
-                if (!player.hasPermission("flappyac.alerts") || !FlappyAnticheat.INSTANCE.getAlertManager().hasAlerts(player)) continue;
+            //TODO: Improve alert toggle
+            for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (!player.hasPermission("flappyac.alerts")) continue;
                 player.spigot().sendMessage(component);
             }
             /**
