@@ -49,5 +49,13 @@ public class Packet {
         return direction == Direction.RECEIVE;
     }
 
+    public boolean isFlying() {
+        return isReceiving() && PacketType.Play.Client.Util.isInstanceOfFlying(packetId);
+    }
+
+    public boolean isUseEntity() {
+        return isReceiving() && packetId == PacketType.Play.Client.USE_ENTITY;
+    }
+
     public enum Direction { SEND, RECEIVE }
 }

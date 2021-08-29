@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.manager;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.checks.combat.aura.AuraA;
 import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
@@ -27,6 +28,7 @@ public class CheckManager {
 
             //Combat
             CrititcalsA.class,
+            AuraA.class,
 
             //Player
             SkinBlinkerA.class,
