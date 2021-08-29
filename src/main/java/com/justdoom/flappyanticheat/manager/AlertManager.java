@@ -22,6 +22,10 @@ public class AlertManager {
         return this.toggledAlerts.contains(player.getUniqueId());
     }
 
+    public void removeAlerts(Player player){
+        if(hasAlerts(player)) this.toggledAlerts.remove(player.getUniqueId());
+    }
+
     public AlertManager() {
         this.toggledAlerts = new HashSet<>();
     }

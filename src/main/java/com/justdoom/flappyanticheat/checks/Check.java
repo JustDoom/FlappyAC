@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -55,6 +56,8 @@ public abstract class Check {
     }
 
     public void fail(final String debug, final boolean lagBack) {
+        if(!data.getPlayer().isOnline()) return;
+
         vl++;
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
@@ -94,11 +97,25 @@ public abstract class Check {
                                 this.data.getPositionProcessor().getLastY() - 0.05,
                                 this.data.getPositionProcessor().getLastZ())));
             }**/
-        });
 
-        if (vl >= maxVl) {
-            //TODO: punish
-        }
+            if (vl >= maxVl && FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
+                    checkType.toLowerCase(), "punishable").getBoolean()) {
+                //TODO: punish
+                vl = 0;
+
+                try {
+                    for (String command : FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
+                            checkType.toLowerCase(), "punish-commands").getList(String.class)) {
+                        command = command.replace("{player}", data.getPlayer().getName());
+                        String finalCommand = command;
+                        Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
+                    }
+                } catch (SerializationException e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void loadConfigOptions() {
