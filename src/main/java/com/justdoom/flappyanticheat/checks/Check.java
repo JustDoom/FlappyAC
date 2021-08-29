@@ -14,6 +14,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -52,7 +53,7 @@ public abstract class Check {
         return data.getExemptManager().isExempt(exemptTypes);
     }
 
-    public void fail(final String debug) {
+    public void fail(final String debug, final boolean lagBack) {
         vl++;
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
@@ -78,8 +79,11 @@ public abstract class Check {
 
 
             for (final Player player : Bukkit.getOnlinePlayers()) {
-                if (!player.hasPermission("flappyac.alerts")) continue;
+                if (!player.hasPermission("flappyac.alerts") || !FlappyAnticheat.INSTANCE.getAlertManager().hasAlerts(player)) continue;
                 player.spigot().sendMessage(component);
+            }
+            if (lagBack){
+                this.data.getPlayer().teleport(new Location(this.data.getPlayer().getWorld(), this.data.getPlayer().getLocation().getX(), this.data.getPlayer().getLocation().getY() - 0.05, this.data.getPlayer().getLocation().getZ()));
             }
         });
 

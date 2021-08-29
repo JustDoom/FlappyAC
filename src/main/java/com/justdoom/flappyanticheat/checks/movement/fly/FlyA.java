@@ -25,6 +25,6 @@ public class FlyA extends Check {
             this.stableY = 0.0D;
         }
         if (this.stableY > 2.0D)
-            fail("No Info");
+            fail("No Info", true);
     }
 }

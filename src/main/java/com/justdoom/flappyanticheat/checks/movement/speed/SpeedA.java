@@ -36,14 +36,14 @@ public class SpeedA extends Check{
                 if (accuracy > 0.001 && data.getPositionProcessor().getDeltaXZ() > 0.1) {
                     //if the player isnt taking knockback and doesnt meet our accuracy, then flag
                     if (!data.getVelocityProcessor().isTakingVelocity()) {
-                        fail("exp=" + prediction + " got=" + data.getPositionProcessor().getDeltaXZ());
+                        fail("exp=" + prediction + " got=" + data.getPositionProcessor().getDeltaXZ(), true);
                         //if the player is taking knockback, we have to account that into it. when in the air you only
                         //take the knockback, it resets all momentum. so compare our velocityXZ to our deltaXZ. from my
                         //testing it can be off by about 0.04, so check if the margin is greater than that.
                     } else if (Math.abs(data.getVelocityProcessor().getVelocityXZ() -
                             data.getPositionProcessor().getDeltaXZ()) > 0.04) {
                         fail("exp=" + prediction + " got=" + data.getPositionProcessor().getDeltaXZ() + " vel=" +
-                                data.getVelocityProcessor().getVelocityXZ());
+                                data.getVelocityProcessor().getVelocityXZ(), true);
                     }
                 }
             }

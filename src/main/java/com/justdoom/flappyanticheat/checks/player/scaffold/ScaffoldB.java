@@ -23,6 +23,6 @@ public class ScaffoldB extends Check {
 
         if(wrappedPacketInBlockPlace.getDirection() == Direction.DOWN
                 && data.getActionProcessor().getLastBlockPlaced().getY() < data.getPositionProcessor().getY())
-            fail("No Info");
+            fail("No Info", false);
     }
 }
