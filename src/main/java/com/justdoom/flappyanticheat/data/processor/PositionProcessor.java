@@ -25,7 +25,9 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            fallHeight, lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ;
+            lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ;
+
+    private float fallHeight;
 
     private int airTicks;
 
@@ -66,12 +68,12 @@ public class PositionProcessor {
         lastLastFallHeight = lastFallHeight;
         lastFallHeight = fallHeight;
 
-        if (deltaY < 0.0) {
+        if (deltaY < 0.0f) {
             fallHeight -= deltaY;
         }
 
         if (lastOnGround) {
-            fallHeight = 0.0;
+            fallHeight = 0.0f;
         }
 
         handleCollisions(0);
