@@ -5,6 +5,9 @@ import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
 import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
+import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
 import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldA;
 import com.justdoom.flappyanticheat.checks.player.scaffold.ScaffoldB;
 import com.justdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
@@ -30,7 +33,10 @@ public class CheckManager {
 
             //Player
             SkinBlinkerA.class,
-            TimerA.class
+            TimerA.class,
+            BadPacketsA.class,
+            BadPacketsB.class,
+            BadPacketsC.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

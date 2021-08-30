@@ -31,6 +31,7 @@ public abstract class Check {
     public FlappyPlayer data;
     public CheckInfo checkData;
     private int maxVl, vl;
+    public double buffer;
 
     public Check(final FlappyPlayer data) {
         this.data = data;

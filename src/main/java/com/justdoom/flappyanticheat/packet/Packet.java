@@ -37,6 +37,10 @@ public class Packet {
         return packetId == PacketType.Play.Client.SETTINGS;
     }
 
+    public boolean isSteerVehicle() {
+        return packetId == PacketType.Play.Client.STEER_VEHICLE;
+    }
+
     public boolean isBlockPlace() {
         return PacketType.Play.Client.Util.isBlockPlace(packetId);
     }

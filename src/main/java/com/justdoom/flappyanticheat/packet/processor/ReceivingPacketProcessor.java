@@ -22,6 +22,12 @@ public class ReceivingPacketProcessor {
             player.getSettingProcessor().handle(wrapper);
         }
 
+        if(packet.isLook()) {
+            final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
+
+            player.getRotationProcessor().handle(wrapper.getYaw(), wrapper.getPitch());
+        }
+
         if (packet.isIncomingTransaction()) {
             final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getRawPacket());
             player.getVelocityProcessor().handleTransaction(wrapper);
