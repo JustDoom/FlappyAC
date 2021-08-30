@@ -10,8 +10,6 @@ import com.justdoom.flappyanticheat.util.PlayerUtil;
 @CheckInfo(check = "NoFall", checkType = "A", experimental = false, description = "Checks if the player says it's on the ground but isn't")
 public class NoFallA extends Check {
 
-    private int buffer = 0;
-
     public NoFallA(FlappyPlayer player) {
         super(player);
     }
