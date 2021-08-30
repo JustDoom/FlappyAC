@@ -31,5 +31,12 @@ public class NoFallA extends Check {
                 fail("No Info", false);
             }
         } else if (buffer > 0) buffer-=0.5;
+
+        float fallDistance = data.getPlayer().getFallDistance();
+        double superResult = data.getPositionProcessor().getFallHeight() - fallDistance;
+
+        if (superResult > 1) {
+            fail("fallHeight: " + data.getPositionProcessor().getFallHeight() + " fallDistance: " + fallDistance, false);
+        }
     }
 }

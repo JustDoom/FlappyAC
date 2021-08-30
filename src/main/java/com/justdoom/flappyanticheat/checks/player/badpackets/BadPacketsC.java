@@ -7,10 +7,9 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.steervehicle.WrappedPacketInSteerVehicle;
 
-@CheckInfo(check = "BadPackets", checkType = "C", experimental = false, description = "Checks for impossible pitch")
+@CheckInfo(check = "BadPackets", checkType = "C", experimental = false, description = "Checks for common exploit in disablers")
 public class BadPacketsC extends Check {
 
     public BadPacketsC(FlappyPlayer data) {
