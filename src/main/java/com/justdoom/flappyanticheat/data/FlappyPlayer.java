@@ -7,6 +7,8 @@ import com.justdoom.flappyanticheat.data.processor.ActionProcessor;
 import com.justdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.justdoom.flappyanticheat.data.processor.SettingProcessor;
 import com.justdoom.flappyanticheat.exempt.ExemptManager;
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.player.ClientVersion;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -18,6 +20,7 @@ import java.util.List;
 public class FlappyPlayer {
 
     private final Player player;
+    private final ClientVersion clientVersion;
 
     private final long joinTime = System.currentTimeMillis();
     private final List<Check> checks = CheckManager.loadChecks(this);
@@ -31,6 +34,7 @@ public class FlappyPlayer {
     public FlappyPlayer(Player player){
 
         this.player = player;
+        clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
 
         this.positionProcessor = new PositionProcessor(this);
         this.velocityProcessor = new VelocityProcessor(this);
