@@ -72,7 +72,7 @@ public class PositionProcessor {
             fallHeight -= deltaY;
         }
 
-        if (lastOnGround) {
+        if (onGround) {
             fallHeight = 0.0f;
         }
 
