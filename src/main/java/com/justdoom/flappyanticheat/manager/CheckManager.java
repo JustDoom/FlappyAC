@@ -27,7 +27,7 @@ public class CheckManager {
             FlyA.class,
             ScaffoldA.class,
             ScaffoldB.class,
-            SpeedA.class,
+            //SpeedA.class,
             NoSlowA.class,
 
             //Combat
