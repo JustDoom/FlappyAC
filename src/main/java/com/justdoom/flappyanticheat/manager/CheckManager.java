@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.nofall.NoFallA;
+import com.justdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.justdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.justdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
@@ -27,6 +28,7 @@ public class CheckManager {
             ScaffoldA.class,
             ScaffoldB.class,
             SpeedA.class,
+            NoSlowA.class,
 
             //Combat
             CrititcalsA.class,
