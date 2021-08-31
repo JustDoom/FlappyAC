@@ -68,11 +68,11 @@ public class PositionProcessor {
         lastLastFallHeight = lastFallHeight;
         lastFallHeight = fallHeight;
 
-        if (deltaY < 0.0f) {
+        if (deltaY < 0.0) {
             fallHeight -= deltaY;
         }
 
-        if (onGround) {
+        if (lastOnGround) {
             fallHeight = 0.0f;
         }
 

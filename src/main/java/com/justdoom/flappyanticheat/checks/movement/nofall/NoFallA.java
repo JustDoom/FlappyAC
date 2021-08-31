@@ -28,15 +28,8 @@ public class NoFallA extends Check {
 
         if (client && !server && !PlayerUtil.isOnClimbable(data.getPlayer())) {
             if (++buffer > 1) {
-                //fail("No Info", false);
+                fail("No Info", false);
             }
         } else if (buffer > 0) buffer-=0.5;
-
-        float fallDistance = data.getPlayer().getFallDistance();
-        float superResult = data.getPositionProcessor().getFallHeight() - fallDistance;
-
-        if (superResult > 1) {
-            fail("fallHeight: " + data.getPositionProcessor().getFallHeight() + " fallDistance: " + fallDistance, false);
-        }
     }
 }
