@@ -5,8 +5,9 @@ import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
+import io.github.retrooper.packetevents.utils.player.ClientVersion;
 
-@CheckInfo(check = "NoSlow", checkType = "A", experimental = false, description = "Checks if the player is sprinting at an impossible time")
+@CheckInfo(check = "NoSlow", checkType = "A", experimental = false, description = "Checks if the player is sprinting at an impossible time (1.8 only)")
 public class NoSlowA extends Check {
 
     public NoSlowA(FlappyPlayer player) {
@@ -16,10 +17,13 @@ public class NoSlowA extends Check {
     @Override
     public void handle(Packet packet) {
 
-        if(!packet.isPosition() || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)) return;
+        if(!packet.isPosition() && !packet.isPositionLook()
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)
+                && data.getClientVersion().isNewerThan(ClientVersion.v_1_8)) return;
 
-        if(data.getPlayer().isSprinting() && data.getPlayer().isBlocking()){
-            fail("Sprinting: " + data.getPlayer().isSprinting() + "  Blocking: " + data.getPlayer().isBlocking(), false);
+        if(data.getPlayer().isSprinting() && (data.getPlayer().isBlocking() || data.getPlayer().isSneaking())){
+            fail("Sprinting: " + data.getPlayer().isSprinting() + "  Blocking: "
+                    + data.getPlayer().isBlocking() + "  Sneaking: " + data.getPlayer().isSneaking(), false);
         }
     }
 }
