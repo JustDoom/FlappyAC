@@ -8,6 +8,15 @@ messages:
     &7TPS: &2{tps}
     &7Ping: &2{ping}
 
+#Messages should not have colour codes
+logs:
+  punishment-log:
+    enabled: true
+    message: "{player} has been punished"
+  violation-log:
+    enabled: true
+    message: "{player} failed {check}({checkType}) {vl}/{maxvl}"
+
 checks:
   #-------------------------
   #       Movement

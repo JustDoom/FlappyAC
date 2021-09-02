@@ -12,14 +12,14 @@ public class FileManager {
 
     public void addToFile(String fileName, String message) {
         File log = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), fileName);
-        try{
+        try {
             if(!log.exists()){
                 createFiles(fileName);
             }
             PrintWriter out = new PrintWriter(new FileWriter(log, true));
             out.append(ChatColor.stripColor(message));
             out.close();
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
