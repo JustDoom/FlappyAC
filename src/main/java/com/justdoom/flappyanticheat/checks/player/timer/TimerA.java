@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks.player.timer;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.checks.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
+import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
 
 @CheckInfo(check = "Timer", checkType = "A", experimental = false, description = "Timer")
@@ -17,6 +18,7 @@ public class TimerA extends Check {
 
     @Override
     public void handle(Packet packet) {
+        if(isExempt(ExemptType.JOINED, ExemptType.GAMEMODE, ExemptType.TPS)) return;
         if (packet.isPosition() || packet.isPositionLook()) {
 
             long time = System.currentTimeMillis();

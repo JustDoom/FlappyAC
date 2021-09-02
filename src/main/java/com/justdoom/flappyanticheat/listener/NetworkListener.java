@@ -5,11 +5,18 @@ import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
+import io.github.retrooper.packetevents.event.impl.PostPlayerInjectEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import org.bukkit.Bukkit;
 
 public class NetworkListener extends PacketListenerAbstract {
+
+    @Override
+    public void onPostPlayerInject(final PostPlayerInjectEvent event){
+        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
+        FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
+    }
 
     @Override
     public void onPacketPlayReceive(final PacketPlayReceiveEvent event){
