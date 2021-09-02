@@ -44,6 +44,7 @@ public enum FlappyAnticheat {
     public void start(final FlappyAnticheatPlugin plugin) {
         this.plugin = plugin;
 
+        // Create the config file
         try {
             if(!FileUtil.doesFileExist(plugin.getDataFolder().getPath()))
                 FileUtil.createDirectory(plugin.getDataFolder().getPath());
@@ -54,10 +55,12 @@ public enum FlappyAnticheat {
             e.printStackTrace();
         }
 
+        // Set where we want to load and save the config from
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Paths.get(plugin.getDataFolder() + "/config.yml")) // Set where we will load and save to
+                .path(Paths.get(plugin.getDataFolder() + "/config.yml"))
                 .build();
 
+        // Load the config
         try {
             configFile = loader.load();
             plugin.getLogger().info("Config has been loaded");
@@ -70,6 +73,7 @@ public enum FlappyAnticheat {
             return;
         }
 
+        // Load/Register everything
         tickManager.start();
         dataManager = new PlayerDataManager();
         commandFramework = new CommandFramework(plugin);
@@ -84,9 +88,7 @@ public enum FlappyAnticheat {
     }
 
     public void loadCommands(){
-        /**
-         * For each command you have to create a new instance for it.
-         */
+        // For each command you have to create a new instance for it
         new FlappyCommand();
         new AlertsCommand();
     }

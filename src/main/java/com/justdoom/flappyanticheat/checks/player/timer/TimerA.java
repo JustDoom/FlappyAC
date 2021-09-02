@@ -18,7 +18,9 @@ public class TimerA extends Check {
 
     @Override
     public void handle(Packet packet) {
+
         if(isExempt(ExemptType.JOINED, ExemptType.GAMEMODE, ExemptType.TPS)) return;
+
         if (packet.isPosition() || packet.isPositionLook()) {
 
             long time = System.currentTimeMillis();

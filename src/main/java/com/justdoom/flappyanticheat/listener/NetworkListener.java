@@ -24,6 +24,7 @@ public class NetworkListener extends PacketListenerAbstract {
 
         if (player == null) return;
 
+        // Check if someone is trying to choke the packet
         if (PacketType.Play.Client.Util.isInstanceOfFlying(event.getPacketId())) {
             final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(event.getNMSPacket());
 
@@ -37,6 +38,7 @@ public class NetworkListener extends PacketListenerAbstract {
             }
         }
 
+        // Handle the packet
         FlappyAnticheat.INSTANCE.getPacketExecutor().execute(() -> FlappyAnticheat.INSTANCE.getReceivingPacketProcessor()
                 .handle(player, new Packet(Packet.Direction.RECEIVE, event.getNMSPacket(), event.getPacketId())));
     }

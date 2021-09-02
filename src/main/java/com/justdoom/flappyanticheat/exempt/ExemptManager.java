@@ -14,11 +14,6 @@ public class ExemptManager {
         return exceptType.getException().apply(playerData);
     }
 
-    /**
-     *
-     * @param exceptTypes - An array of possible exceptions.
-     * @return - True/False depending on if any match the appliance.
-     */
     public boolean isExempt(final ExemptType... exemptTypes) {
         for (final ExemptType exemptType : exemptTypes) {
             if (this.isExempt(exemptType)) {

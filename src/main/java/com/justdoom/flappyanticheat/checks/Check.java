@@ -57,11 +57,14 @@ public abstract class Check {
     }
 
     public void fail(final String debug, final boolean lagBack) {
+        // Make sure player is online
         if(!data.getPlayer().isOnline()) return;
 
         vl++;
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
+
+            // Alert message
             final TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
                     FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix").getString()
                             + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
@@ -71,6 +74,7 @@ public abstract class Check {
                     .replace("{vl}", String.valueOf(vl))
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
+            // Alert hover message
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',
                     FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString()
                             .replace("{description}", description)
@@ -99,11 +103,13 @@ public abstract class Check {
                                 this.data.getPositionProcessor().getLastZ())));
             }**/
 
+            // Check if violations are equal to or bigger than the max violations
             if (vl >= maxVl && FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
                     checkType.toLowerCase(), "punishable").getBoolean()) {
                 //TODO: punish
                 vl = 0;
 
+                // Run punishment keys
                 try {
                     for (String command : FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
                             checkType.toLowerCase(), "punish-commands").getList(String.class)) {

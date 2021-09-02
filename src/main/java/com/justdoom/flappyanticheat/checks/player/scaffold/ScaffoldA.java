@@ -39,6 +39,8 @@ public class ScaffoldA extends Check {
             add(block.getRelative(BlockFace.DOWN).getType());
         }};
 
+        // Loop through the block materials the block was placed on
+        // and check if it was placed on air
         for (Material material : blockFace) {
             if (material != XMaterial.AIR.parseMaterial() && material != XMaterial.LAVA.parseMaterial()
                     && material != XMaterial.WATER.parseMaterial() && material != XMaterial.CAVE_AIR.parseMaterial()

@@ -40,28 +40,34 @@ public class PositionProcessor {
     }
 
     public void handle(double x, double y, double z, boolean onGround) {
+
+        // Set last pos
         lastX = this.x;
         lastY = this.y;
         lastZ = this.z;
 
         lastOnGround = this.onGround;
 
+        // Set current pos
         this.x = x;
         this.y = y;
         this.z = z;
 
         this.onGround = onGround;
 
+        // Set last delta
         lastDeltaX = deltaX;
         lastDeltaY = deltaY;
         lastDeltaZ = deltaZ;
         lastDeltaXZ = deltaXZ;
 
+        // Set current delta
         deltaX = this.x - lastX;
         deltaY = this.y - lastY;
         deltaZ = this.z - lastZ;
         deltaXZ = Math.hypot(deltaX, deltaZ);
 
+        // Calculate real fall distance
         playerLastHeight = playerHeight;
         playerHeight = player.getPlayer().getFallDistance();
 
@@ -76,6 +82,7 @@ public class PositionProcessor {
             fallHeight = 0.0f;
         }
 
+        // Handle collisions
         handleCollisions(0);
         handleCollisions(1);
     }

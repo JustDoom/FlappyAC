@@ -22,6 +22,7 @@ public class NoSlowA extends Check {
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)
                 || data.getClientVersion() != ClientVersion.v_1_8) return;
 
+        // Check if the player is blocking with the sword or sneaking and sprinting at the same time
         if(data.getPlayer().isSprinting() && (data.getPlayer().isBlocking() || data.getPlayer().isSneaking())){
             fail("Sprinting: " + data.getPlayer().isSprinting() + "  Blocking: "
                     + data.getPlayer().isBlocking() + "  Sneaking: " + data.getPlayer().isSneaking(), false);

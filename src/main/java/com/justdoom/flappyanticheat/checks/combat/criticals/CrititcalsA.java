@@ -28,6 +28,7 @@ public class CrititcalsA extends Check {
         double groundY = 0.015625;
         boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
 
+        // Check if the client says it's not on the ground but the server says it is
         if (!client && server && !PlayerUtil.isOnClimbable(data.getPlayer())) {
             if (++buffer > 1) {
                 fail("No Info", false);

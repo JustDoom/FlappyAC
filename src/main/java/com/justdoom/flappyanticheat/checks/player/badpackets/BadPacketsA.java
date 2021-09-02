@@ -16,6 +16,7 @@ public class BadPacketsA extends Check {
     public void handle(Packet packet) {
         if(!packet.isPosition() || !packet.isPositionLook()) return;
 
+        // Check if the pitch is above or below 90F which is impossible
         float pitch = data.getRotationProcessor().getPitch();
         if(Math.abs(pitch) > 90F){
             fail("&7pitch=&2" + pitch, false);

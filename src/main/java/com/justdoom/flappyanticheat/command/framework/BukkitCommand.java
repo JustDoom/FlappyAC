@@ -22,7 +22,7 @@ public class BukkitCommand extends Command {
     }
 
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        boolean success = false;
+        boolean success;
         if (!this.owningPlugin.isEnabled())
             return false;
         if (!testPermission(sender))

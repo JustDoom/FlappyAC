@@ -19,6 +19,7 @@ public class FlyA extends Check {
 
         if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE)) return;
 
+        // Checks if the Y says the same while in the air
         if (data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY() && data.getPositionProcessor().isInAir()) {
             this.stableY++;
         } else {

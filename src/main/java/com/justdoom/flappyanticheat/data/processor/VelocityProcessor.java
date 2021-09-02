@@ -25,11 +25,14 @@ public class VelocityProcessor {
     private long transactionPing, transactionReply;
 
     public void handle(final double velocityX, final double velocityY, final double velocityZ){
+
+        // Set last velocity
         this.lastVelocityX = this.velocityX;
         this.lastVelocityY = this.velocityY;
         this.lastVelocityZ = this.velocityZ;
         lastVelocityXZ = velocityXZ;
 
+        // Set current velocity
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.velocityZ = velocityZ;
