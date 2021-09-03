@@ -3,6 +3,8 @@ package com.justdoom.flappyanticheat.listener;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.packet.Packet;
+import com.justdoom.flappyanticheat.util.ClientBrandUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PostPlayerInjectEvent;
@@ -13,9 +15,13 @@ import org.bukkit.Bukkit;
 public class NetworkListener extends PacketListenerAbstract {
 
     @Override
-    public void onPostPlayerInject(final PostPlayerInjectEvent event){
+    public void onPostPlayerInject(final PostPlayerInjectEvent event) {
+
         FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
         FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
+
+        Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+                ClientBrandUtil.addChannel(event.getPlayer(), "minecraft:brand"));
     }
 
     @Override

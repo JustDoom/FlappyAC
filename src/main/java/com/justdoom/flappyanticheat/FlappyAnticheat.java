@@ -11,10 +11,12 @@ import com.justdoom.flappyanticheat.manager.CheckManager;
 import com.justdoom.flappyanticheat.manager.PlayerDataManager;
 import com.justdoom.flappyanticheat.manager.TickManager;
 import com.justdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
+import com.justdoom.flappyanticheat.util.ClientBrandUtil;
 import com.justdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.messaging.Messenger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -80,6 +82,9 @@ public enum FlappyAnticheat {
         this.alertManager = new AlertManager();
         loadCommands();
         CheckManager.setup();
+
+        Messenger messenger = Bukkit.getMessenger();
+        messenger.registerIncomingPluginChannel(FlappyAnticheat.INSTANCE.getPlugin(), "minecraft:brand", new ClientBrandUtil());
 
         Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new BukkitEventListener(), plugin);

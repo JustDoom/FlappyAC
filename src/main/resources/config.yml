@@ -1,7 +1,8 @@
 messages:
   prefix: "&9FlappyAC "
   output-to-console: false
-  failed-check: '&2{player} &7failed &2{check}&7(&2{checkType}&7) &2{vl}&7/&2{maxvl}'
+  failed-check: "&2{player} &7failed &2{check}&7(&2{checkType}&7) &2{vl}&7/&2{maxvl}"
+  player-join: "&2{player} &7joined using &2{brand}&7/&2{version}"
   hover:  |
     &7Description: &2{description}
     &7Debug: &2{debug}

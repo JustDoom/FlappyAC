@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.listener;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
+import com.justdoom.flappyanticheat.util.ClientBrandUtil;
 import io.github.retrooper.packetevents.event.PacketEvent;
 import io.github.retrooper.packetevents.event.PacketListener;
 import io.github.retrooper.packetevents.event.impl.PostPlayerInjectEvent;

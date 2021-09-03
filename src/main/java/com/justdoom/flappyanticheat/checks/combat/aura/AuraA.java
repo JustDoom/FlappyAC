@@ -12,7 +12,6 @@ public class AuraA extends Check {
     private long lastSent;
     private double verbose;
 
-
     public AuraA(FlappyPlayer data) {
         super(data);
     }

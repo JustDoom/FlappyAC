@@ -86,6 +86,7 @@ public abstract class Check {
             //TODO: make click command more secure
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
 
+            // Loop through players with alerts enabled
             //TODO: Improve alert toggle
             for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
                 Player player = Bukkit.getPlayer(uuid);
