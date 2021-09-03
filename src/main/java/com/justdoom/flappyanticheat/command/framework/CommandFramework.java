@@ -27,8 +27,8 @@ public class CommandFramework implements CommandExecutor {
 
     private FlappyAnticheatPlugin plugin;
 
-    public CommandFramework(FlappyAnticheatPlugin plugin) {
-        this.plugin = plugin;
+    public CommandFramework() {
+        this.plugin = FlappyAnticheat.INSTANCE.getPlugin();
         if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
             SimplePluginManager manager = (SimplePluginManager)plugin.getServer().getPluginManager();
             try {
@@ -107,7 +107,7 @@ public class CommandFramework implements CommandExecutor {
     }
 
     public void registerHelp() {
-        Set<HelpTopic> help = new TreeSet<>((Comparator<? super HelpTopic>)HelpTopicComparator.helpTopicComparatorInstance());
+        Set<HelpTopic> help = new TreeSet<>(HelpTopicComparator.helpTopicComparatorInstance());
         for (String s : this.commandMap.keySet()) {
             if (!s.contains(".")) {
                 Command cmd = this.map.getCommand(s);

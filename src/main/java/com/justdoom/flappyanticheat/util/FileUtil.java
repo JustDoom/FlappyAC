@@ -36,7 +36,7 @@ public class FileUtil {
     }
 
     // Log file functions
-    public void addToFile(String fileName, String message) {
+    public static void addToFile(String fileName, String message) {
         File log = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), fileName);
         try {
             if(!log.exists()){
@@ -50,7 +50,7 @@ public class FileUtil {
         }
     }
 
-    public void createFiles(String name) {
+    public static void createFiles(String name) {
         if (!new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name).exists()) {
             File todayFile = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name);
             try {

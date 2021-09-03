@@ -78,7 +78,7 @@ public enum FlappyAnticheat {
         // Load/Register everything
         tickManager.start();
         dataManager = new PlayerDataManager();
-        commandFramework = new CommandFramework(plugin);
+        commandFramework = new CommandFramework();
         this.alertManager = new AlertManager();
         loadCommands();
         CheckManager.setup();

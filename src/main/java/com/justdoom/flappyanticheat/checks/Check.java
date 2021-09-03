@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;
+import com.justdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.PacketEvent;
 import lombok.Getter;
@@ -70,7 +71,7 @@ public abstract class Check {
                             + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
                             .replace("{player}", data.getPlayer().getName())
                             .replace("{check}", check)
-                            .replace("{checkType}", checkType))
+                            .replace("{checktype}", checkType))
                     .replace("{vl}", String.valueOf(vl))
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
@@ -93,6 +94,16 @@ public abstract class Check {
                 if (!player.hasPermission("flappyac.alerts")) continue;
                 player.spigot().sendMessage(component);
             }
+
+            if(FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "violation-log", "enabled").getBoolean())
+                FileUtil.addToFile("violations.txt",
+                        FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "violation-log", "message").getString()
+                                .replace("{check}", check)
+                                .replace("{checktype}", checkType)
+                                .replace("{player}", data.getPlayer().getName())
+                                .replace("{vl}", String.valueOf(vl))
+                                .replace("{maxvl}", String.valueOf(maxVl)));
+
             /**
              * Disabled lagBacks for now
              */
@@ -122,11 +133,18 @@ public abstract class Check {
                 } catch (SerializationException e){
                     e.printStackTrace();
                 }
+
+                if(FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "punishment-log", "enabled").getBoolean())
+                    FileUtil.addToFile("punishments.txt",
+                            FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "punishment-log", "message").getString()
+                                    .replace("{check}", check)
+                                    .replace("{checktype}", checkType)
+                                    .replace("{player}", data.getPlayer().getName()));
             }
         });
     }
 
-    public void loadConfigOptions() {
+    private void loadConfigOptions() {
         final ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
         maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
     }
