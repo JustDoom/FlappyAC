@@ -13,7 +13,7 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - run: mvn --batch-mode --update-snapshots verify
-      - run: mkdir staging && cp target/*.jar staging
+      - run: mkdir staging && cp plugin/target/*.jar staging
       - uses: actions/upload-artifact@v2
         with:
           name: Package
