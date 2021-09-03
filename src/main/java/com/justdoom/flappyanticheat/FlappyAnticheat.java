@@ -22,6 +22,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -74,6 +75,13 @@ public enum FlappyAnticheat {
             System.exit(1);
             return;
         }
+
+        //Load metrics
+
+        int pluginId = 11300;
+        Metrics metrics = new Metrics(getPlugin(), pluginId);
+
+        metrics.addCustomChart(new Metrics.SimplePie("used_language", () -> getPlugin().getConfig().getString("language", "en")));
 
         // Load/Register everything
         tickManager.start();
