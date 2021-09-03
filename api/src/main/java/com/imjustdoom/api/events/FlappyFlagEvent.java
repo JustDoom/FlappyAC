@@ -1,7 +1,6 @@
 package com.imjustdoom.api.events;
 
-import com.justdoom.flappyanticheat.FlappyAnticheat;
-import com.justdoom.flappyanticheat.checks.Check;
+import com.imjustdoom.api.check.FlappyCheck;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -9,16 +8,16 @@ import org.bukkit.event.HandlerList;
 
 public class FlappyFlagEvent extends Event implements Cancellable {
 
-    //TODO: Change config when options are changed through the api
+    //TODO: Change config when options are changed through the api?
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player flaggedPlayer;
     private boolean isCancelled, isPunishable, isLagbackable;
-    private Check check;
+    private FlappyCheck check;
     private int vl, maxVl;
 
-    public FlappyFlagEvent(Player player, Check check) {
+    public FlappyFlagEvent(Player player, FlappyCheck check) {
         super(true);
         this.flaggedPlayer = player;
         this.isCancelled = false;
@@ -26,7 +25,7 @@ public class FlappyFlagEvent extends Event implements Cancellable {
         this.isPunishable = check.isPunishable();
         this.vl = check.getVl();
         this.maxVl = check.getMaxVl();
-        this.isLagbackable = check.lagbackable;
+        this.isLagbackable = check.isLagbackable();
     }
 
     @Override
@@ -52,7 +51,7 @@ public class FlappyFlagEvent extends Event implements Cancellable {
         return this.flaggedPlayer;
     }
 
-    public Check getCheck() {
+    public FlappyCheck getCheck() {
         return this.check;
     }
 

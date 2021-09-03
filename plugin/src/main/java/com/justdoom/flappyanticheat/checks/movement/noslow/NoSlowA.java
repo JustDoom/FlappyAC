@@ -1,7 +1,7 @@
 package com.justdoom.flappyanticheat.checks.movement.noslow;
 
 import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.checks.CheckInfo;
+import com.imjustdoom.api.check.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;

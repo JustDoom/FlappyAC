@@ -27,11 +27,6 @@
             <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.imjustdoom</groupId>
-            <artifactId>FlappyAC</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 
 </project>

@@ -1,5 +1,7 @@
 package com.justdoom.flappyanticheat.checks;
 
+import com.imjustdoom.api.check.CheckInfo;
+import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.events.FlappyFlagEvent;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
@@ -23,7 +25,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public abstract class Check {
+public abstract class Check implements FlappyCheck {
 
     public String check, checkType, description;
     public boolean experimental, punishable, lagbackable;
@@ -150,5 +152,14 @@ public abstract class Check {
         final ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
         maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
         punishable = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punishable").getBoolean();
+    }
+
+    public CheckInfo getCheckInfo() {
+        if (this.getClass().isAnnotationPresent(CheckInfo.class)) {
+            return this.getClass().getAnnotation(CheckInfo.class);
+        } else {
+            System.err.println("CheckInfo annotation hasn't been added to the class " + this.getClass().getSimpleName() + ".");
+        }
+        return null;
     }
 }

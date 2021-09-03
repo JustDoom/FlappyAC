@@ -2,7 +2,7 @@ package com.justdoom.flappyanticheat.checks.player.scaffold;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.justdoom.flappyanticheat.checks.Check;
-import com.justdoom.flappyanticheat.checks.CheckInfo;
+import com.imjustdoom.api.check.CheckInfo;
 import com.justdoom.flappyanticheat.data.FlappyPlayer;
 import com.justdoom.flappyanticheat.exempt.type.ExemptType;
 import com.justdoom.flappyanticheat.packet.Packet;

@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.checks;
+package com.imjustdoom.api.check;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
