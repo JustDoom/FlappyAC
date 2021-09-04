@@ -34,4 +34,20 @@
         </resources>
     </build>
 
+    <repositories>
+        <repository>
+            <id>jitpack-repo</id>
+            <url>https://jitpack.io/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.retrooper</groupId>
+            <artifactId>packetevents</artifactId>
+            <version>093c45609c</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
 </project>
