@@ -122,8 +122,7 @@ public abstract class Check implements FlappyCheck {
             }**/
 
             // Check if violations are equal to or bigger than the max violations
-            if (vl >= maxVl && FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
-                    checkType.toLowerCase(), "punishable").getBoolean()) {
+            if (vl >= maxVl && punishable) {
 
                 // Fire FlappyPunishPlayerEvent and check if it was cancelled
                 FlappyPunishPlayerEvent punishEvent = new FlappyPunishPlayerEvent(data.getPlayer(), this);

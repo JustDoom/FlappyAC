@@ -1,8 +1,8 @@
 package com.imjustdoom.flappyanticheat;
 
-import com.imjustdoom.flappyanticheat.command.framework.CommandFramework;
-import com.imjustdoom.flappyanticheat.command.impl.FlappyCommand;
-import com.imjustdoom.flappyanticheat.command.impl.sub.AlertsCommand;
+import com.imjustdoom.flappyanticheat.commands.framework.CommandFramework;
+import com.imjustdoom.flappyanticheat.commands.impl.FlappyCommand;
+import com.imjustdoom.flappyanticheat.commands.impl.sub.AlertsCommand;
 import com.imjustdoom.flappyanticheat.listener.BukkitEventListener;
 import com.imjustdoom.flappyanticheat.listener.NetworkListener;
 import com.imjustdoom.flappyanticheat.listener.PlayerConnectionListener;
