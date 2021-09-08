@@ -4,6 +4,7 @@ import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.ClientBrandUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PostPlayerInjectEvent;
@@ -15,6 +16,8 @@ public class NetworkListener extends PacketListenerAbstract {
 
     @Override
     public void onPostPlayerInject(final PostPlayerInjectEvent event) {
+
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer())) return;
 
         FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
         FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
