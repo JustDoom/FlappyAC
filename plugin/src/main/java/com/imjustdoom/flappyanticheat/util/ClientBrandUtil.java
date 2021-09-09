@@ -1,6 +1,7 @@
 package com.imjustdoom.flappyanticheat.util;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
+import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -16,8 +17,7 @@ public class ClientBrandUtil implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player p, byte[] msg) {
         try {
-            String message = FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix").getString()
-                    + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "player-join").getString();
+            String message = Config.Prefix.PREFIX + Config.Alerts.PLAYER_JOIN;
 
             FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p.getPlayer());
 

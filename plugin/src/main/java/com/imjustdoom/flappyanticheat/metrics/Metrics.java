@@ -1,4 +1,4 @@
-package com.imjustdoom.flappyanticheat;
+package com.imjustdoom.flappyanticheat.metrics;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

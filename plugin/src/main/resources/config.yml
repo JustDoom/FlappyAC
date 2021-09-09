@@ -1,6 +1,10 @@
-messages:
-  prefix: "&9FlappyAC "
+prefix: "&9FlappyAC "
+
+settings:
   output-to-console: false
+  join-exemption: 5000
+
+alerts:
   failed-check: "&2{player} &7failed &2{check}&7(&2{checkyype}&7) &2{vl}&7/&2{maxvl}"
   player-join: "&2{player} &7joined using &2{brand}&7/&2{version}"
   hover:  |

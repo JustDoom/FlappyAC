@@ -1,8 +1,6 @@
 package com.imjustdoom.flappyanticheat;
 
-import com.imjustdoom.flappyanticheat.commands.framework.CommandFramework;
-import com.imjustdoom.flappyanticheat.commands.impl.FlappyCommand;
-import com.imjustdoom.flappyanticheat.commands.impl.sub.AlertsCommand;
+import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.listener.BukkitEventListener;
 import com.imjustdoom.flappyanticheat.listener.NetworkListener;
 import com.imjustdoom.flappyanticheat.listener.PlayerConnectionListener;
@@ -10,6 +8,7 @@ import com.imjustdoom.flappyanticheat.manager.AlertManager;
 import com.imjustdoom.flappyanticheat.manager.CheckManager;
 import com.imjustdoom.flappyanticheat.manager.PlayerDataManager;
 import com.imjustdoom.flappyanticheat.manager.TickManager;
+import com.imjustdoom.flappyanticheat.metrics.Metrics;
 import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import com.imjustdoom.flappyanticheat.util.ClientBrandUtil;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
@@ -33,9 +32,6 @@ public enum FlappyAnticheat {
 
     private PlayerDataManager dataManager;
 
-    private CommentedConfigurationNode configFile;
-    private CommandFramework commandFramework;
-
     private final TickManager tickManager = new TickManager();
     private AlertManager alertManager;
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
@@ -46,34 +42,8 @@ public enum FlappyAnticheat {
     public void start(final FlappyAnticheatPlugin plugin) {
         this.plugin = plugin;
 
-        // Create the config file
-        try {
-            if(!FileUtil.doesFileExist(plugin.getDataFolder().getPath()))
-                FileUtil.createDirectory(plugin.getDataFolder().getPath());
-
-            if(!FileUtil.doesFileExist(plugin.getDataFolder() + "/config.yml"))
-                FileUtil.addConfig(plugin.getDataFolder() + "/config.yml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Set where we want to load and save the config from
-        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Paths.get(plugin.getDataFolder() + "/config.yml"))
-                .build();
-
-        // Load the config
-        try {
-            configFile = loader.load();
-            plugin.getLogger().info("Config has been loaded");
-        } catch (IOException e) {
-            System.err.println("An error occurred while loading this configuration: " + e.getMessage());
-            if (e.getCause() != null) {
-                e.getCause().printStackTrace();
-            }
-            System.exit(1);
-            return;
-        }
+        // Load config
+        Config.load();
 
         //Load metrics
 
@@ -85,7 +55,6 @@ public enum FlappyAnticheat {
         // Load/Register everything
         tickManager.start();
         dataManager = new PlayerDataManager();
-        commandFramework = new CommandFramework();
         this.alertManager = new AlertManager();
         loadCommands();
         CheckManager.setup();
@@ -100,9 +69,7 @@ public enum FlappyAnticheat {
     }
 
     public void loadCommands(){
-        // For each command you have to create a new instance for it
-        new FlappyCommand();
-        new AlertsCommand();
+
     }
 
     public void stop(final FlappyAnticheatPlugin plugin) {

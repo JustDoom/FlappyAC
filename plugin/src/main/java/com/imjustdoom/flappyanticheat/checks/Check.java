@@ -5,9 +5,11 @@ import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.events.FlappyFlagEvent;
 import com.imjustdoom.api.events.FlappyPunishPlayerEvent;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
+import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
+import com.imjustdoom.flappyanticheat.util.Color;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
@@ -72,9 +74,8 @@ public abstract class Check implements FlappyCheck {
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
 
             // Alert message
-            final TextComponent component = new TextComponent(ChatColor.translateAlternateColorCodes('&',
-                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "prefix").getString()
-                            + FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "failed-check").getString()
+            final TextComponent component = new TextComponent(Color.translate(Config.Prefix.PREFIX
+                            + Config.Alerts.FAILED_CHECK
                             .replace("{player}", data.getPlayer().getName())
                             .replace("{check}", check)
                             .replace("{checktype}", checkType))
@@ -82,8 +83,8 @@ public abstract class Check implements FlappyCheck {
                     .replace("{maxvl}", String.valueOf(maxVl)));
 
             // Alert hover message
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',
-                    FlappyAnticheat.INSTANCE.getConfigFile().node("messages", "hover").getString()
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(
+                    Config.Alerts.HOVER
                             .replace("{description}", description)
                             .replace("{debug}", debug)
                             .replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
@@ -101,9 +102,9 @@ public abstract class Check implements FlappyCheck {
                 player.spigot().sendMessage(component);
             }
 
-            if(FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "violation-log", "enabled").getBoolean())
+            if(Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",
-                        FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "violation-log", "message").getString()
+                        Config.Logs.ViolationLog.MESSAGE
                                 .replace("{check}", check)
                                 .replace("{checktype}", checkType)
                                 .replace("{player}", data.getPlayer().getName())
@@ -144,9 +145,9 @@ public abstract class Check implements FlappyCheck {
                     e.printStackTrace();
                 }
 
-                if(FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "punishment-log", "enabled").getBoolean())
+                if(Config.Logs.PunishmentLog.ENABLED)
                     FileUtil.addToFile("punishments.txt",
-                            FlappyAnticheat.INSTANCE.getConfigFile().node("logs", "punishment-log", "message").getString()
+                            Config.Logs.PunishmentLog.MESSAGE
                                     .replace("{check}", check)
                                     .replace("{checktype}", checkType)
                                     .replace("{player}", data.getPlayer().getName()));
