@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -36,6 +37,7 @@ public abstract class Check implements FlappyCheck {
     public CheckInfo checkData;
     private int maxVl, vl;
     public double buffer;
+    public List<String> commands;
 
     public Check(final FlappyPlayer data) {
         this.data = data;
@@ -47,7 +49,15 @@ public abstract class Check implements FlappyCheck {
         this.experimental = checkData.experimental();
         this.description = checkData.description();
 
-        loadConfigOptions();
+        ConfigurationNode config = Config.getConfigurationSection(check.toLowerCase(), checkType.toLowerCase());
+
+        this.maxVl = config.node("punish-vl").getInt();
+        this.punishable = config.node("punishable").getBoolean();
+        try {
+            this.commands = config.node("punish-commands").getList(String.class);
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract void handle(final Packet packet);
@@ -74,7 +84,7 @@ public abstract class Check implements FlappyCheck {
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
 
             // Alert message
-            final TextComponent component = new TextComponent(Color.translate(Config.Prefix.PREFIX
+            final TextComponent component = new TextComponent(Color.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
                             .replace("{player}", data.getPlayer().getName())
                             .replace("{check}", check)
@@ -133,16 +143,11 @@ public abstract class Check implements FlappyCheck {
                 vl = 0;
 
                 // Run punishment keys
-                try {
-                    for (String command : FlappyAnticheat.INSTANCE.getConfigFile().node("checks", check.toLowerCase(),
-                            checkType.toLowerCase(), "punish-commands").getList(String.class)) {
-                        command = command.replace("{player}", data.getPlayer().getName());
-                        String finalCommand = command;
-                        Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
-                    }
-                } catch (SerializationException e){
-                    e.printStackTrace();
+                for (String command : commands) {
+                    command = command.replace("{player}", data.getPlayer().getName());
+                    String finalCommand = command;
+                    Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
                 }
 
                 if(Config.Logs.PunishmentLog.ENABLED)
@@ -153,12 +158,6 @@ public abstract class Check implements FlappyCheck {
                                     .replace("{player}", data.getPlayer().getName()));
             }
         });
-    }
-
-    private void loadConfigOptions() {
-        final ConfigurationNode config = FlappyAnticheat.INSTANCE.getConfigFile();
-        maxVl = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punish-vl").getInt();
-        punishable = config.node("checks", check.toLowerCase(), checkType.toLowerCase(), "punishable").getBoolean();
     }
 
     // Credit to medusa anticheat

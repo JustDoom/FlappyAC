@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class AlertManager {
     @Getter
-    private Set<UUID> toggledAlerts;
+    public Set<UUID> toggledAlerts;
 
     public void toggleAlerts(Player player){
         if (this.toggledAlerts.contains(player.getUniqueId()))

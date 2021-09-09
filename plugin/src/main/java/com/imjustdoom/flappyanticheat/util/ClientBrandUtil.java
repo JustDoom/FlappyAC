@@ -17,7 +17,7 @@ public class ClientBrandUtil implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player p, byte[] msg) {
         try {
-            String message = Config.Prefix.PREFIX + Config.Alerts.PLAYER_JOIN;
+            String message = Config.PREFIX + Config.Alerts.PLAYER_JOIN;
 
             FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p.getPlayer());
 

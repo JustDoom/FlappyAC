@@ -3,6 +3,7 @@ package com.imjustdoom.flappyanticheat.config;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
@@ -10,9 +11,9 @@ import java.nio.file.Paths;
 
 public class Config {
 
-    public static class Prefix {
-        public static String PREFIX;
-    }
+    public static CommentedConfigurationNode configFile;
+
+    public static String PREFIX;
 
     public static class Settings {
         public static boolean OUTPUT_TO_CONSOLE;
@@ -23,6 +24,8 @@ public class Config {
         public static String FAILED_CHECK;
         public static String PLAYER_JOIN;
         public static String HOVER;
+        public static String TOGGLE_ALERTS_ON;
+        public static String TOGGLE_ALERTS_OFF;
     }
 
     public static class Logs {
@@ -37,9 +40,11 @@ public class Config {
         }
     }
 
-    public static void load() {
+    public static class Messages {
+        public static String RELOAD;
+    }
 
-        CommentedConfigurationNode configFile;
+    public static void load() {
 
         // Create the config file
         try {
@@ -70,7 +75,7 @@ public class Config {
             return;
         }
 
-        Prefix.PREFIX = configFile.node("prefix").getString();
+        PREFIX = configFile.node("prefix").getString();
 
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
         Settings.JOIN_EXEMPTION = configFile.node("join-exemption").getInt();
@@ -78,11 +83,19 @@ public class Config {
         Alerts.FAILED_CHECK = configFile.node("alerts", "failed-check").getString();
         Alerts.PLAYER_JOIN = configFile.node("alerts", "player-join").getString();
         Alerts.HOVER = configFile.node("alerts", "hover").getString();
+        Alerts.TOGGLE_ALERTS_ON = configFile.node("alerts", "toggle-alerts-on").getString();
+        Alerts.TOGGLE_ALERTS_OFF = configFile.node("alerts", "toggle-alerts-off").getString();
 
         Logs.PunishmentLog.ENABLED = configFile.node("logs", "punishment-log", "enabled").getBoolean();
         Logs.PunishmentLog.MESSAGE = configFile.node("logs", "punishment-log", "message").getString();
 
         Logs.ViolationLog.ENABLED = configFile.node("logs", "violation-log", "enabled").getBoolean();
         Logs.ViolationLog.MESSAGE = configFile.node("logs", "violation-log", "message").getString();
+
+        Messages.RELOAD = configFile.node("messages", "reload").getString();
+    }
+
+    public static ConfigurationNode getConfigurationSection(String check, String type) {
+        return configFile.node("checks", check, type);
     }
 }
