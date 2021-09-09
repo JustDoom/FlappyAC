@@ -84,7 +84,5 @@ public class Config {
 
         Logs.ViolationLog.ENABLED = configFile.node("logs", "violation-log", "enabled").getBoolean();
         Logs.ViolationLog.MESSAGE = configFile.node("logs", "violation-log", "message").getString();
-
-        configFile.
     }
 }

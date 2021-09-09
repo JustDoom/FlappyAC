@@ -16,9 +16,7 @@ public class FlappyACCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("flappyanticheat") || command.getName().equalsIgnoreCase("flappyac")){
 
-            if(args.length == 0) {
-                sender.sendMessage("FlappyAC {version}");
-            }
+            if(args.length == 0) sender.sendMessage("FlappyAC {version}");
 
             switch (args[0].toUpperCase()) {
                 case "reload":
