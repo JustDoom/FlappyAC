@@ -7,7 +7,7 @@ settings:
 alerts:
   toggle-alerts-on: "Alerts have been toggled on"
   toggle-alerts-off: "Alerts have been toggled off"
-  failed-check: "&2{player} &7failed &2{check}&7(&2{checkytype}&7) &2{vl}&7/&2{maxvl}"
+  failed-check: "&2{player} &7failed &2{check}&7(&2{checktype}&7) &2{vl}&7/&2{maxvl}"
   player-join: "&2{player} &7joined using &2{brand}&7/&2{version}"
   hover:  |
     &7Description: &2{description}
@@ -26,6 +26,7 @@ logs:
 
 messages:
   reload: "&7Reloaded the config"
+  reset-all-violations: "&7Reset violations"
 
 checks:
   #-------------------------

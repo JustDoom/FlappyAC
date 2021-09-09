@@ -42,6 +42,7 @@ public class Config {
 
     public static class Messages {
         public static String RELOAD;
+        public static String RESET_ALL_VIOLATIONS;
     }
 
     public static void load() {
@@ -93,6 +94,7 @@ public class Config {
         Logs.ViolationLog.MESSAGE = configFile.node("logs", "violation-log", "message").getString();
 
         Messages.RELOAD = configFile.node("messages", "reload").getString();
+        Messages.RESET_ALL_VIOLATIONS = configFile.node("messages", "reset-all-violations").getString();
     }
 
     public static ConfigurationNode getConfigurationSection(String check, String type) {

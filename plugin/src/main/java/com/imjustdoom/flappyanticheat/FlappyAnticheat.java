@@ -1,5 +1,7 @@
 package com.imjustdoom.flappyanticheat;
 
+import com.imjustdoom.flappyanticheat.commands.FlappyACCommand;
+import com.imjustdoom.flappyanticheat.commands.FlappyACTabCompletion;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.listener.BukkitEventListener;
 import com.imjustdoom.flappyanticheat.listener.NetworkListener;
@@ -65,11 +67,14 @@ public enum FlappyAnticheat {
         Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new BukkitEventListener(), plugin);
 
+        loadCommands();
+
         PacketEvents.get().registerListener(new NetworkListener());
     }
 
     public void loadCommands(){
-
+        getPlugin().getCommand("flappyac").setExecutor(new FlappyACCommand());
+        getPlugin().getCommand("flappyac").setTabCompleter(new FlappyACTabCompletion());
     }
 
     public void stop(final FlappyAnticheatPlugin plugin) {

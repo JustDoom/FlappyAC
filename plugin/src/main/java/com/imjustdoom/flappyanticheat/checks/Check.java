@@ -87,15 +87,15 @@ public abstract class Check implements FlappyCheck {
             final TextComponent component = new TextComponent(Color.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
                             .replace("{player}", data.getPlayer().getName())
-                            .replace("{check}", check)
-                            .replace("{checktype}", checkType))
-                    .replace("{vl}", String.valueOf(vl))
-                    .replace("{maxvl}", String.valueOf(maxVl)));
+                            .replace("{check}", getCheck())
+                            .replace("{checktype}", getCheckType()))
+                    .replace("{vl}", String.valueOf(getVl()))
+                    .replace("{maxvl}", String.valueOf(getMaxVl())));
 
             // Alert hover message
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(
                     Config.Alerts.HOVER
-                            .replace("{description}", description)
+                            .replace("{description}", getDescription())
                             .replace("{debug}", debug)
                             .replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
                             .replace("{ping}", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
@@ -115,11 +115,11 @@ public abstract class Check implements FlappyCheck {
             if(Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",
                         Config.Logs.ViolationLog.MESSAGE
-                                .replace("{check}", check)
-                                .replace("{checktype}", checkType)
+                                .replace("{check}", getCheck())
+                                .replace("{checktype}", getCheckType())
                                 .replace("{player}", data.getPlayer().getName())
-                                .replace("{vl}", String.valueOf(vl))
-                                .replace("{maxvl}", String.valueOf(maxVl)));
+                                .replace("{vl}", String.valueOf(getVl()))
+                                .replace("{maxvl}", String.valueOf(getMaxVl())));
 
             /**
              * Disabled lagBacks for now
@@ -133,17 +133,17 @@ public abstract class Check implements FlappyCheck {
             }**/
 
             // Check if violations are equal to or bigger than the max violations
-            if (vl >= maxVl && punishable) {
+            if (getVl() >= getMaxVl() && punishable) {
 
                 // Fire FlappyPunishPlayerEvent and check if it was cancelled
                 FlappyPunishPlayerEvent punishEvent = new FlappyPunishPlayerEvent(data.getPlayer(), this);
                 Bukkit.getPluginManager().callEvent(punishEvent);
                 if(punishEvent.isCancelled()) return;
 
-                vl = 0;
+                setVl(0);
 
                 // Run punishment keys
-                for (String command : commands) {
+                for (String command : getCommands()) {
                     command = command.replace("{player}", data.getPlayer().getName());
                     String finalCommand = command;
                     Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
@@ -153,8 +153,8 @@ public abstract class Check implements FlappyCheck {
                 if(Config.Logs.PunishmentLog.ENABLED)
                     FileUtil.addToFile("punishments.txt",
                             Config.Logs.PunishmentLog.MESSAGE
-                                    .replace("{check}", check)
-                                    .replace("{checktype}", checkType)
+                                    .replace("{check}", getCheck())
+                                    .replace("{checktype}", getCheckType())
                                     .replace("{player}", data.getPlayer().getName()));
             }
         });

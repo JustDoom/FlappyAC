@@ -9,3 +9,10 @@ permissions:
 
   flappyac.alerts:
     description: Allows viewing of alerts
+
+  flappyac.commands:
+    description: Commands permission
+
+commands:
+  flappyac:
+    aliases: flappyanticheat
