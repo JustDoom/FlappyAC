@@ -57,6 +57,8 @@ public class Packet {
         return isReceiving() && PacketType.Play.Client.Util.isInstanceOfFlying(packetId);
     }
 
+    public boolean isInventoryClick() { return packetId == PacketType.Play.Client.WINDOW_CLICK; }
+
     public boolean isUseEntity() {
         return isReceiving() && packetId == PacketType.Play.Client.USE_ENTITY;
     }

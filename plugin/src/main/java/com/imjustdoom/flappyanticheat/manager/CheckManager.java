@@ -10,6 +10,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
+import com.imjustdoom.flappyanticheat.checks.player.inventory.InventoryA;
 import com.imjustdoom.flappyanticheat.checks.player.scaffold.ScaffoldA;
 import com.imjustdoom.flappyanticheat.checks.player.scaffold.ScaffoldB;
 import com.imjustdoom.flappyanticheat.checks.player.skinblinker.SkinBlinkerA;
@@ -41,7 +42,8 @@ public class CheckManager {
             TimerA.class,
             BadPacketsA.class,
             BadPacketsB.class,
-            BadPacketsC.class
+            BadPacketsC.class,
+            InventoryA.class
     };
 
     private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
