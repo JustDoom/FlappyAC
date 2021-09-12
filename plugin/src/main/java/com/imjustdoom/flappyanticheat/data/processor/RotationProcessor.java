@@ -8,13 +8,16 @@ public class RotationProcessor {
 
     private FlappyPlayer data;
 
-    private float yaw, pitch;
+    private float yaw, pitch, lastYaw, lastPitch;
 
     public RotationProcessor(FlappyPlayer data) {
         this.data = data;
     }
 
     public void handle(final float yaw, final float pitch) {
+        this.lastYaw = this.yaw;
+        this.lastPitch = this.pitch;
+
         this.yaw = yaw;
         this.pitch = pitch;
     }

@@ -10,6 +10,7 @@ public class ActionProcessor {
     private FlappyPlayer player;
 
     private Block lastBlockPlaced, blockPlacedAgainst;
+    private boolean open;
 
     public ActionProcessor(FlappyPlayer player){
         this.player = player;
@@ -18,5 +19,9 @@ public class ActionProcessor {
     public void handleBlockPlace(Block blockPlaced, Block blockAgainst){
         lastBlockPlaced = blockPlaced;
         blockPlacedAgainst = blockAgainst;
+    }
+
+    public void handleInventory(boolean isOpen) {
+        this.open = isOpen;
     }
 }

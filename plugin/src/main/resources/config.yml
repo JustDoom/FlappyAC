@@ -92,13 +92,32 @@ checks:
   inventory:
     a:
       enabled: true
-        min-tps: 17.0
-        punishable: true
-        broadcast-punishment: true
-        vl: 1
-        punish-vl: 2
-        punish-commands:
-          - "kick {player} FlappyAC > Suspicious Activity"
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 2
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+    b:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+    #Currently falses
+    c:
+      enabled: false
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
   scaffold:
     a:
       enabled: true
