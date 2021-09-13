@@ -18,11 +18,11 @@ public class InventoryC extends Check {
         if(!packet.isLook() && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
-        System.out.println(data.getRotationProcessor().getYaw());
+        /**System.out.println(data.getRotationProcessor().getYaw());
         System.out.println(data.getRotationProcessor().getLastYaw());
         System.out.println(data.getRotationProcessor().getPitch());
         System.out.println(data.getRotationProcessor().getLastPitch());
-        System.out.println(data.getPlayer().getAllowFlight());
+        System.out.println(data.getPlayer().getAllowFlight());**/
 
         if(data.getActionProcessor().isOpen() && (data.getRotationProcessor().getYaw() != data.getRotationProcessor().getLastYaw()
                 || data.getRotationProcessor().getPitch() != data.getRotationProcessor().getLastPitch())

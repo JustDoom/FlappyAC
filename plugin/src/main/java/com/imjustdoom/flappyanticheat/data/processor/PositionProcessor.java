@@ -27,7 +27,7 @@ public class PositionProcessor {
 
     private float fallHeight;
 
-    private int airTicks;
+    private int airTicks, waterTicks;
 
     private final List<Block> blocks = new ArrayList<>();
     private final List<Block> blocksNear = new ArrayList<>();
@@ -173,6 +173,7 @@ public class PositionProcessor {
 
     public void handleTicks(){
         airTicks = inAir ? airTicks + 1 : 0;
+        waterTicks = inLiquid ? waterTicks + 1 : 0;
     }
 
     public Block getBlock(final Location location) {
