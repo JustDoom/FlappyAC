@@ -6,7 +6,7 @@
 
     <groupId>com.justdoom</groupId>
     <artifactId>FlappyAnticheat</artifactId>
-    <version>1.7.4-BETA</version>
+    <version>1.7.5-BETA</version>
     <packaging>jar</packaging>
 
     <name>FlappyAnticheat</name>

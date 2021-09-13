@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.checks.player.badpackets;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 
@@ -12,6 +13,7 @@ public class BadPacketsA extends Check {
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 

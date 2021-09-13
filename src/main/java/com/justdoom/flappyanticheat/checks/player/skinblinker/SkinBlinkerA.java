@@ -2,6 +2,7 @@ package com.justdoom.flappyanticheat.checks.player.skinblinker;
 
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
@@ -17,7 +18,7 @@ public class SkinBlinkerA extends Check {
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
-
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
         if (event.getPacketId() == PacketType.Play.Client.SETTINGS){
             WrappedPacketInSettings packet = new WrappedPacketInSettings(event.getNMSPacket());
             Player player = event.getPlayer();

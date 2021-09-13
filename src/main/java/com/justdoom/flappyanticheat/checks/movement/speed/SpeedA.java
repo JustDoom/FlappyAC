@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,6 +29,8 @@ public class SpeedA extends Check implements Listener {
     public void onPacketPlayReceive(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer().getUniqueId());
+
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         //pos stuff
         data.lastOnGround = data.onGround;

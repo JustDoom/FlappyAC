@@ -5,6 +5,7 @@ import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
@@ -37,6 +38,7 @@ public class GroundSpoofA extends Check {
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent e) {
         Player player = e.getPlayer();
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(e.getPlayer().getPlayer())) return;
 
         if (e.getPacketId() == PacketType.Play.Client.POSITION || e.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 

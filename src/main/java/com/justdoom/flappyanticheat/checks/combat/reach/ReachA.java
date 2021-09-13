@@ -4,6 +4,7 @@ import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.data.PlayerData;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PacketPlaySendEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
@@ -41,6 +42,8 @@ public class ReachA extends Check {
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
         PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer().getUniqueId());
+
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
             WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(event.getNMSPacket());

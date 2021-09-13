@@ -168,3 +168,13 @@ checks:
       punish-commands:
         - "kick {player} FlappyAC > Suspicious Activity"
       vl: 20
+  inventory:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      punish-vl: 40
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+      vl: 20

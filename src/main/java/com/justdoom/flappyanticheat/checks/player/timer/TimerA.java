@@ -2,6 +2,7 @@ package com.justdoom.flappyanticheat.checks.player.timer;
 
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class TimerA extends Check {
     public void onPacketPlayReceive(PacketPlayReceiveEvent e) {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(e.getPlayer().getPlayer())) return;
 
         if (e.getPacketId() == PacketType.Play.Client.POSITION || e.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 

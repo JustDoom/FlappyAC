@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks.player.blockplace;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
+import io.github.retrooper.packetevents.PacketEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -23,7 +24,7 @@ public class BlockPlaceA extends Check implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
         if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
 

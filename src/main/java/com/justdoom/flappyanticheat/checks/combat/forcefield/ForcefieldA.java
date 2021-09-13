@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.checks.combat.forcefield;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
@@ -16,6 +17,8 @@ public class ForcefieldA extends Check {
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
+
+        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         if(event.getPacketId() == PacketType.Play.Client.FLYING ||
                 event.getPacketId() == PacketType.Play.Client.POSITION_LOOK ||
