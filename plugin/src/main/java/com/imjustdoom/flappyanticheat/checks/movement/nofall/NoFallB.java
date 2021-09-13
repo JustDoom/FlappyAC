@@ -43,7 +43,6 @@ public class NoFallB extends Check {
         for(int x = loc.getBlockX(); x <= loc.getBlockX(); x++) {
             for(int z = loc.getBlockZ(); z <= loc.getBlockZ(); z++) {
                 blocks.add(loc.getWorld().getBlockAt(x, loc.getBlockY(), z).getType());
-                data.getPlayer().sendMessage(String.valueOf(loc.getWorld().getBlockAt(x, loc.getBlockY(), z).getType()));
             }
         }
 
