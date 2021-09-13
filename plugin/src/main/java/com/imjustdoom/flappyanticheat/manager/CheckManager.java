@@ -7,6 +7,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyB;
 import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyC;
 import com.imjustdoom.flappyanticheat.checks.movement.nofall.NoFallA;
+import com.imjustdoom.flappyanticheat.checks.movement.nofall.NoFallB;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
@@ -29,6 +30,7 @@ public class CheckManager {
     public static final Class<?>[] CHECKS = new Class[]{
             //Movement
             NoFallA.class,
+            NoFallB.class,
             FlyA.class,
             FlyB.class,
             ScaffoldA.class,

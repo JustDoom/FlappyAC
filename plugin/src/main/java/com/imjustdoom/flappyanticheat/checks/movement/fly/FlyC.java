@@ -23,7 +23,7 @@ public class FlyC extends Check {
         final double deltaY = data.getPositionProcessor().getDeltaY();
         final int airTicks = data.getPositionProcessor().getAirTicks();
 
-        if(airTicks > 10 && accel <= 0 && deltaY > 0)
+        if(airTicks > 10 && accel > 0 && deltaY > 0 && lastAccel <= 0)
             fail("Air: " + airTicks + " accel: " + accel, false);
 
         lastAccel = accel;
