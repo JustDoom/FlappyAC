@@ -5,10 +5,10 @@ public interface FlappyCheck {
     CheckInfo getCheckInfo();
 
     int getMaxVl();
-    int setMaxVl(int maxVl);
+    void setMaxVl(int maxVl);
 
     int getVl();
-    int setVl(int vl);
+    void setVl(int vl);
 
     boolean isPunishable();
 
