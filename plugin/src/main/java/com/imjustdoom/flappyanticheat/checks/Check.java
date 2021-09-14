@@ -30,13 +30,13 @@ import java.util.UUID;
 @Setter
 public abstract class Check implements FlappyCheck {
 
-    public String check, checkType, description;
-    public boolean experimental, punishable, lagbackable;
-    public FlappyPlayer data;
-    public CheckInfo checkData;
+    private String check, checkType, description;
+    private boolean experimental, punishable, lagbackable;
+    private FlappyPlayer data;
+    private CheckInfo checkData;
     private int maxVl, vl;
     public double buffer;
-    public List<String> commands;
+    private List<String> commands;
 
     public Check(final FlappyPlayer data) {
         this.data = data;

@@ -56,7 +56,7 @@ public class CheckManager {
             InventoryC.class
     };
 
-    private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
+    public static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
 
     public static List<Check> loadChecks(final FlappyPlayer player) {
         List<Check> checkList = new ArrayList<>();

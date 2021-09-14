@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.data;
 
+import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.data.FlappyPlayerAPI;
 import com.imjustdoom.api.events.FlappyLoadPlayerEvent;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
@@ -14,6 +15,7 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +38,8 @@ public class FlappyPlayer implements FlappyPlayerAPI {
 
     public FlappyPlayer(Player player){
 
+
+
         this.player = player;
         clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
 
@@ -56,5 +60,29 @@ public class FlappyPlayer implements FlappyPlayerAPI {
         // Fire FlappyPunishPlayerEvent and check if it was cancelled
         FlappyLoadPlayerEvent loadPlayerEvent = new FlappyLoadPlayerEvent(this);
         Bukkit.getPluginManager().callEvent(loadPlayerEvent);
+    }
+
+    @Override
+    public void addCheck(FlappyCheck check) {
+        for (Constructor<?> constructor : CheckManager.CONSTRUCTORS) {
+            try {
+                //System.out.println("check loaded");
+                checks.add((Check) constructor.newInstance(player));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void removeCheck(FlappyCheck check) {
+        for (Constructor<?> constructor : CheckManager.CONSTRUCTORS) {
+            try {
+                //System.out.println("check loaded");
+                checks.remove((Check) constructor.newInstance(player));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 }

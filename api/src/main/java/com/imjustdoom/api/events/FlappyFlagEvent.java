@@ -13,19 +13,14 @@ public class FlappyFlagEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player flaggedPlayer;
-    private boolean isCancelled, isPunishable, isLagbackable;
+    private boolean isCancelled;
     private FlappyCheck check;
-    private int vl, maxVl;
 
     public FlappyFlagEvent(Player player, FlappyCheck check) {
         super(true);
         this.flaggedPlayer = player;
         this.isCancelled = false;
         this.check = check;
-        this.isPunishable = check.isPunishable();
-        this.vl = check.getVl();
-        this.maxVl = check.getMaxVl();
-        this.isLagbackable = check.isLagbackable();
     }
 
     @Override
@@ -53,37 +48,5 @@ public class FlappyFlagEvent extends Event implements Cancellable {
 
     public FlappyCheck getCheck() {
         return this.check;
-    }
-
-    public boolean isPunishable() {
-        return this.isPunishable;
-    }
-
-    public void setPunishable(boolean punishable) {
-        this.isPunishable = punishable;
-    }
-
-    public int getViolations() {
-        return this.vl;
-    }
-
-    public void setViolations(int violations) {
-        this.vl = violations;
-    }
-
-    public int getMaxViolations() {
-        return this.maxVl;
-    }
-
-    public void setMaxViolations(int maxViolations) {
-        this.maxVl = maxViolations;
-    }
-
-    public boolean isLagbackable() {
-        return this.isLagbackable;
-    }
-
-    public void setLagbackable(boolean isLagbackable) {
-        this.isLagbackable = isLagbackable;
     }
 }
