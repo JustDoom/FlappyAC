@@ -26,7 +26,7 @@ public class NoFallB extends Check {
     @Override
     public void handle(Packet packet) {
 
-        if(!packet.isPosition()
+        if (!packet.isPosition()
                 && !packet.isLook()
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
@@ -40,13 +40,13 @@ public class NoFallB extends Check {
         final Location loc = new Location(data.getPlayer().getWorld(), data.getPositionProcessor().getX(),
                 data.getPositionProcessor().getY() - 2, data.getPositionProcessor().getZ());
 
-        for(int x = loc.getBlockX(); x <= loc.getBlockX(); x++) {
-            for(int z = loc.getBlockZ(); z <= loc.getBlockZ(); z++) {
+        for (int x = loc.getBlockX(); x <= loc.getBlockX(); x++) {
+            for (int z = loc.getBlockZ(); z <= loc.getBlockZ(); z++) {
                 blocks.add(loc.getWorld().getBlockAt(x, loc.getBlockY(), z).getType());
             }
         }
 
-        if(fallDistance < lastFallDistance && airTicks > 10 && !blocks.contains(XMaterial.AIR.parseMaterial())){
+        if (fallDistance < lastFallDistance && airTicks > 10 && !blocks.contains(XMaterial.AIR.parseMaterial())) {
             fail("fallDistance: " + fallDistance + " lastFallDistance: " + lastFallDistance
                     + " blocks: " + !blocks.contains(XMaterial.AIR.parseMaterial()), false);
         }

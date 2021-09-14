@@ -23,14 +23,10 @@ public class BukkitEventListener implements Listener {
 
     @EventHandler
     public void onInventoryOpen(final InventoryOpenEvent event) {
-        System.out.println(event.getPlayer().getUniqueId());
         final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
-
-        System.out.println(player.getPlayer().getDisplayName());
 
         // Handle the event
         if (player != null) {
-            System.out.println("NOT EVEN NULLLLLLLL");
             player.getActionProcessor().handleInventory(true);
         }
     }

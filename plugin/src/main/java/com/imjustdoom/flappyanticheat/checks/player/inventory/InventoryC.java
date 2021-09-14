@@ -6,7 +6,7 @@ import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Inventory", checkType = "C", experimental = false, description = "Attacking while clicking in an inventory")
+@CheckInfo(check = "Inventory", checkType = "C", experimental = true, description = "Attacking while clicking in an inventory")
 public class InventoryC extends Check {
 
     public InventoryC(FlappyPlayer data) {
@@ -15,14 +15,8 @@ public class InventoryC extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if(!packet.isLook() && !packet.isPositionLook()
+        if(!packet.isLook() && !packet.isPositionLook() && !packet.isPosition()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
-
-        /**System.out.println(data.getRotationProcessor().getYaw());
-        System.out.println(data.getRotationProcessor().getLastYaw());
-        System.out.println(data.getRotationProcessor().getPitch());
-        System.out.println(data.getRotationProcessor().getLastPitch());
-        System.out.println(data.getPlayer().getAllowFlight());**/
 
         if(data.getActionProcessor().isOpen() && (data.getRotationProcessor().getYaw() != data.getRotationProcessor().getLastYaw()
                 || data.getRotationProcessor().getPitch() != data.getRotationProcessor().getLastPitch())
