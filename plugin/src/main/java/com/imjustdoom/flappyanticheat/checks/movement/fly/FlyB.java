@@ -10,7 +10,7 @@ import com.imjustdoom.flappyanticheat.packet.Packet;
 @CheckInfo(check = "Fly",checkType = "B",experimental = false,description = "checks for mid air jump")
 public class FlyB extends Check {
 
-    private int verbose;
+    private boolean wentDown;
 
     public FlyB(FlappyPlayer data) {
         super(data);
@@ -18,22 +18,25 @@ public class FlyB extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if(packet.isFlying()) {
+        if (packet.isPosition() || packet.isPositionLook()) {
 
-            final PositionProcessor positionProcessor = data.getPositionProcessor();
+            //both things here can false from velocity. just return on velocity
+            if (isExempt(ExemptType.VELOCITY, ExemptType.PISTON)) return;
 
-            final double deltaY = positionProcessor.getDeltaY();
-            final double lastDeltaY = positionProcessor.getLastDeltaY();
+            boolean isExempt1 = isExempt(/**ExemptType.PLACING, ExemptType.CLIMBABLE, ExemptType.STEPPED,**/
+                    ExemptType.LIQUID /**ExemptType.SLIME, ExemptType.WEB, ExemptType.TELEPORT**/);
 
-            if (isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE,ExemptType.LIQUID)) return;
+            //check if their deltaY is less than previous, and set our wentDown boolean to true if so.
+            if (!data.getPositionProcessor().isOnGround() && !data.getPlayer().isFlying() && !isExempt1) {
+                if (data.getPositionProcessor().getDeltaY() < data.getPositionProcessor().getLastDeltaY())
+                    wentDown = true;
+            } else wentDown = false;
 
-            final int airTicks = positionProcessor.getAirTicks();
-
-            if(airTicks > 6 && deltaY > lastDeltaY) {
-                if(++verbose > 3) {
-                    fail("dY=" + deltaY +" lDY=" + lastDeltaY,true);
-                }
-            } else verbose *= 0.9;
+            //check if theyre heading back up after previous going down. dont run if theyre placing blocks (can false)
+            if (data.getPositionProcessor().getDeltaY() > data.getPositionProcessor().getLastDeltaY() &&
+                    wentDown && data.getPositionProcessor().getDeltaY() > data.getPositionProcessor().getLastLastDeltaY()) {
+                fail("", false);
+            }
         }
     }
 }

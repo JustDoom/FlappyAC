@@ -23,7 +23,7 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ;
+            lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ, lastLastDeltaY;
 
     private float fallHeight;
 
@@ -52,6 +52,8 @@ public class PositionProcessor {
         this.z = z;
 
         this.onGround = onGround;
+
+        lastLastDeltaY = lastDeltaY;
 
         // Set last delta
         lastDeltaX = deltaX;

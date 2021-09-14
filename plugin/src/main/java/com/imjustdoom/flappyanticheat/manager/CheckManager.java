@@ -3,6 +3,7 @@ package com.imjustdoom.flappyanticheat.manager;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.checks.combat.aura.AuraA;
 import com.imjustdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
+import com.imjustdoom.flappyanticheat.checks.movement.boatfly.BoatFlyA;
 import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyB;
 import com.imjustdoom.flappyanticheat.checks.movement.fly.FlyC;
@@ -38,6 +39,7 @@ public class CheckManager {
             //SpeedA.class,
             NoSlowA.class,
             FlyC.class,
+            BoatFlyA.class,
 
             //Combat
             CrititcalsA.class,
