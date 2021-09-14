@@ -32,7 +32,7 @@ public abstract class Check implements FlappyCheck {
 
     private String check, checkType, description;
     private boolean experimental, punishable, lagbackable;
-    private FlappyPlayer data;
+    public FlappyPlayer data;
     private CheckInfo checkData;
     private int maxVl, vl;
     public double buffer;
