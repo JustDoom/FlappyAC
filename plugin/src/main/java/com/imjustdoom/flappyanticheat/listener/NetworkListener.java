@@ -4,6 +4,7 @@ import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.ClientBrandUtil;
+import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
@@ -41,7 +42,10 @@ public class NetworkListener extends PacketListenerAbstract {
                     || Math.abs(wrapper.getZ()) > 1.0E+7
                     || Math.abs(wrapper.getPitch()) > 1.0E+7
                     || Math.abs(wrapper.getYaw()) > 1.0E+7) {
-                Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> event.getPlayer().kickPlayer("No"));
+                Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> {
+                    event.getPlayer().kickPlayer("No");
+                    MessageUtil.toConsole("No");
+                });
                 return;
             }
         }

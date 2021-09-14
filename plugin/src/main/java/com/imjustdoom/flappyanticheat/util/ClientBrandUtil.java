@@ -34,6 +34,8 @@ public class ClientBrandUtil implements PluginMessageListener {
                 if (!player.hasPermission("flappyac.alerts")) continue;
                 player.sendMessage(message);
             }
+
+            MessageUtil.toConsole(message);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -4,14 +4,13 @@ import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.util.Color;
+import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
 import java.util.UUID;
 
 public class FlappyACCommand implements CommandExecutor {
@@ -28,7 +27,7 @@ public class FlappyACCommand implements CommandExecutor {
             switch (args[0].toLowerCase()) {
                 case "reload":
                     Config.load();
-                    sender.sendMessage(Color.translate(Config.Messages.RELOAD));
+                    sender.sendMessage(MessageUtil.translate(Config.Messages.RELOAD));
                     break;
 
                 case "violations":
@@ -44,16 +43,16 @@ public class FlappyACCommand implements CommandExecutor {
                     }
 
                     for(UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
-                        Bukkit.getPlayer(uuid).sendMessage(Color.translate(Config.Messages.RESET_ALL_VIOLATIONS));
+                        Bukkit.getPlayer(uuid).sendMessage(MessageUtil.translate(Config.Messages.RESET_ALL_VIOLATIONS));
                     }
                     break;
 
                 case "alerts":
                     FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts((Player) sender);
                     if(FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts().contains((Player) sender))
-                        sender.sendMessage(Color.translate(Config.Alerts.TOGGLE_ALERTS_OFF));
+                        sender.sendMessage(MessageUtil.translate(Config.Alerts.TOGGLE_ALERTS_OFF));
                     else
-                        sender.sendMessage(Color.translate(Config.Alerts.TOGGLE_ALERTS_ON));
+                        sender.sendMessage(MessageUtil.translate(Config.Alerts.TOGGLE_ALERTS_ON));
 
                     break;
 

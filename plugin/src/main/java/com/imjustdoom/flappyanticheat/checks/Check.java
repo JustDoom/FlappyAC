@@ -9,12 +9,11 @@ import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import com.imjustdoom.flappyanticheat.util.Color;
+import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -84,7 +83,7 @@ public abstract class Check implements FlappyCheck {
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
 
             // Alert message
-            final TextComponent component = new TextComponent(Color.translate(Config.PREFIX
+            final TextComponent component = new TextComponent(MessageUtil.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
                             .replace("{player}", data.getPlayer().getName())
                             .replace("{check}", getCheck())
@@ -93,7 +92,7 @@ public abstract class Check implements FlappyCheck {
                     .replace("{maxvl}", String.valueOf(getMaxVl())));
 
             // Alert hover message
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Color.translate(
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(MessageUtil.translate(
                     Config.Alerts.HOVER
                             .replace("{description}", getDescription())
                             .replace("{debug}", debug)
@@ -111,6 +110,8 @@ public abstract class Check implements FlappyCheck {
                 if (!player.hasPermission("flappyac.alerts")) continue;
                 player.spigot().sendMessage(component);
             }
+
+            MessageUtil.toConsole(component.getText());
 
             if(Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",

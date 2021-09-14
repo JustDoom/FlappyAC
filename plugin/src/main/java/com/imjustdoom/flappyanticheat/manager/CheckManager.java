@@ -62,7 +62,7 @@ public class CheckManager {
         List<Check> checkList = new ArrayList<>();
         for (Constructor<?> constructor : CONSTRUCTORS) {
             try {
-                System.out.println("check loaded");
+                //System.out.println("check loaded");
                 checkList.add((Check) constructor.newInstance(player));
             } catch (Exception exception) {
                 exception.printStackTrace();
