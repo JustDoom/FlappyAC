@@ -21,6 +21,7 @@
     <modules>
         <module>plugin</module>
         <module>api</module>
+        <module>ExampleAPI</module>
     </modules>
 
     <repositories>
