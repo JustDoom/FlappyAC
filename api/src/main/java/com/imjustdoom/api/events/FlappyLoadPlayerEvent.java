@@ -35,4 +35,8 @@ public class FlappyLoadPlayerEvent extends Event {
     public ClientVersion getClientVersion() {
         return player.getClientVersion();
     }
+
+    public String getClientBrand() {
+        return player.getClientBrand();
+    }
 }

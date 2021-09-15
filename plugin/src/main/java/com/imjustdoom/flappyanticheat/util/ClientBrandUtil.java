@@ -36,6 +36,8 @@ public class ClientBrandUtil implements PluginMessageListener {
             }
 
             MessageUtil.toConsole(message);
+
+            data.setBrand(new String(msg, "UTF-8").substring(1));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

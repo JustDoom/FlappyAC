@@ -26,6 +26,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
 
     private final Player player;
     private final ClientVersion clientVersion;
+    private String clientBrand;
 
     private final long joinTime = System.currentTimeMillis();
     private final List<FlappyCheck> checks = CheckManager.loadChecks(this);

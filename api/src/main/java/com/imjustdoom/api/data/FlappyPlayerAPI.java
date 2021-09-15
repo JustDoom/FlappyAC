@@ -10,6 +10,8 @@ public interface FlappyPlayerAPI {
 
     ClientVersion getClientVersion();
 
+    String getClientBrand();
+
     Player getPlayer();
 
     long getJoinTime();

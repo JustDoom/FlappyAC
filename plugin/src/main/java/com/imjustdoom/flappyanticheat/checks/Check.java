@@ -73,7 +73,7 @@ public abstract class Check implements FlappyCheck {
         // Make sure player is online
         if(!data.getPlayer().isOnline()) return;
 
-        // Fire FlappyFlagEvent and check if it was cancelled
+        // Fire FlappyPreFlagEvent and check if it was cancelled
         FlappyFlagEvent flagEvent = new FlappyFlagEvent(data.getPlayer(), this);
         Bukkit.getPluginManager().callEvent(flagEvent);
         if(flagEvent.isCancelled()) return;

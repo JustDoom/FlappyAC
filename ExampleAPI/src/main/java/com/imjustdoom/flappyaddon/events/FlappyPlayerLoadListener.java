@@ -12,5 +12,9 @@ public class FlappyPlayerLoadListener implements Listener {
         if(event.getClientVersion() == ClientVersion.v_1_10) {
             event.getPlayer().sendMessage("Why are you even on this version...");
         }
+
+        if(event.getClientBrand().equalsIgnoreCase("vanilla")) {
+            event.getPlayer().sendMessage("You are on the " + event.getClientBrand() + " client but hack clients can spoof this");
+        }
     }
 }
