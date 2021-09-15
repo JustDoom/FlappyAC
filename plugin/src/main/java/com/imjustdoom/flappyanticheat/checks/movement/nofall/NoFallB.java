@@ -21,8 +21,6 @@ public class NoFallB extends Check {
         super(player);
     }
 
-    private double lastFallDistance;
-
     @Override
     public void handle(Packet packet) {
 
@@ -33,24 +31,23 @@ public class NoFallB extends Check {
                 ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE)) return;
 
         int airTicks = data.getPositionProcessor().getAirTicks();
-        double fallDistance = data.getPlayer().getFallDistance();
+        double fallDistance = data.getPositionProcessor().getFallDistance();
 
 
         List<Material> blocks = new ArrayList<>();
-        final Location loc = new Location(data.getPlayer().getWorld(), data.getPositionProcessor().getX(),
+        /**final Location loc = new Location(data.getPlayer().getWorld(), data.getPositionProcessor().getX(),
                 data.getPositionProcessor().getY() - 2, data.getPositionProcessor().getZ());
 
         for (int x = loc.getBlockX(); x <= loc.getBlockX(); x++) {
             for (int z = loc.getBlockZ(); z <= loc.getBlockZ(); z++) {
                 blocks.add(loc.getWorld().getBlockAt(x, loc.getBlockY(), z).getType());
             }
-        }
+         && !blocks.contains(XMaterial.AIR.parseMaterial())
+        }**/
 
-        if (fallDistance < lastFallDistance && airTicks > 10 && !blocks.contains(XMaterial.AIR.parseMaterial())) {
-            fail("fallDistance: " + fallDistance + " lastFallDistance: " + lastFallDistance
-                    + " blocks: " + !blocks.contains(XMaterial.AIR.parseMaterial()), false);
+        if (data.getPositionProcessor().getLastFallDistance() < data.getPositionProcessor().getLastLastFallDistance() && airTicks > 10 && !data.getPositionProcessor().isOnGround()) {
+            fail("fallDistance: " + fallDistance + " lastFallDistance: " + data.getPositionProcessor().getLastFallDistance()
+                    + " blocks: " + !data.getPositionProcessor().isOnGround(), false);
         }
-
-        lastFallDistance = fallDistance;
     }
 }

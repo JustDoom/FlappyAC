@@ -23,7 +23,7 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            lastFallHeight, lastLastFallHeight, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ, lastLastDeltaY;
+            fallDistance, lastFallDistance, lastLastFallDistance, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ, lastLastDeltaY;
 
     private float fallHeight;
 
@@ -71,7 +71,11 @@ public class PositionProcessor {
         playerLastHeight = playerHeight;
         playerHeight = player.getPlayer().getFallDistance();
 
-        lastLastFallHeight = lastFallHeight;
+        lastLastFallDistance = lastFallDistance;
+        lastFallDistance = fallDistance;
+        fallDistance = player.getPlayer().getFallDistance();
+
+        /**lastLastFallHeight = lastFallHeight;
         lastFallHeight = fallHeight;
 
         if (deltaY < 0.0) {
@@ -80,7 +84,7 @@ public class PositionProcessor {
 
         if (lastOnGround) {
             fallHeight = 0.0f;
-        }
+        }**/
 
         // Handle collisions
         handleCollisions(0);
