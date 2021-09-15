@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     private final ClientVersion clientVersion;
 
     private final long joinTime = System.currentTimeMillis();
-    private final List<Check> checks = CheckManager.loadChecks(this);
+    private final List<FlappyCheck> checks = CheckManager.loadChecks(this);
 
     private final PositionProcessor positionProcessor;
     private final RotationProcessor rotationProcessor;
@@ -37,8 +38,6 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     private final ExemptManager exemptManager;
 
     public FlappyPlayer(Player player){
-
-
 
         this.player = player;
         clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
@@ -84,5 +83,14 @@ public class FlappyPlayer implements FlappyPlayerAPI {
                 exception.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public List<FlappyCheck> getChecks() {
+        List<FlappyCheck> checks = new ArrayList<>();
+        for(FlappyCheck check:this.checks){
+            checks.add(check);
+        }
+        return checks;
     }
 }

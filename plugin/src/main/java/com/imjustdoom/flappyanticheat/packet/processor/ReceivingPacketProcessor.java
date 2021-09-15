@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.packet.processor;
 
+import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
@@ -36,8 +37,8 @@ public class ReceivingPacketProcessor {
 
         if (player.getPlayer().hasPermission("flappyac.bypass")) return;
 
-        for (final Check check : player.getChecks()) {
-            check.handle(packet);
+        for (final FlappyCheck check : player.getChecks()) {
+            ((Check) check).handle(packet);
         }
     }
 }

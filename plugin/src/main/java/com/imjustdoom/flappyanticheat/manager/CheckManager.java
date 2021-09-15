@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.manager;
 
+import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.checks.combat.aura.AuraA;
 import com.imjustdoom.flappyanticheat.checks.combat.criticals.CrititcalsA;
@@ -58,8 +59,8 @@ public class CheckManager {
 
     public static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
 
-    public static List<Check> loadChecks(final FlappyPlayer player) {
-        List<Check> checkList = new ArrayList<>();
+    public static List<FlappyCheck> loadChecks(final FlappyPlayer player) {
+        List<FlappyCheck> checkList = new ArrayList<>();
         for (Constructor<?> constructor : CONSTRUCTORS) {
             try {
                 //System.out.println("check loaded");

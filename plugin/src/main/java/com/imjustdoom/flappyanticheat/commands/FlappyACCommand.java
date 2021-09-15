@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.commands;
 
+import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.config.Config;
@@ -37,7 +38,7 @@ public class FlappyACCommand implements CommandExecutor {
                         FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(player);
                         if(data == null) continue;
 
-                        for(Check check : data.getChecks()) {
+                        for(FlappyCheck check : data.getChecks()) {
                             check.setVl(0);
                         }
                     }
