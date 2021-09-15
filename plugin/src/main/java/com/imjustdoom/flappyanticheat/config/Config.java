@@ -14,6 +14,7 @@ public class Config {
     public static CommentedConfigurationNode configFile;
 
     public static String PREFIX;
+    public static int CONFIG_VERSION;
 
     public static class Settings {
         public static boolean OUTPUT_TO_CONSOLE;
@@ -77,6 +78,7 @@ public class Config {
         }
 
         PREFIX = configFile.node("prefix").getString();
+        CONFIG_VERSION = configFile.node("config-version").getInt();
 
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
         Settings.JOIN_EXEMPTION = configFile.node("join-exemption").getInt();
@@ -95,6 +97,10 @@ public class Config {
 
         Messages.RELOAD = configFile.node("messages", "reload").getString();
         Messages.RESET_ALL_VIOLATIONS = configFile.node("messages", "reset-all-violations").getString();
+
+        if(CONFIG_VERSION != FlappyAnticheat.INSTANCE.getConfigVersion()) {
+            FlappyAnticheat.INSTANCE.getPlugin().getLogger().info("Config is out of date, please update it");
+        }
     }
 
     public static ConfigurationNode getConfigurationSection(String check, String type) {

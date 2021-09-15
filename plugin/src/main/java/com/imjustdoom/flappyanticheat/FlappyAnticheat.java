@@ -32,10 +32,12 @@ public enum FlappyAnticheat {
 
     private FlappyAnticheatPlugin plugin;
 
-    private PlayerDataManager dataManager;
+    public int configVersion = 1;
 
+    private PlayerDataManager dataManager;
     private final TickManager tickManager = new TickManager();
     private AlertManager alertManager;
+
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
 
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
