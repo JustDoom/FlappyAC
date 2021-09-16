@@ -1,11 +1,12 @@
 package com.imjustdoom.flappyanticheat.checks.movement.speed;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Speed", checkType = "A", experimental = false, description = "Not Fly")
+@CheckInfo(check = "Speed", checkType = "A", experimental = false, description = "Not Fly", type = CheckType.MOVEMENT)
 public class SpeedA extends Check{
 
     public SpeedA(FlappyPlayer data) {

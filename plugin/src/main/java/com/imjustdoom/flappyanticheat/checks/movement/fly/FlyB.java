@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.checks.movement.fly;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -7,7 +8,7 @@ import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Fly",checkType = "B",experimental = false,description = "checks for mid air jump")
+@CheckInfo(check = "Fly",checkType = "B",experimental = false,description = "checks for mid air jump", type = CheckType.MOVEMENT)
 public class FlyB extends Check {
 
     private boolean wentDown;

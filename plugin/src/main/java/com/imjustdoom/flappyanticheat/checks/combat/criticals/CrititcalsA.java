@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.checks.combat.criticals;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -7,7 +8,7 @@ import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 
-@CheckInfo(check = "Criticals", checkType = "A", experimental = false, description = "Checks if the player says it's falling but isn't")
+@CheckInfo(check = "Criticals", checkType = "A", experimental = false, description = "Checks if the player says it's falling but isn't", type = CheckType.COMBAT)
 public class CrititcalsA extends Check {
 
     private int buffer = 0;

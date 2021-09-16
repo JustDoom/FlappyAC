@@ -1,12 +1,13 @@
 package com.imjustdoom.flappyanticheat.checks.movement.boatfly;
 
 import com.imjustdoom.api.check.CheckInfo;
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "BoarFly", checkType = "A", experimental = false, description = "Going up in a boat")
+@CheckInfo(check = "BoarFly", checkType = "A", experimental = false, description = "Going up in a boat", type = CheckType.MOVEMENT)
 public class BoatFlyA extends Check {
 
     private double stableY;

@@ -1,12 +1,13 @@
 package com.imjustdoom.flappyanticheat.checks.player.skinblinker;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "SkinBlinker", checkType = "A", experimental = false, description = "Skin settings being changed when crouching/sprinting")
+@CheckInfo(check = "SkinBlinker", checkType = "A", experimental = false, description = "Skin settings being changed when crouching/sprinting", type = CheckType.PLAYER)
 public class SkinBlinkerA extends Check {
 
     public SkinBlinkerA(FlappyPlayer data) {

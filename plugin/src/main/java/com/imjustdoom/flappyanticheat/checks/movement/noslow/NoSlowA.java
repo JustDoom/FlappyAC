@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.checks.movement.noslow;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -7,7 +8,7 @@ import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.utils.player.ClientVersion;
 
-@CheckInfo(check = "NoSlow", checkType = "A", experimental = false, description = "Checks if the player is sprinting at an impossible time (1.8 only)")
+@CheckInfo(check = "NoSlow", checkType = "A", experimental = false, description = "Checks if the player is sprinting at an impossible time (1.8 only)", type = CheckType.MOVEMENT)
 public class NoSlowA extends Check {
 
     public NoSlowA(FlappyPlayer player) {

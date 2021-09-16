@@ -1,12 +1,13 @@
 package com.imjustdoom.flappyanticheat.checks.player.timer;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Timer", checkType = "A", experimental = false, description = "Timer")
+@CheckInfo(check = "Timer", checkType = "A", experimental = false, description = "Timer", type = CheckType.PLAYER)
 public class TimerA extends Check {
 
     public TimerA(FlappyPlayer data) {

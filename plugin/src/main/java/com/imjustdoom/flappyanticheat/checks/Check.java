@@ -1,6 +1,7 @@
 package com.imjustdoom.flappyanticheat.checks;
 
 import com.imjustdoom.api.check.CheckInfo;
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.events.FlappyFlagEvent;
 import com.imjustdoom.api.events.FlappyPunishPlayerEvent;
@@ -34,6 +35,7 @@ public abstract class Check implements FlappyCheck {
     private boolean experimental, punishable, lagbackable;
     public FlappyPlayer data;
     private CheckInfo checkData;
+    private CheckType type;
     private int maxVl, vl;
     public double buffer;
     private List<String> commands;
@@ -47,6 +49,7 @@ public abstract class Check implements FlappyCheck {
         this.checkType = checkData.checkType();
         this.experimental = checkData.experimental();
         this.description = checkData.description();
+        this.type = checkData.type();
 
         ConfigurationNode config = Config.getConfigurationSection(check.toLowerCase(), checkType.toLowerCase());
 

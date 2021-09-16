@@ -1,11 +1,12 @@
 package com.imjustdoom.flappyanticheat.checks.player.badpackets;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "BadPackets", checkType = "A", experimental = false, description = "Checks for impossible pitch")
+@CheckInfo(check = "BadPackets", checkType = "A", experimental = false, description = "Checks for impossible pitch", type = CheckType.PLAYER)
 public class BadPacketsA extends Check {
 
     public BadPacketsA(FlappyPlayer data) {

@@ -1,6 +1,7 @@
 package com.imjustdoom.flappyanticheat.checks.player.scaffold;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -13,7 +14,7 @@ import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
 import java.util.List;
 
-@CheckInfo(check = "Scaffold", checkType = "A", experimental = false, description = "Checks if the player placed a block in the air")
+@CheckInfo(check = "Scaffold", checkType = "A", experimental = false, description = "Checks if the player placed a block in the air", type = CheckType.PLAYER)
 public class ScaffoldA extends Check {
 
     public ScaffoldA(final FlappyPlayer player){

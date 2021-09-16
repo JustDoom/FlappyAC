@@ -1,12 +1,13 @@
 package com.imjustdoom.flappyanticheat.checks.player.inventory;
 
 import com.imjustdoom.api.check.CheckInfo;
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Inventory", checkType = "C", experimental = true, description = "Attacking while clicking in an inventory")
+@CheckInfo(check = "Inventory", checkType = "C", experimental = true, description = "Attacking while clicking in an inventory", type = CheckType.PLAYER)
 public class InventoryC extends Check {
 
     public InventoryC(FlappyPlayer data) {

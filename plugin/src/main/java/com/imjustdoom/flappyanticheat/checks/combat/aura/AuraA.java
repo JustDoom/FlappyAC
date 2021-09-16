@@ -1,12 +1,13 @@
 package com.imjustdoom.flappyanticheat.checks.combat.aura;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 
-@CheckInfo(check = "Aura", checkType = "A", experimental = true, description = "check for correct order between packets ")
+@CheckInfo(check = "Aura", checkType = "A", experimental = true, description = "check for correct order between packets", type = CheckType.COMBAT)
 public class AuraA extends Check {
 
     private long lastSent;
