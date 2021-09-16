@@ -7,7 +7,7 @@ import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Fly", checkType = "A", experimental = false, description = "Fly", type = CheckType.MOVEMENT)
+@CheckInfo(check = "Fly", checkType = "A", experimental = false, description = "Floating and players Y staying the same", type = CheckType.MOVEMENT)
 public class FlyA extends Check {
 
     private double stableY;
