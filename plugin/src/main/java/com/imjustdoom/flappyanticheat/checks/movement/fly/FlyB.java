@@ -22,7 +22,7 @@ public class FlyB extends Check {
         if (packet.isPosition() || packet.isPositionLook()) {
 
             //both things here can false from velocity. just return on velocity
-            if (isExempt(ExemptType.VELOCITY, ExemptType.PISTON)) return;
+            if (isExempt(ExemptType.VELOCITY, ExemptType.PISTON, ExemptType.INSIDE_VEHICLE)) return;
 
             boolean isExempt1 = isExempt(/**ExemptType.PLACING, ExemptType.CLIMBABLE, ExemptType.STEPPED,**/
                     ExemptType.LIQUID /**ExemptType.SLIME, ExemptType.WEB, ExemptType.TELEPORT**/);

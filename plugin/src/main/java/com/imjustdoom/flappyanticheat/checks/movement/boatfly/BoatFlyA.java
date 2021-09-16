@@ -21,8 +21,6 @@ public class BoatFlyA extends Check {
 
     public void handle(final Packet packet) {
 
-        data.getPlayer().sendMessage(String.valueOf(data.getPlayer().isOnGround()));
-
         if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
 
         if(data.getPlayer().isInsideVehicle() && data.getPositionProcessor().getAirTicks() > 10
