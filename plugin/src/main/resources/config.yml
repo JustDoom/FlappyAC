@@ -85,6 +85,25 @@ checks:
       punish-vl: 5
       punish-commands:
         - "kick {player} FlappyAC > Suspicious Activity"
+  boatfly:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
+    b:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick {player} FlappyAC > Suspicious Activity"
 
   #-------------------------
   #         Combat
