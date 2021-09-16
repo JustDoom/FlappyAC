@@ -15,6 +15,9 @@ public class BadPacketsA extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        // Check if the packet is not a position or position look packet
+        // and if exempts are true, if true return
         if(!packet.isPosition() || !packet.isPositionLook()) return;
 
         // Check if the pitch is above or below 90F which is impossible

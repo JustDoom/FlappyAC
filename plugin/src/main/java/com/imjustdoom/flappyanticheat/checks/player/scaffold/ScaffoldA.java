@@ -24,6 +24,7 @@ public class ScaffoldA extends Check {
     @Override
     public void handle(Packet packet) {
 
+        // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isBlockPlace()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)
                 || data.getActionProcessor().getLastBlockPlaced() == null) return;
@@ -41,7 +42,7 @@ public class ScaffoldA extends Check {
         }};
 
         // Loop through the block materials the block was placed on
-        // and check if it was placed on air
+        // and check if it was placed on air or a liquid
         for (Material material : blockFace) {
             if (material != XMaterial.AIR.parseMaterial() && material != XMaterial.LAVA.parseMaterial()
                     && material != XMaterial.WATER.parseMaterial() && material != XMaterial.CAVE_AIR.parseMaterial()
@@ -50,6 +51,7 @@ public class ScaffoldA extends Check {
                 break;
             }
         }
+
         if (placedOnAir) {
             fail("faces=" + blockFace, false);
         }

@@ -18,11 +18,14 @@ public class NoSlowA extends Check {
     @Override
     public void handle(Packet packet) {
 
+        // Check if the packet is not a position or position look packet,
+        // if exempts are true and if the client version is not 1.8.X, if true return
         if(!packet.isPosition() && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)
                 || data.getClientVersion() != ClientVersion.v_1_8) return;
 
         // Check if the player is blocking with the sword or sneaking and sprinting at the same time
+        // This check is disabled on 1.9+ servers because you can now sprint while blocking
         if(data.getPlayer().isSprinting() && (data.getPlayer().isBlocking() || data.getPlayer().isSneaking())){
             fail("Sprinting: " + data.getPlayer().isSprinting() + "  Blocking: "
                     + data.getPlayer().isBlocking() + "  Sneaking: " + data.getPlayer().isSneaking(), false);

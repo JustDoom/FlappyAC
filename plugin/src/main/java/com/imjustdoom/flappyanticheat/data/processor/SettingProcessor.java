@@ -16,8 +16,9 @@ public class SettingProcessor {
     }
 
     public void handle(final WrappedPacketInSettings wrapper){
-        lastSkin = skin;
 
+        // Set last and current skin
+        lastSkin = skin;
         skin = wrapper.getDisplaySkinPartsMask();
     }
 }

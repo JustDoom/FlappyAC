@@ -21,6 +21,7 @@ public class FlappyACCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("flappyanticheat") || command.getName().equalsIgnoreCase("flappyac")){
 
+            // Check if the command has any arguments
             if(args.length == 0) {
                 sender.sendMessage("FlappyAC {version}");
                 return true;
@@ -33,8 +34,10 @@ public class FlappyACCommand implements CommandExecutor {
                     break;
 
                 case "violations":
+                    // Check if the right argument was used if it exists
                     if(args.length <= 1 || !args[1].equalsIgnoreCase("reset")) sender.sendMessage("Possible options are 'reset'");
 
+                    // Reset violations for every player
                     for(Player player : Bukkit.getOnlinePlayers()) {
                         FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(player);
                         if(data == null) continue;
@@ -44,12 +47,15 @@ public class FlappyACCommand implements CommandExecutor {
                         }
                     }
 
+                    // Send the reset all violations message
                     for(UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
                         Bukkit.getPlayer(uuid).sendMessage(MessageUtil.translate(Config.Messages.RESET_ALL_VIOLATIONS));
                     }
                     break;
 
                 case "alerts":
+
+                    // Toggle allerts
                     FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts((Player) sender);
                     if(FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts().contains((Player) sender))
                         sender.sendMessage(MessageUtil.translate(Config.Alerts.TOGGLE_ALERTS_OFF));
@@ -59,11 +65,14 @@ public class FlappyACCommand implements CommandExecutor {
                     break;
 
                 case "profile":
+
+                    // Check if command includes a player
                     if(args.length <= 1) {
                         sender.sendMessage("You must include a player");
                         return true;
                     }
 
+                    // Check if the player is valid
                     final Player p = Bukkit.getPlayer(args[1]);
                     if(p == null) {
                         sender.sendMessage("Invalid player");
@@ -73,6 +82,7 @@ public class FlappyACCommand implements CommandExecutor {
                     int movement = 0, combat = 0, player = 0;
                     FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p);
 
+                    // Add all the violations up
                     for(FlappyCheck check : data.getChecks()) {
                         switch (check.getCheckInfo().type()) {
                             case COMBAT:
@@ -87,6 +97,7 @@ public class FlappyACCommand implements CommandExecutor {
                         }
                     }
 
+                    // Send profile message
                     sender.sendMessage(
                             "Version: " + data.getClientVersion() +
                             "\nBrand: " + data.getClientBrand() +

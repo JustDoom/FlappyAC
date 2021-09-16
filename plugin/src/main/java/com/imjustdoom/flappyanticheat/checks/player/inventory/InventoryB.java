@@ -18,12 +18,12 @@ public class InventoryB extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        // Check if the packet is not a use entity packet and if exempts are true, if true return
         if(!packet.isUseEntity()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
-        //WrappedPacketInUseEntity wrappedPacketInUseEntity = new WrappedPacketInUseEntity(packet.getRawPacket());
-        //WrappedPacketInUseEntity.EntityUseAction action = wrappedPacketInUseEntity.getAction();
-
+        // Check if an inventory is open while attacking
         if(data.getActionProcessor().isOpen()) {
             fail("No Info", false);
         }

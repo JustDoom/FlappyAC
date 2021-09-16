@@ -15,6 +15,8 @@ public class RotationProcessor {
     }
 
     public void handle(final float yaw, final float pitch) {
+
+        // Set last and new pitch/yaw
         this.lastYaw = this.yaw;
         this.lastPitch = this.pitch;
 

@@ -3,7 +3,6 @@ package com.imjustdoom.flappyanticheat.listener;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import com.imjustdoom.flappyanticheat.util.ClientBrandUtil;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.PacketListenerAbstract;
@@ -18,13 +17,14 @@ public class NetworkListener extends PacketListenerAbstract {
     @Override
     public void onPostPlayerInject(final PostPlayerInjectEvent event) {
 
+        // Check if the player is a bedrock player, if so don't add them to the anticheat
         if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer())) return;
 
         FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
         FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
 
         Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                ClientBrandUtil.addChannel(event.getPlayer(), "minecraft:brand"));
+                ClientBrandListener.addChannel(event.getPlayer(), "minecraft:brand"));
     }
 
     @Override

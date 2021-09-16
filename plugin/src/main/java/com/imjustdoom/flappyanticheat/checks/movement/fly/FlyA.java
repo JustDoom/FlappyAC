@@ -18,6 +18,8 @@ public class FlyA extends Check {
 
     public void handle(final Packet packet) {
 
+        // Check if the packet is not a position packet
+        // and if exempts are true, if true return
         if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE)) return;
 
         // Checks if the Y says the same while in the air

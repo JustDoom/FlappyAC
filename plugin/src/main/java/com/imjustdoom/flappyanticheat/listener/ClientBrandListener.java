@@ -1,8 +1,9 @@
-package com.imjustdoom.flappyanticheat.util;
+package com.imjustdoom.flappyanticheat.listener;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
+import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,21 +13,20 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-public class ClientBrandUtil implements PluginMessageListener {
+public class ClientBrandListener implements PluginMessageListener {
 
     @Override
     public void onPluginMessageReceived(String channel, Player p, byte[] msg) {
         try {
             String message = Config.PREFIX + Config.Alerts.PLAYER_JOIN;
+            String brand = new String(msg, "UTF-8").substring(1);
 
             FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p.getPlayer());
 
-            message = ChatColor.translateAlternateColorCodes('&', message)
+            message = MessageUtil.translate(message)
                     .replace("{player}", p.getName())
-                    .replace("{brand}", new String(msg, "UTF-8").substring(1))
-                    .replace("{version}", data.getClientVersion().name()
-                            .replace("v_", "")
-                            .replace("_", "."));
+                    .replace("{brand}", brand)
+                    .replace("{version}", MessageUtil.translateVersion(data.getClientVersion().name()));
 
             //TODO: Improve alert toggle
             for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
@@ -37,7 +37,7 @@ public class ClientBrandUtil implements PluginMessageListener {
 
             MessageUtil.toConsole(message);
 
-            data.setClientBrand(new String(msg, "UTF-8").substring(1));
+            data.setClientBrand(brand);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

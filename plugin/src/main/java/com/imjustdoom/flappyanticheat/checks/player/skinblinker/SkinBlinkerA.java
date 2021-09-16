@@ -17,20 +17,23 @@ public class SkinBlinkerA extends Check {
     @Override
     public void handle(Packet packet){
 
-        // Check the packet type and exempts
+        // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isSetting()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
         // Get last skin
         int lastSkin = data.getSettingProcessor().getLastSkin();
 
+        // Check of the lastSkin has been set by the packet handler
         if (lastSkin == -1) return;
 
-        // Check if player is not able to change their skin settings and
-        // if the skin is different to the last skin
+        // Check if player is not able to change their skin settings
+        // (Sprinting/Crouching/Blocking/In Inventory)
+        // and if the skin is different to the last skin
         if ((data.getPlayer().isSprinting()
                 || data.getPlayer().isSneaking()
-                || data.getPlayer().isBlocking())
+                || data.getPlayer().isBlocking()
+                || data.getActionProcessor().isOpen())
                 && lastSkin != data.getSettingProcessor().getSkin())
             fail("&7last=&2" + lastSkin + " &7current=&2" + data.getSettingProcessor().getSkin(), false);
     }

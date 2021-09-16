@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.util;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,6 +19,11 @@ import java.util.logging.Level;
 
 public final class PlayerUtil {
 
+    /**
+     * Get the players ping
+     * @param player - Player to get the ping from
+     * @return - Returns the players ping
+     */
     public static int getPing(final Player player) {
         try {
             final Method handle = player.getClass().getMethod("getHandle");
@@ -32,11 +38,23 @@ public final class PlayerUtil {
         return -1;
     }
 
+    /**
+     * Checks if the player is on a climbable block
+     * @param player - Player to check if they are on a climbable
+     * @return - Returns if the player is on a climbable
+     */
     public static boolean isOnClimbable(final Player player) {
-        return player.getLocation().getBlock().getType() == Material.LADDER || player.getLocation().getBlock().getType() == Material.VINE;
+        return player.getLocation().getBlock().getType() == XMaterial.LADDER.parseMaterial()
+                || player.getLocation().getBlock().getType() == XMaterial.VINE.parseMaterial();
     }
 
-    //From AntiHaxerMan
+    /**
+     * Get all entities within a certain radius
+     * From AntiHaxerMan
+     * @param location - Location to get entities within the radius from
+     * @param radius - Radius to check
+     * @return - Returns the entities within the certain radius
+     */
     public static List<Entity> getEntitiesWithinRadius(final Location location, final double radius) {
         try {
             final double expander = 16.0D;
@@ -73,13 +91,18 @@ public final class PlayerUtil {
             }
 
             return entities;
-        } catch (final Throwable t) {
-            // I know stfu
+        } catch (final Throwable ignored) {
         }
 
         return null;
     }
 
+    /**
+     * Get the players potion level
+     * @param player - Player to check the potion effect from
+     * @param effect - The effect to check the level of
+     * @return - Returns the level of the effect
+     */
     public int getPotionLevel(final Player player, final PotionEffectType effect) {
         final int effectId = effect.getId();
 

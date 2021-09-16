@@ -41,8 +41,9 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     public FlappyPlayer(Player player){
 
         this.player = player;
-        clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+        this.clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
 
+        // Load the processors and exempt manager
         this.positionProcessor = new PositionProcessor(this);
         this.rotationProcessor = new RotationProcessor(this);
         this.velocityProcessor = new VelocityProcessor(this);
@@ -51,13 +52,15 @@ public class FlappyPlayer implements FlappyPlayerAPI {
         this.exemptManager = new ExemptManager(this);
 
         //TODO: Improve alert toggle and join message
+
+        // Send client join brand message
         for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
             Player player1 = Bukkit.getPlayer(uuid);
             if (!player1.hasPermission("flappyac.alerts")) continue;
             player1.sendMessage(player.getDisplayName() + " has joined on version " + clientVersion.name());
         }
 
-        // Fire FlappyPunishPlayerEvent and check if it was cancelled
+        // Fire FlappyLoadPlayerEvent
         FlappyLoadPlayerEvent loadPlayerEvent = new FlappyLoadPlayerEvent(this);
         Bukkit.getPluginManager().callEvent(loadPlayerEvent);
     }
@@ -66,7 +69,6 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     public void addCheck(FlappyCheck check) {
         for (Constructor<?> constructor : CheckManager.CONSTRUCTORS) {
             try {
-                //System.out.println("check loaded");
                 checks.add((Check) constructor.newInstance(player));
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -78,7 +80,6 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     public void removeCheck(FlappyCheck check) {
         for (Constructor<?> constructor : CheckManager.CONSTRUCTORS) {
             try {
-                //System.out.println("check loaded");
                 checks.remove((Check) constructor.newInstance(player));
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -88,10 +89,6 @@ public class FlappyPlayer implements FlappyPlayerAPI {
 
     @Override
     public List<FlappyCheck> getChecks() {
-        List<FlappyCheck> checks = new ArrayList<>();
-        for(FlappyCheck check:this.checks){
-            checks.add(check);
-        }
-        return checks;
+        return new ArrayList<>(this.checks);
     }
 }

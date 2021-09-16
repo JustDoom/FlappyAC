@@ -11,6 +11,11 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.windowclick.Wrapp
 
 public class ReceivingPacketProcessor {
 
+    /**
+     * Handles incoming packets
+     * @param player - Player to handle the packets for
+     * @param packet - The packet to handle
+     */
     public void handle(final FlappyPlayer player, Packet packet){
         if(packet.isPosition()){
             final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());

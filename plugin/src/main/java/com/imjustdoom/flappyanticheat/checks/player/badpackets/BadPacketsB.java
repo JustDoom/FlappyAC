@@ -19,20 +19,22 @@ public class BadPacketsB extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        // Check if the packet is not a steering packet, if true return
         if (!packet.isSteerVehicle()) return;
-            final WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
 
-            final boolean unmount = wrapper.isDismount();
+        final WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
 
-            final boolean invalid = data.getPlayer().getVehicle() == null && !unmount;
+        final boolean unmount = wrapper.isDismount();
+        final boolean invalid = data.getPlayer().getVehicle() == null && !unmount;
 
-            if (invalid) {
-                if (++buffer > 8) {
-                    fail("buffer=" + buffer, false);
-                    buffer /= 2;
-                }
-            } else {
-                buffer = 0;
+        if (invalid) {
+            if (++buffer > 8) {
+                fail("buffer=" + buffer, false);
+                buffer /= 2;
             }
+        } else {
+            buffer = 0;
+        }
     }
 }

@@ -19,6 +19,7 @@ public class ScaffoldB extends Check {
     @Override
     public void handle(final Packet packet) {
 
+        // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isBlockPlace()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 

@@ -17,9 +17,12 @@ public class InventoryA extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        // Check if the packet is not an inventory click and if exempts are true, if true return
         if(!packet.isInventoryClick()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
+        // Check of the player is sprinting or sneaking
         final Player player = data.getPlayer();
         if(player.isSprinting() || player.isSneaking()) {
             fail("No Info", false);

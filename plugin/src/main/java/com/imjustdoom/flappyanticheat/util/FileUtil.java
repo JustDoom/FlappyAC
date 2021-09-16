@@ -10,7 +10,11 @@ import java.nio.file.Paths;
 
 public class FileUtil {
 
-    // Config file functions
+    /**
+     * Checks if a file exists
+     * @param filename - The file name to check if exists
+     * @return - Returns if the file exists
+     */
     public static boolean doesFileExist(String filename) {
         Path path = Paths.get(filename);
         if (!Files.exists(path)) {
@@ -19,23 +23,31 @@ public class FileUtil {
         return true;
     }
 
-    public static void createFile(String filename) throws IOException {
-        Path path = Paths.get(filename);
-        File file = new File(String.valueOf(path));
-        file.createNewFile();
-    }
-
+    /**
+     * Creates a directory
+     * @param path - The directory path to create
+     * @throws IOException
+     */
     public static void createDirectory(String path) throws IOException {
         Files.createDirectory(Paths.get(path));
     }
 
+    /**
+     * Creates the config file
+     * @param filename - The file name/directory to create the config file
+     * @throws IOException
+     */
     public static void addConfig(String filename) throws IOException {
         Path path = Paths.get(filename);
         InputStream stream = FlappyAnticheat.class.getResourceAsStream("/config.yml");
         Files.copy(stream, path);
     }
 
-    // Log file functions
+    /**
+     * Adds a message to a file
+     * @param fileName - The file to add the text to
+     * @param message - The message to add to the file
+     */
     public static void addToFile(String fileName, String message) {
         File log = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), fileName);
         try {
@@ -50,6 +62,10 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Create some files
+     * @param name - Name of the file to create
+     */
     public static void createFiles(String name) {
         if (!new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name).exists()) {
             File todayFile = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name);

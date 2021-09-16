@@ -64,14 +64,6 @@ public abstract class Check implements FlappyCheck {
 
     public abstract void handle(final Packet packet);
 
-    protected boolean isExempt(final ExemptType exemptType) {
-        return data.getExemptManager().isExempt(exemptType);
-    }
-
-    protected boolean isExempt(final ExemptType... exemptTypes) {
-        return data.getExemptManager().isExempt(exemptTypes);
-    }
-
     public void fail(final String debug, final boolean lagBack) {
         // Make sure player is online
         if(!data.getPlayer().isOnline()) return;
@@ -116,6 +108,7 @@ public abstract class Check implements FlappyCheck {
 
             MessageUtil.toConsole(component.getText());
 
+            // Add violation to violation file if enabled
             if(Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",
                         Config.Logs.ViolationLog.MESSAGE
@@ -154,6 +147,7 @@ public abstract class Check implements FlappyCheck {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
                 }
 
+                // Add punishment to punishment file if enabled
                 if(Config.Logs.PunishmentLog.ENABLED)
                     FileUtil.addToFile("punishments.txt",
                             Config.Logs.PunishmentLog.MESSAGE
@@ -172,5 +166,13 @@ public abstract class Check implements FlappyCheck {
             System.err.println("CheckInfo annotation hasn't been added to the class " + this.getClass().getSimpleName() + ".");
         }
         return null;
+    }
+
+    protected boolean isExempt(final ExemptType exemptType) {
+        return data.getExemptManager().isExempt(exemptType);
+    }
+
+    protected boolean isExempt(final ExemptType... exemptTypes) {
+        return data.getExemptManager().isExempt(exemptTypes);
     }
 }

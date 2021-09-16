@@ -23,9 +23,7 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            fallDistance, lastFallDistance, lastLastFallDistance, playerHeight, playerLastHeight, deltaXZ, lastDeltaXZ, lastLastDeltaY;
-
-    private float fallHeight;
+            fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
 
     private int airTicks, waterTicks;
 
@@ -44,15 +42,16 @@ public class PositionProcessor {
         lastY = this.y;
         lastZ = this.z;
 
-        lastOnGround = this.onGround;
-
         // Set current pos
         this.x = x;
         this.y = y;
         this.z = z;
 
+        // Set last on ground
+        lastOnGround = this.onGround;
         this.onGround = onGround;
 
+        // Set last last delta Y
         lastLastDeltaY = lastDeltaY;
 
         // Set last delta
@@ -67,24 +66,10 @@ public class PositionProcessor {
         deltaZ = this.z - lastZ;
         deltaXZ = Math.hypot(deltaX, deltaZ);
 
-        // Calculate real fall distance
-        playerLastHeight = playerHeight;
-        playerHeight = player.getPlayer().getFallDistance();
-
+        // Set fall distance
         lastLastFallDistance = lastFallDistance;
         lastFallDistance = fallDistance;
         fallDistance = player.getPlayer().getFallDistance();
-
-        /**lastLastFallHeight = lastFallHeight;
-        lastFallHeight = fallHeight;
-
-        if (deltaY < 0.0) {
-            fallHeight -= deltaY;
-        }
-
-        if (lastOnGround) {
-            fallHeight = 0.0f;
-        }**/
 
         // Handle collisions
         handleCollisions(0);
