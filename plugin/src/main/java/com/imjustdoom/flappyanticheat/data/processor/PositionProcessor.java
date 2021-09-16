@@ -8,9 +8,7 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Boat;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Shulker;
+import org.bukkit.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +18,12 @@ public class PositionProcessor {
 
     private FlappyPlayer player;
 
-    private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle;
+    private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
 
-    private int airTicks, waterTicks;
+    private int airTicks, waterTicks, sinceVehicleTicks;
 
     private final List<Block> blocks = new ArrayList<>();
     private final List<Block> blocksNear = new ArrayList<>();
@@ -165,6 +163,8 @@ public class PositionProcessor {
     public void handleTicks(){
         airTicks = inAir ? airTicks + 1 : 0;
         waterTicks = inLiquid ? waterTicks + 1 : 0;
+        inVehicle = player.getPlayer().isInsideVehicle();
+        sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;
     }
 
     public Block getBlock(final Location location) {

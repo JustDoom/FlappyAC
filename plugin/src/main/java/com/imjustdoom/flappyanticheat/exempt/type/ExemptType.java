@@ -25,7 +25,9 @@ public enum ExemptType {
 
     VELOCITY(data -> data.getVelocityProcessor().isTakingVelocity()),
 
-    VEHICLE(data -> data.getPositionProcessor().isNearVehicle());
+    VEHICLE(data -> data.getPositionProcessor().isNearVehicle()),
+
+    INSIDE_VEHICLE(data -> data.getPositionProcessor().getSinceVehicleTicks() < 10);
 
     private final Function<FlappyPlayer, Boolean> exception;
 
