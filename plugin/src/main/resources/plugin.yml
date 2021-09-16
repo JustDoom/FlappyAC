@@ -16,3 +16,7 @@ permissions:
 commands:
   flappyac:
     aliases: flappyanticheat
+    permission: flappyac.commands
+
+  flappyachoverclick:
+    permission: flappyac.commands

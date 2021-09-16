@@ -104,7 +104,7 @@ public abstract class Check implements FlappyCheck {
                     )).create()));
 
             //TODO: make click command more secure
-            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/say clicked hehehehheheheheheheh"));
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));
 
             // Loop through players with alerts enabled
             //TODO: Improve alert toggle

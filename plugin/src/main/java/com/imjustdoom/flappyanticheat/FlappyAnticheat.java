@@ -1,6 +1,7 @@
 package com.imjustdoom.flappyanticheat;
 
 import com.imjustdoom.flappyanticheat.commands.FlappyACCommand;
+import com.imjustdoom.flappyanticheat.commands.FlappyACHoverClick;
 import com.imjustdoom.flappyanticheat.commands.FlappyACTabCompletion;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.listener.BukkitEventListener;
@@ -76,6 +77,7 @@ public enum FlappyAnticheat {
 
     public void loadCommands(){
         getPlugin().getCommand("flappyac").setExecutor(new FlappyACCommand());
+        getPlugin().getCommand("flappyachoverclick").setExecutor(new FlappyACHoverClick());
         getPlugin().getCommand("flappyac").setTabCompleter(new FlappyACTabCompletion());
     }
 

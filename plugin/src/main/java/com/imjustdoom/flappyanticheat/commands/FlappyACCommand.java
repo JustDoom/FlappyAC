@@ -89,9 +89,9 @@ public class FlappyACCommand implements CommandExecutor {
 
                     sender.sendMessage(
                             "Version: " + data.getClientVersion() +
-                            "Brand: " + data.getClientBrand() +
-                            "Total VL: " + (combat + player + movement) +
-                            "Combat:" + combat +
+                            "\nBrand: " + data.getClientBrand() +
+                            "\nTotal VL: " + (combat + player + movement) +
+                            "\nCombat:" + combat +
                             "\nMovement: " + movement +
                             "\nPlayer:" + player);
                     break;

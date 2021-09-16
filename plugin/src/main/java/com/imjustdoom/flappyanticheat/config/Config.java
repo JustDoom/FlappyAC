@@ -4,10 +4,12 @@ import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Config {
 
@@ -27,6 +29,7 @@ public class Config {
         public static String HOVER;
         public static String TOGGLE_ALERTS_ON;
         public static String TOGGLE_ALERTS_OFF;
+        public static List<String> CLICK_COMMANDS;
     }
 
     public static class Logs {
@@ -88,6 +91,11 @@ public class Config {
         Alerts.HOVER = configFile.node("alerts", "hover").getString();
         Alerts.TOGGLE_ALERTS_ON = configFile.node("alerts", "toggle-alerts-on").getString();
         Alerts.TOGGLE_ALERTS_OFF = configFile.node("alerts", "toggle-alerts-off").getString();
+        try {
+            Alerts.CLICK_COMMANDS = configFile.node("alerts", "click-commands").getList(String.class);
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
 
         Logs.PunishmentLog.ENABLED = configFile.node("logs", "punishment-log", "enabled").getBoolean();
         Logs.PunishmentLog.MESSAGE = configFile.node("logs", "punishment-log", "message").getString();

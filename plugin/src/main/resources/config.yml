@@ -17,6 +17,9 @@ alerts:
     &7Debug: &2{debug}
     &7TPS: &2{tps}
     &7Ping: &2{ping}
+  click-commands:
+    - "tp {player}"
+    - "gamemode spectator"
 
 #Messages should not have colour codes
 logs:
