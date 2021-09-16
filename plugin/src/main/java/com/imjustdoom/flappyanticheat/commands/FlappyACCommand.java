@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.commands;
 
+import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.checks.Check;
@@ -58,46 +59,43 @@ public class FlappyACCommand implements CommandExecutor {
                     break;
 
                 case "profile":
+                    if(args.length <= 1) {
+                        sender.sendMessage("You must include a player");
+                        return true;
+                    }
 
+                    final Player p = Bukkit.getPlayer(args[1]);
+                    if(p == null) {
+                        sender.sendMessage("Invalid player");
+                        return true;
+                    }
+
+                    int movement = 0, combat = 0, player = 0;
+                    FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p);
+
+                    for(FlappyCheck check : data.getChecks()) {
+                        switch (check.getCheckInfo().type()) {
+                            case COMBAT:
+                                combat += check.getVl();
+                                break;
+                            case MOVEMENT:
+                                movement += check.getVl();
+                                break;
+                            case PLAYER:
+                                player += check.getVl();
+                                break;
+                        }
+                    }
+
+                    sender.sendMessage(
+                            "Version: " + data.getClientVersion() +
+                            "Brand: " + data.getClientBrand() +
+                            "Total VL: " + (combat + player + movement) +
+                            "Combat:" + combat +
+                            "\nMovement: " + movement +
+                            "\nPlayer:" + player);
                     break;
             }
-
-
-
-
-
-
-
-            // OLD --------------------------------------------------------------------------
-            /**if (args[0].equalsIgnoreCase("resetviolations")) {
-                if(args.length >= 2){
-                    if(Bukkit.getPlayerExact(args[1]) != null) {
-                        FlappyAnticheat.INSTANCE.violationHandler.clearViolations(Bukkit.getPlayerExact(args[1]));
-                        for(Player p: Bukkit.getOnlinePlayers()){
-                            if(p.hasPermission("flappyanticheat.alerts")){
-                                p.sendMessage(Color.translate(FlappyAnticheat.INSTANCE.getConfigFile().node("prefix") + FlappyAnticheat.INSTANCE.getConfigFile().node("messages.violation-reset.player").replace("{player}", args[1])));
-                            }
-                        }
-                        if(FlappyAnticheat.getInstance().config.configuration.getBoolean("messages.flag-to-console")) {
-                            Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.INSTANCE.getConfigFile().node("prefix") + FlappyAnticheat.INSTANCE.getConfigFile().node("messages.violation-reset.player").replace("{player}", args[1])));
-                        }
-                    } else {
-                        sender.sendMessage(Color.translate(FlappyAnticheat.INSTANCE.getConfigFile().node("prefix") + FlappyAnticheat.INSTANCE.getConfigFile().node("messages.violation-remove-invalid-player")));
-                    }
-                } else {
-                    FlappyAnticheat.getInstance().violationHandler.clearAllViolations();
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (p.hasPermission("flappyanticheat.alerts")) {
-                            p.sendMessage(Color.translate(FlappyAnticheat.INSTANCE.getConfigFile().node("prefix") + FlappyAnticheat.INSTANCE.getConfigFile().node("messages.violation-reset.all")));
-                        }
-                    }
-                    if(FlappyAnticheat.INSTANCE.getConfigFile().node("messages.flag-to-console")) {
-                        Bukkit.getConsoleSender().sendMessage(Color.translate(FlappyAnticheat.INSTANCE.getConfigFile().node("prefix") + FlappyAnticheat.INSTANCE.getConfigFile().node("messages.violation-reset.all")));
-                    }
-                }
-
-                //Alerts toggle
-            }**/
         }
         return false;
     }
