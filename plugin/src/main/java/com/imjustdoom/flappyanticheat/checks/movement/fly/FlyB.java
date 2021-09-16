@@ -24,8 +24,8 @@ public class FlyB extends Check {
             //both things here can false from velocity. just return on velocity
             if (isExempt(ExemptType.VELOCITY, ExemptType.PISTON, ExemptType.INSIDE_VEHICLE)) return;
 
-            boolean isExempt1 = isExempt(/**ExemptType.PLACING, ExemptType.CLIMBABLE, ExemptType.STEPPED,**/
-                    ExemptType.LIQUID /**ExemptType.SLIME, ExemptType.WEB, ExemptType.TELEPORT**/);
+            boolean isExempt1 = isExempt(/**ExemptType.PLACING, ExemptType.STEPPED,**/
+                    ExemptType.LIQUID, ExemptType.CLIMBABLE /**ExemptType.SLIME, ExemptType.WEB, ExemptType.TELEPORT**/);
 
             //check if their deltaY is less than previous, and set our wentDown boolean to true if so.
             if (!data.getPositionProcessor().isOnGround() && !data.getPlayer().isFlying() && !isExempt1) {
