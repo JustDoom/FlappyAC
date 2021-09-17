@@ -7,6 +7,10 @@ settings:
   output-to-console: false
   join-exemption: 5000
 
+discord-bot:
+  token: "token"
+  channel: "channel id"
+
 alerts:
   toggle-alerts-on: "Alerts have been toggled on"
   toggle-alerts-off: "Alerts have been toggled off"

@@ -16,9 +16,16 @@ import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import com.imjustdoom.flappyanticheat.listener.ClientBrandListener;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.hooks.EventListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.messaging.Messenger;
 
+import javax.security.auth.login.LoginException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,6 +40,7 @@ public enum FlappyAnticheat {
     private PlayerDataManager dataManager;
     private final TickManager tickManager = new TickManager();
     private AlertManager alertManager;
+    private JDA api;
 
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
 
@@ -72,9 +80,19 @@ public enum FlappyAnticheat {
         getPlugin().getCommand("flappyac").setExecutor(new FlappyACCommand());
         getPlugin().getCommand("flappyachoverclick").setExecutor(new FlappyACHoverClick());
         getPlugin().getCommand("flappyac").setTabCompleter(new FlappyACTabCompletion());
+
+        // Connect to Discord
+        try {
+            JDA jda = JDABuilder.createDefault(Config.DISCORD_BOT.TOKEN).build();
+            this.api = jda;
+        } catch (LoginException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop(final FlappyAnticheatPlugin plugin) {
+        api.shutdown();
+
         tickManager.stop();
     }
 }

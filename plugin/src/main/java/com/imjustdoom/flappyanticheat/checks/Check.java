@@ -15,6 +15,9 @@ import com.imjustdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import lombok.Setter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -106,6 +109,19 @@ public abstract class Check implements FlappyCheck {
                 player.spigot().sendMessage(component);
             }
 
+            // Send discord message
+            FlappyAnticheat.INSTANCE.getApi().getTextChannelById(Config.DISCORD_BOT.CHANNEL_ID).sendMessage(
+                    new EmbedBuilder()
+                            .setTitle("FlappyAC Alert")
+                            .addField(new MessageEmbed.Field(data.getPlayer().getName() + " flagged",
+                                    getCheck() + " (" + getCheckType() + ")"
+                                            + "\nViolations: " + getVl() + "/" + getMaxVl()
+                                            + "\nClient Brand: " + data.getClientBrand()
+                                            + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
+                                    false))
+                            .build()).queue();
+
+            // Send console message
             MessageUtil.toConsole(component.getText());
 
             // Add violation to violation file if enabled

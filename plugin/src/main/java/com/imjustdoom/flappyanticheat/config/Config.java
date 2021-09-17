@@ -18,6 +18,11 @@ public class Config {
     public static String PREFIX;
     public static int CONFIG_VERSION;
 
+    public static class DISCORD_BOT {
+        public static String TOKEN;
+        public static String CHANNEL_ID;
+    }
+
     public static class Settings {
         public static boolean OUTPUT_TO_CONSOLE;
         public static int JOIN_EXEMPTION;
@@ -82,6 +87,9 @@ public class Config {
 
         PREFIX = configFile.node("prefix").getString();
         CONFIG_VERSION = configFile.node("config-version").getInt();
+
+        DISCORD_BOT.TOKEN = configFile.node("discord-bot", "token").getString();
+        DISCORD_BOT.CHANNEL_ID = configFile.node("discord-bot", "channel").getString();
 
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
         Settings.JOIN_EXEMPTION = configFile.node("join-exemption").getInt();
