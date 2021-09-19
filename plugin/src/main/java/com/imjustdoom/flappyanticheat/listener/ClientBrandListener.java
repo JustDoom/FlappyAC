@@ -4,9 +4,6 @@ import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -41,14 +38,14 @@ public class ClientBrandListener implements PluginMessageListener {
 
             data.setClientBrand(brand);
 
-            FlappyAnticheat.INSTANCE.getApi().getTextChannelById(Config.DISCORD_BOT.CHANNEL_ID).sendMessage(
+            /**FlappyAnticheat.INSTANCE.getApi().getTextChannelById(Config.DISCORD_BOT.CHANNEL_ID).sendMessage(
                     new EmbedBuilder()
                             .setTitle("FlappyAC Alert")
                             .addField(new MessageEmbed.Field(p.getName() + " joined",
                                     "Client Brand: " + data.getClientBrand()
                                             + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
                                     false))
-                            .build()).queue();
+                            .build()).queue();**/
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
