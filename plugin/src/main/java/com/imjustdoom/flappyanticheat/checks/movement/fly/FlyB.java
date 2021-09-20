@@ -8,7 +8,7 @@ import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Fly",checkType = "B",experimental = false,description = "checks for mid air jump", type = CheckType.MOVEMENT)
+@CheckInfo(check = "Fly", checkType = "B", experimental = false, description = "checks for mid air jump", type = CheckType.MOVEMENT)
 public class FlyB extends Check {
 
     private boolean wentDown;

@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.util.NumberConversions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class PositionProcessor {
 
     private FlappyPlayer player;
 
-    private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle;
+    private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
@@ -157,6 +158,7 @@ public class PositionProcessor {
             case 1:
         }
 
+        handleClimbableCollision();
         handleTicks();
     }
 
@@ -166,6 +168,17 @@ public class PositionProcessor {
         inVehicle = player.getPlayer().isInsideVehicle();
         sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;
     }
+
+    public void handleClimbableCollision() {
+        final Location location = player.getPlayer().getLocation();
+        final int x = NumberConversions.floor(location.getX());
+        final int y = NumberConversions.floor(location.getY());
+        final int z = NumberConversions.floor(location.getZ());
+        final Block block = this.getBlock(new Location(location.getWorld(), x, y, z));
+        lastOnLadder = onLadder;
+        onLadder = block.getType() == Material.LADDER || block.getType() == Material.VINE;
+    }
+
 
     public Block getBlock(final Location location) {
         if (location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {

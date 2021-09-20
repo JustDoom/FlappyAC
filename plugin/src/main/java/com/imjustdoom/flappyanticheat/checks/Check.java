@@ -65,7 +65,7 @@ public abstract class Check implements FlappyCheck {
     public abstract void handle(final Packet packet);
 
     public void fail(final String debug, final boolean lagBack) {
-        // Make sure player is online
+        // Make sure player is online because punishing has some issues with this
         if(!data.getPlayer().isOnline()) return;
 
         // Fire FlappyPreFlagEvent and check if it was cancelled
@@ -77,7 +77,7 @@ public abstract class Check implements FlappyCheck {
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
 
-            // Alert message
+            // Create alert message
             final TextComponent component = new TextComponent(MessageUtil.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
                             .replace("{player}", data.getPlayer().getName())
@@ -86,7 +86,7 @@ public abstract class Check implements FlappyCheck {
                     .replace("{vl}", String.valueOf(getVl()))
                     .replace("{maxvl}", String.valueOf(getMaxVl())));
 
-            // Alert hover message
+            // Create alert hover message
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(MessageUtil.translate(
                     Config.Alerts.HOVER
                             .replace("{description}", getDescription())
@@ -95,7 +95,6 @@ public abstract class Check implements FlappyCheck {
                             .replace("{ping}", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
                     )).create()));
 
-            //TODO: make click command more secure
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));
 
             // Loop through players with alerts enabled
