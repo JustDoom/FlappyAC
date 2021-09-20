@@ -23,7 +23,7 @@ public class FlappyACCommand implements CommandExecutor {
 
             // Check if the command has any arguments
             if(args.length == 0) {
-                sender.sendMessage("FlappyAC {version}");
+                sender.sendMessage("FlappyAC %version%");
                 return true;
             }
 
@@ -98,13 +98,13 @@ public class FlappyACCommand implements CommandExecutor {
                     }
 
                     // Send profile message
-                    sender.sendMessage(
-                            "Version: " + data.getClientVersion() +
-                            "\nBrand: " + data.getClientBrand() +
-                            "\nTotal VL: " + (combat + player + movement) +
-                            "\nCombat:" + combat +
-                            "\nMovement: " + movement +
-                            "\nPlayer:" + player);
+                    sender.sendMessage(MessageUtil.translate(Config.Messages.PROFILE)
+                            .replaceAll("%version%", MessageUtil.translateVersion(data.getClientVersion().name()))
+                            .replaceAll("%brand%", data.getClientBrand())
+                            .replaceAll("%player%", String.valueOf(player))
+                            .replaceAll("%combat%", String.valueOf(combat))
+                            .replaceAll("%movement%", String.valueOf(movement))
+                            .replaceAll("%total%", String.valueOf(player + movement + combat)));
                     break;
             }
         }

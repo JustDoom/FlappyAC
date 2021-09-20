@@ -14,29 +14,36 @@ discord-bot:
 alerts:
   toggle-alerts-on: "Alerts have been toggled on"
   toggle-alerts-off: "Alerts have been toggled off"
-  failed-check: "&2{player} &7failed &2{check}&7(&2{checktype}&7) &2{vl}&7/&2{maxvl}"
-  player-join: "&2{player} &7joined using &2{brand}&7/&2{version}"
+  failed-check: "&2%player% &7failed &2%check%&7(&2%checktype%&7) &2%vl%&7/&2%maxvl%"
+  player-join: "&2%player% &7joined using &2%brand%&7/&2%version%"
   hover:  |
-    &7Description: &2{description}
-    &7Debug: &2{debug}
-    &7TPS: &2{tps}
-    &7Ping: &2{ping}
+    &7Description: &2%description%
+    &7Debug: &2%debug%
+    &7TPS: &2%tps%
+    &7Ping: &2%ping%
   click-commands:
-    - "tp {player}"
+    - "tp %player%"
     - "gamemode spectator"
 
 #Messages should not have colour codes
 logs:
   punishment-log:
     enabled: true
-    message: "{player} has been punished for {check}({checktype})"
+    message: "%player% has been punished for %check%(%checktype%)"
   violation-log:
     enabled: true
-    message: "{player} failed {check}({checktype}) {vl}/{maxvl}"
+    message: "%player% failed %check%(%checktype%) %vl%/%maxvl%"
 
 messages:
   reload: "&7Reloaded the config"
   reset-all-violations: "&7Reset violations"
+  profile:  |
+    Version: %version%
+    Brand: %brand%
+    Total VL: %total%
+    Combat: %combat%
+    Movement: %movement%
+    Player: %player%
 
 checks:
   #-------------------------
@@ -51,7 +58,7 @@ checks:
       vl: 1
       punish-vl: 5
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -60,7 +67,7 @@ checks:
       vl: 1
       punish-vl: 5
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   noslow:
     a:
       enabled: true
@@ -70,7 +77,7 @@ checks:
       vl: 1
       punish-vl: 10
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -79,7 +86,7 @@ checks:
       vl: 1
       punish-vl: 2
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   fly:
     a:
       enabled: true
@@ -89,7 +96,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -98,7 +105,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     c:
       enabled: true
       min-tps: 17.0
@@ -107,7 +114,7 @@ checks:
       vl: 1
       punish-vl: 5
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   boatfly:
     a:
       enabled: true
@@ -117,7 +124,7 @@ checks:
       vl: 1
       punish-vl: 5
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -126,7 +133,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   fastclimb:
     a:
       enabled: true
@@ -136,7 +143,7 @@ checks:
       vl: 1
       punish-vl: 10
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
 
   #-------------------------
   #         Combat
@@ -150,7 +157,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   aura:
     a:
       enabled: true
@@ -160,7 +167,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
 
   #-------------------------
   #         Player
@@ -174,7 +181,7 @@ checks:
       vl: 1
       punish-vl: 2
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -183,7 +190,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     #Currently falses
     c:
       enabled: false
@@ -193,7 +200,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   scaffold:
     a:
       enabled: true
@@ -203,7 +210,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -212,7 +219,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   skinblinker:
     a:
       enabled: true
@@ -222,7 +229,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   timer:
     a:
       enabled: true
@@ -232,7 +239,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
   badpackets:
     a:
       enabled: true
@@ -242,7 +249,7 @@ checks:
       vl: 1
       punish-vl: 1
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     b:
       enabled: true
       min-tps: 17.0
@@ -251,7 +258,7 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"
     c:
       enabled: true
       min-tps: 17.0
@@ -260,4 +267,4 @@ checks:
       vl: 1
       punish-vl: 20
       punish-commands:
-        - "kick {player} FlappyAC > Suspicious Activity"
+        - "kick %player% FlappyAC > Suspicious Activity"

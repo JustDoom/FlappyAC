@@ -52,6 +52,7 @@ public class Config {
     public static class Messages {
         public static String RELOAD;
         public static String RESET_ALL_VIOLATIONS;
+        public static String PROFILE;
     }
 
     public static void load() {
@@ -113,6 +114,7 @@ public class Config {
 
         Messages.RELOAD = configFile.node("messages", "reload").getString();
         Messages.RESET_ALL_VIOLATIONS = configFile.node("messages", "reset-all-violations").getString();
+        Messages.PROFILE = configFile.node("messages", "profile").getString();
 
         if(CONFIG_VERSION != FlappyAnticheat.INSTANCE.getConfigVersion()) {
             FlappyAnticheat.INSTANCE.getPlugin().getLogger().info("Config is out of date, please update it");

@@ -53,13 +53,6 @@ public class FlappyPlayer implements FlappyPlayerAPI {
 
         //TODO: Improve alert toggle and join message
 
-        // Send client join brand message
-        for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
-            Player p = Bukkit.getPlayer(uuid);
-            if (!p.hasPermission("flappyac.alerts")) continue;
-            p.sendMessage(player.getDisplayName() + " has joined on version " + clientVersion.name());
-        }
-
         // Fire FlappyLoadPlayerEvent
         FlappyLoadPlayerEvent loadPlayerEvent = new FlappyLoadPlayerEvent(this);
         Bukkit.getPluginManager().callEvent(loadPlayerEvent);

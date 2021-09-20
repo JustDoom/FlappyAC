@@ -80,19 +80,19 @@ public abstract class Check implements FlappyCheck {
             // Create alert message
             final TextComponent component = new TextComponent(MessageUtil.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
-                            .replace("{player}", data.getPlayer().getName())
-                            .replace("{check}", getCheck())
-                            .replace("{checktype}", getCheckType()))
-                    .replace("{vl}", String.valueOf(getVl()))
-                    .replace("{maxvl}", String.valueOf(getMaxVl())));
+                            .replaceAll("%player%", data.getPlayer().getName())
+                            .replaceAll("%check%", getCheck())
+                            .replaceAll("%checktype%", getCheckType()))
+                    .replaceAll("%vl%", String.valueOf(getVl()))
+                    .replaceAll("%maxvl%", String.valueOf(getMaxVl())));
 
             // Create alert hover message
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(MessageUtil.translate(
                     Config.Alerts.HOVER
-                            .replace("{description}", getDescription())
-                            .replace("{debug}", debug)
-                            .replace("{tps}", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
-                            .replace("{ping}", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
+                            .replaceAll("%description%", getDescription())
+                            .replaceAll("%debug%", debug)
+                            .replaceAll("%tps%", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
+                            .replaceAll("%ping%", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
                     )).create()));
 
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));
@@ -124,11 +124,11 @@ public abstract class Check implements FlappyCheck {
             if(Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",
                         Config.Logs.ViolationLog.MESSAGE
-                                .replace("{check}", getCheck())
-                                .replace("{checktype}", getCheckType())
-                                .replace("{player}", data.getPlayer().getName())
-                                .replace("{vl}", String.valueOf(getVl()))
-                                .replace("{maxvl}", String.valueOf(getMaxVl())));
+                                .replaceAll("%check%", getCheck())
+                                .replaceAll("%checktype%", getCheckType())
+                                .replaceAll("%player%", data.getPlayer().getName())
+                                .replaceAll("%vl%", String.valueOf(getVl()))
+                                .replaceAll("%maxvl%", String.valueOf(getMaxVl())));
 
             /**
              * Disabled lagBacks for now
@@ -153,7 +153,7 @@ public abstract class Check implements FlappyCheck {
 
                 // Run punishment keys
                 for (String command : getCommands()) {
-                    command = command.replace("{player}", data.getPlayer().getName());
+                    command = command.replaceAll("%player%", data.getPlayer().getName());
                     String finalCommand = command;
                     Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
@@ -163,9 +163,9 @@ public abstract class Check implements FlappyCheck {
                 if(Config.Logs.PunishmentLog.ENABLED)
                     FileUtil.addToFile("punishments.txt",
                             Config.Logs.PunishmentLog.MESSAGE
-                                    .replace("{check}", getCheck())
-                                    .replace("{checktype}", getCheckType())
-                                    .replace("{player}", data.getPlayer().getName()));
+                                    .replaceAll("%check%", getCheck())
+                                    .replaceAll("%checktype%", getCheckType())
+                                    .replaceAll("%player%", data.getPlayer().getName()));
             }
         });
     }

@@ -21,8 +21,8 @@ public class NetworkListener extends PacketListenerAbstract {
         // Check if the player is a bedrock player, if so don't add them to the anticheat
         if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer())) return;
 
-        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
         FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
+        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
 
         Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
                 ClientBrandListener.addChannel(event.getPlayer(), "minecraft:brand"));

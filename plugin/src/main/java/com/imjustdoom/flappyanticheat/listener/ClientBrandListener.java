@@ -23,9 +23,9 @@ public class ClientBrandListener implements PluginMessageListener {
             FlappyPlayer data = FlappyAnticheat.INSTANCE.getDataManager().getData(p.getPlayer());
 
             message = MessageUtil.translate(message)
-                    .replace("{player}", p.getName())
-                    .replace("{brand}", brand)
-                    .replace("{version}", MessageUtil.translateVersion(data.getClientVersion().name()));
+                    .replaceAll("%player%", p.getName())
+                    .replaceAll("%brand%", brand)
+                    .replaceAll("%version%", MessageUtil.translateVersion(data.getClientVersion().name()));
 
             //TODO: Improve alert toggle
             for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {

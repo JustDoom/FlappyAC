@@ -15,7 +15,7 @@ public class FlappyACHoverClick implements CommandExecutor {
 
             // Check if command doesnt have a player set
             if (args.length == 0) {
-                sender.sendMessage("FlappyAC {version}");
+                sender.sendMessage("FlappyAC %version%");
                 return true;
             }
 
@@ -28,7 +28,7 @@ public class FlappyACHoverClick implements CommandExecutor {
 
             // Run alert click commands
             for(String commands : Config.Alerts.CLICK_COMMANDS){
-                Bukkit.dispatchCommand(sender, commands.replace("{player}", args[0]));
+                Bukkit.dispatchCommand(sender, commands.replaceAll("%player%", args[0]));
             }
         }
 
