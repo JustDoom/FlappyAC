@@ -30,6 +30,8 @@ public class SpeedA extends Check implements Listener {
         Player player = event.getPlayer();
         PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer().getUniqueId());
 
+        //dont run the check if they have /fly on or are creative flying
+        if (player.isFlying() || player.isGliding()) return;
         if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         //pos stuff

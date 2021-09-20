@@ -3,6 +3,7 @@ package com.justdoom.flappyanticheat.checks;
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.combat.forcefield.ForcefieldA;
 import com.justdoom.flappyanticheat.checks.combat.reach.ReachA;
+import com.justdoom.flappyanticheat.checks.movement.boatfly.BoatFlyA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyA;
 import com.justdoom.flappyanticheat.checks.movement.fly.FlyB;
 import com.justdoom.flappyanticheat.checks.movement.groundspoof.GroundSpoofA;
@@ -45,6 +46,7 @@ public class CheckManager {
         PacketEvents.get().registerListener(new ForcefieldA());
         PacketEvents.get().registerListener(new ReachA());
         PacketEvents.get().registerListener(new InventoryA());
+        PacketEvents.get().registerListener(new BoatFlyA());
 
         Bukkit.getPluginManager().registerEvents(new BlockPlaceA(), plugin);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceB(), plugin);

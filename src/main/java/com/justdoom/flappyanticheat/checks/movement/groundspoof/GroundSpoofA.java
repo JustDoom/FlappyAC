@@ -67,6 +67,8 @@ public class GroundSpoofA extends Check {
                     AtomicReference<List<Entity>> nearby = new AtomicReference<>();
                     sync(() -> nearby.set(data.entities));
 
+                    if(nearby.get() == null) return;
+
                     for (Entity entity : nearby.get()) {
                         if (entity.getType() == EntityType.BOAT && player.getLocation().getY() > entity.getLocation().getY()) {
                             boat = true;
