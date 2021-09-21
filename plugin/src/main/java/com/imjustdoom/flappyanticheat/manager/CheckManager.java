@@ -14,6 +14,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.nofall.NoFallA;
 import com.imjustdoom.flappyanticheat.checks.movement.nofall.NoFallB;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowB;
+import com.imjustdoom.flappyanticheat.checks.movement.step.StepA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
@@ -48,6 +49,7 @@ public class CheckManager {
             BoatFlyA.class,
             BoatFlyB.class,
             FastClimbA.class,
+            StepA.class,
 
             //Combat
             CrititcalsA.class,

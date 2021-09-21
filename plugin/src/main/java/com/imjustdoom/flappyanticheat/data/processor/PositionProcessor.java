@@ -19,7 +19,7 @@ public class PositionProcessor {
 
     private FlappyPlayer player;
 
-    private boolean onGround, lastOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder;
+    private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
@@ -46,9 +46,13 @@ public class PositionProcessor {
         this.y = y;
         this.z = z;
 
-        // Set last on ground
+        // Set on ground
         lastOnGround = this.onGround;
         this.onGround = onGround;
+
+        // Set mathematicallt onGround
+        lastMathematicallyOnGround = mathematicallyOnGround;
+        mathematicallyOnGround = y % (1D/64) == 0;
 
         // Set last last delta Y
         lastLastDeltaY = lastDeltaY;
