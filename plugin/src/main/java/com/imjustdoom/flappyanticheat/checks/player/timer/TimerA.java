@@ -14,7 +14,7 @@ public class TimerA extends Check {
         super(data);
     }
 
-    private long lastTime ;
+    private long lastTime;
     private double balance;
 
     @Override

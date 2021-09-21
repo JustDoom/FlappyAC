@@ -51,16 +51,7 @@ public abstract class Check implements FlappyCheck {
         this.description = checkData.description();
         this.type = checkData.type();
 
-        ConfigurationNode config = Config.getConfigurationSection(check.toLowerCase(), checkType.toLowerCase());
-
-        this.maxVl = config.node("punish-vl").getInt();
-        this.punishable = config.node("punishable").getBoolean();
-        this.enabled = config.node("enabled").getBoolean();
-        try {
-            this.commands = config.node("punish-commands").getList(String.class);
-        } catch (SerializationException e) {
-            e.printStackTrace();
-        }
+        loadConfigSection();
     }
 
     public abstract void handle(final Packet packet);
@@ -187,5 +178,18 @@ public abstract class Check implements FlappyCheck {
 
     protected boolean isExempt(final ExemptType... exemptTypes) {
         return data.getExemptManager().isExempt(exemptTypes);
+    }
+
+    public void loadConfigSection() {
+        ConfigurationNode config = Config.getConfigurationSection(check.toLowerCase(), checkType.toLowerCase());
+
+        this.maxVl = config.node("punish-vl").getInt();
+        this.punishable = config.node("punishable").getBoolean();
+        this.enabled = config.node("enabled").getBoolean();
+        try {
+            this.commands = config.node("punish-commands").getList(String.class);
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
     }
 }

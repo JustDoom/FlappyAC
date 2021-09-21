@@ -29,4 +29,8 @@ public class PlayerDataManager {
     public FlappyPlayer getData(Player player) {
         return dataMap.get(player);
     }
+
+    public Map getPlayers() {
+        return dataMap;
+    }
 }
