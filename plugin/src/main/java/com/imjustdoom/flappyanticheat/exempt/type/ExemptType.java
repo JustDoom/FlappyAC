@@ -30,7 +30,9 @@ public enum ExemptType {
 
     INSIDE_VEHICLE(data -> data.getPositionProcessor().getSinceVehicleTicks() < 10),
 
-    CLIMBABLE(data -> PlayerUtil.isOnClimbable(data.getPlayer()));
+    CLIMBABLE(data -> PlayerUtil.isOnClimbable(data.getPlayer())),
+
+    FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isGliding());
 
     private final Function<FlappyPlayer, Boolean> exception;
 
