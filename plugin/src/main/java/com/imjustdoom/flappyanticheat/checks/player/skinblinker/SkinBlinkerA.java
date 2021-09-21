@@ -19,7 +19,7 @@ public class SkinBlinkerA extends Check {
 
         // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isSetting()
-                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS) || !isEnabled()) return;
 
         // Get last skin
         int lastSkin = data.getSettingProcessor().getLastSkin();

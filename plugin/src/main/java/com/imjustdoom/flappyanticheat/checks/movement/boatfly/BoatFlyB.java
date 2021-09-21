@@ -20,7 +20,7 @@ public class BoatFlyB extends Check {
 
     public void handle(final Packet packet) {
 
-        if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
+        if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE) || !isEnabled()) return;
 
         // Checks if the Y says the same while in the air
         if (data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY()

@@ -24,7 +24,7 @@ public class NoFallA extends Check {
                 && !packet.isLook()
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
-                ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE)) return;
+                ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE) || !isEnabled()) return;
 
         // Get the clients onGround and servers onGround
         double groundY = 0.015625;

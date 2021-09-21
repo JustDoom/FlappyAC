@@ -21,7 +21,7 @@ public class BoatFlyA extends Check {
 
     public void handle(final Packet packet) {
 
-        if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
+        if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE) || !isEnabled()) return;
 
         if(data.getPlayer().isInsideVehicle() && data.getPositionProcessor().getAirTicks() > 10
                 && data.getPositionProcessor().getY() > data.getPositionProcessor().getLastY()

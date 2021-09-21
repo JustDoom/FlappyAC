@@ -18,7 +18,7 @@ public class BadPacketsA extends Check {
 
         // Check if the packet is not a position or position look packet
         // and if exempts are true, if true return
-        if(!packet.isPosition() || !packet.isPositionLook()) return;
+        if(!packet.isPosition() || !packet.isPositionLook() || !isEnabled()) return;
 
         // Check if the pitch is above or below 90F which is impossible
         float pitch = data.getRotationProcessor().getPitch();

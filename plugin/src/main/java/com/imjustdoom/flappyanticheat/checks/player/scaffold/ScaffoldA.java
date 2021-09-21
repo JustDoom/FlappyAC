@@ -27,7 +27,7 @@ public class ScaffoldA extends Check {
         // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isBlockPlace()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)
-                || data.getActionProcessor().getLastBlockPlaced() == null) return;
+                || data.getActionProcessor().getLastBlockPlaced() == null || !isEnabled()) return;
 
         Block block = data.getActionProcessor().getLastBlockPlaced();
         boolean placedOnAir = true;

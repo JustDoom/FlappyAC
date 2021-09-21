@@ -16,6 +16,8 @@ public class SpeedA extends Check{
     @Override
     public void handle(final Packet packet) {
 
+        if(!isEnabled()) return;
+
         if (packet.isPosition()) {
             if (!data.getPositionProcessor().isOnGround() && !data.getPositionProcessor().isLastOnGround()) {
 

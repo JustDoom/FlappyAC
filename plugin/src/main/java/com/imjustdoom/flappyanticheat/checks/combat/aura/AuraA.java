@@ -19,6 +19,9 @@ public class AuraA extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        if(!isEnabled()) return;
+
         if (packet.isFlying()) {
             this.lastSent = System.currentTimeMillis();
         } else if (packet.isUseEntity()) {

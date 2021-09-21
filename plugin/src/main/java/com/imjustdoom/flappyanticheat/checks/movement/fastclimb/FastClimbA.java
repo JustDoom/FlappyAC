@@ -15,7 +15,7 @@ public class FastClimbA extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if (!packet.isPositionLook() && !packet.isPosition()) return;
+        if (!packet.isPositionLook() && !packet.isPosition() || !isEnabled()) return;
 
         if (data.getPositionProcessor().isOnLadder() && data.getPositionProcessor().isLastOnLadder()) {
             double aNumber = data.getPositionProcessor().getDeltaY() - data.getPositionProcessor().getLastDeltaY();

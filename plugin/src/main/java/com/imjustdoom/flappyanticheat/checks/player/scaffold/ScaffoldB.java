@@ -21,7 +21,7 @@ public class ScaffoldB extends Check {
 
         // Check if the packet is not a block place and if exempts are true, if true return
         if(!packet.isBlockPlace()
-                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS) || !isEnabled()) return;
 
         final WrappedPacketInBlockPlace wrappedPacketInBlockPlace = new WrappedPacketInBlockPlace(packet.getRawPacket());
 
