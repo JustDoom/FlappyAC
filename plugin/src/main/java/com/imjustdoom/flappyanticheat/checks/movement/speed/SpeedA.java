@@ -4,9 +4,10 @@ import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
+import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Speed", checkType = "A", experimental = false, description = "Not Fly", type = CheckType.MOVEMENT)
+@CheckInfo(check = "Speed", checkType = "A", experimental = false, description = "Checks players speed in the air", type = CheckType.MOVEMENT)
 public class SpeedA extends Check{
 
     public SpeedA(FlappyPlayer data) {
@@ -15,10 +16,9 @@ public class SpeedA extends Check{
 
     @Override
     public void handle(final Packet packet) {
-
         if(!isEnabled()) return;
 
-        if (packet.isPosition()) {
+        if (packet.isPosition() || packet.isPositionLook()) {
             if (!data.getPositionProcessor().isOnGround() && !data.getPositionProcessor().isLastOnGround()) {
 
                 //stole the if Y thing is same as last from hades. it seems to prevent some niche false positives.
