@@ -32,7 +32,9 @@ public enum ExemptType {
 
     CLIMBABLE(data -> PlayerUtil.isOnClimbable(data.getPlayer())),
 
-    FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isGliding());
+    FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isGliding()),
+
+    VOID(data -> data.getPositionProcessor().getY() < 0);
 
     private final Function<FlappyPlayer, Boolean> exception;
 

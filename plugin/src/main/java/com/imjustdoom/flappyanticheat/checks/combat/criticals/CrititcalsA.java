@@ -27,7 +27,7 @@ public class CrititcalsA extends Check {
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
                 ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE,
-                ExemptType.INSIDE_VEHICLE)) return;
+                ExemptType.INSIDE_VEHICLE, ExemptType.VOID)) return;
 
         double groundY = 0.015625;
         boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
