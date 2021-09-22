@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
+import io.github.retrooper.packetevents.utils.vector.Vector3d;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,49 +35,55 @@ public class PositionProcessor {
         this.player = player;
     }
 
-    public void handle(double x, double y, double z, boolean onGround) {
+    public void handle(double x, double y, double z, boolean onGround, Vector3d location) {
 
-        // Set last pos
-        lastX = this.x;
-        lastY = this.y;
-        lastZ = this.z;
+            if (x == lastX && y == lastY && z == lastZ) {
+                player.getPlayer().sendMessage("E");
+                return;
+            }
 
-        // Set current pos
-        this.x = x;
-        this.y = y;
-        this.z = z;
+                // Set last pos
+                lastX = this.x;
+                lastY = this.y;
+                lastZ = this.z;
 
-        // Set on ground
-        lastOnGround = this.onGround;
-        this.onGround = onGround;
+                // Set current pos
+                this.x = x;
+                this.y = y;
+                this.z = z;
 
-        // Set mathematicallt onGround
-        lastMathematicallyOnGround = mathematicallyOnGround;
-        mathematicallyOnGround = y % (1D/64) == 0;
+                // Set on ground
+                lastOnGround = this.onGround;
+                this.onGround = onGround;
 
-        // Set last last delta Y
-        lastLastDeltaY = lastDeltaY;
+                // Set mathematically onGround
+                lastMathematicallyOnGround = mathematicallyOnGround;
+                mathematicallyOnGround = y % (1D / 64) == 0;
 
-        // Set last delta
-        lastDeltaX = deltaX;
-        lastDeltaY = deltaY;
-        lastDeltaZ = deltaZ;
-        lastDeltaXZ = deltaXZ;
+                // Set last last delta Y
+                lastLastDeltaY = lastDeltaY;
 
-        // Set current delta
-        deltaX = this.x - lastX;
-        deltaY = this.y - lastY;
-        deltaZ = this.z - lastZ;
-        deltaXZ = Math.hypot(deltaX, deltaZ);
+                // Set last delta
+                lastDeltaX = deltaX;
+                lastDeltaY = deltaY;
+                lastDeltaZ = deltaZ;
+                lastDeltaXZ = deltaXZ;
 
-        // Set fall distance
-        lastLastFallDistance = lastFallDistance;
-        lastFallDistance = fallDistance;
-        fallDistance = player.getPlayer().getFallDistance();
+                // Set current delta
+                deltaX = this.x - lastX;
+                deltaY = this.y - lastY;
+                deltaZ = this.z - lastZ;
+                deltaXZ = Math.hypot(deltaX, deltaZ);
 
-        // Handle collisions
-        handleCollisions(0);
-        handleCollisions(1);
+                // Set fall distance
+                lastLastFallDistance = lastFallDistance;
+                lastFallDistance = fallDistance;
+                fallDistance = player.getPlayer().getFallDistance();
+
+                // Handle collisions
+                handleCollisions(0);
+                handleCollisions(1);
+
     }
 
     //Credit to AntiHaxerman for this part

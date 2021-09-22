@@ -3,6 +3,7 @@ package com.imjustdoom.flappyanticheat.packet.processor;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
+import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
@@ -22,19 +23,22 @@ public class ReceivingPacketProcessor {
         if(packet.isFlying()){
             final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
 
+            PositionProcessor pos = player.getPositionProcessor();
+
             if(packet.isLook() || packet.isPositionLook()) {
                 player.getRotationProcessor().handle(wrapper.getYaw(), wrapper.getPitch());
             }
 
             if(packet.isPosition() || packet.isPositionLook()) {
-                player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround());
+                if (wrapper.getX() != pos.getX() || wrapper.getY() != pos.getY() || wrapper.getZ() != pos.getZ())
+                    player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround(), wrapper.getPosition());
             }
         }
 
         if(packet.isVehicleMove()) {
             final WrappedPacketInVehicleMove wrapper = new WrappedPacketInVehicleMove(packet.getRawPacket());
 
-            player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), false);
+            player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), false, wrapper.getPosition());
         }
 
         if(packet.isSetting()){

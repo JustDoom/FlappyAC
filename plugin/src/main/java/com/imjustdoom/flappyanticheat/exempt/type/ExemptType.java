@@ -34,6 +34,8 @@ public enum ExemptType {
 
     FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isGliding()),
 
+    STEPPED(data -> data.getPositionProcessor().isOnGround() && data.getPositionProcessor().getDeltaY() > 0),
+
     VOID(data -> data.getPositionProcessor().getY() < 0);
 
     private final Function<FlappyPlayer, Boolean> exception;
