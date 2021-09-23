@@ -6,8 +6,8 @@ import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.blockplace.WrappedPacketInBlockPlace;
-import io.github.retrooper.packetevents.utils.player.Direction;
+import net.minestom.server.network.packet.client.play.ClientPlayerBlockPlacementPacket;
+import net.minestom.server.utils.Direction;
 
 @CheckInfo(check = "Scaffold", checkType = "B", experimental = false, description = "Checks if the player is scaffolding downwards", type = CheckType.PLAYER)
 public class ScaffoldB extends Check {
@@ -23,12 +23,14 @@ public class ScaffoldB extends Check {
         if(!packet.isBlockPlace()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS) || !isEnabled()) return;
 
-        final WrappedPacketInBlockPlace wrappedPacketInBlockPlace = new WrappedPacketInBlockPlace(packet.getRawPacket());
+        final ClientPlayerBlockPlacementPacket  wrapper = (ClientPlayerBlockPlacementPacket) packet.getRawPacket();
+
+        // TODO: scaffold b
 
         // Check of the face the block was placed on was the bottom
         // and if the player is above where the block was placed
-        if(wrappedPacketInBlockPlace.getDirection() == Direction.DOWN
-                && data.getActionProcessor().getLastBlockPlaced().getY() < data.getPositionProcessor().getY())
-            fail("No Info", false);
+        //if(wrapper.blockFace.toDirection() == Direction.DOWN
+                //&& data.getActionProcessor().getLastBlockPlaced().getY() < data.getPositionProcessor().getY())
+            //fail("No Info", false);
     }
 }

@@ -18,6 +18,8 @@ public class NoFallA extends Check {
     @Override
     public void handle(Packet packet) {
 
+        System.out.println("e");
+
         // Check if the packet is not a position, look or position look packet
         // and if exempts are true, if true return
         if(!packet.isPosition()
@@ -31,7 +33,7 @@ public class NoFallA extends Check {
         boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
 
         // Check if the client says its on the ground but the server says it isn't
-        if (client && !server && !PlayerUtil.isOnClimbable(data.getPlayer())) {
+        if (client && !server && !data.getPositionProcessor().isOnLadder()) {
             if (++buffer > 1) {
                 fail("No Info", false);
             }

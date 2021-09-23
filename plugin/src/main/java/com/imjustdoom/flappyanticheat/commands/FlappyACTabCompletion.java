@@ -1,4 +1,4 @@
-package com.imjustdoom.flappyanticheat.commands;
+/**package com.imjustdoom.flappyanticheat.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -38,4 +38,4 @@ public class FlappyACTabCompletion implements TabCompleter {
 
         return null;
     }
-}
+}**/

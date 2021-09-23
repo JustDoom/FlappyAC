@@ -6,11 +6,7 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.vehiclemove.WrappedPacketInVehicleMove;
-import org.bukkit.entity.Boat;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Vehicle;
+import net.minestom.server.entity.EntityType;
 
 @CheckInfo(check = "BoatFly", checkType = "A", experimental = false, description = "Going up in a boat", type = CheckType.MOVEMENT)
 public class BoatFlyA extends Check {
@@ -23,9 +19,9 @@ public class BoatFlyA extends Check {
 
         if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE) || !isEnabled()) return;
 
-        if(data.getPlayer().isInsideVehicle() && data.getPositionProcessor().getAirTicks() > 10
+        if(data.getPlayer().getVehicle() != null && data.getPositionProcessor().getAirTicks() > 10
                 && data.getPositionProcessor().getY() > data.getPositionProcessor().getLastY()
-                && data.getPlayer().getVehicle().getType() == EntityType.BOAT) {
+                && data.getPlayer().getVehicle().getEntityType() == EntityType.BOAT) {
             fail("", false);
         }
     }

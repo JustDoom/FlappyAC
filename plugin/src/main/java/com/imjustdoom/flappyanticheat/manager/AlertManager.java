@@ -1,7 +1,7 @@
 package com.imjustdoom.flappyanticheat.manager;
 
 import lombok.Getter;
-import org.bukkit.entity.Player;
+import net.minestom.server.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,18 +12,18 @@ public class AlertManager {
     public Set<UUID> toggledAlerts;
 
     public void toggleAlerts(Player player){
-        if (this.toggledAlerts.contains(player.getUniqueId()))
-            this.toggledAlerts.remove(player.getUniqueId());
+        if (this.toggledAlerts.contains(player.getUuid()))
+            this.toggledAlerts.remove(player.getUuid());
         else
-            this.toggledAlerts.add(player.getUniqueId());
+            this.toggledAlerts.add(player.getUuid());
     }
 
     public boolean hasAlerts(Player player){
-        return this.toggledAlerts.contains(player.getUniqueId());
+        return this.toggledAlerts.contains(player.getUuid());
     }
 
     public void removeAlerts(Player player){
-        if(hasAlerts(player)) this.toggledAlerts.remove(player.getUniqueId());
+        if(hasAlerts(player)) this.toggledAlerts.remove(player.getUuid());
     }
 
     public AlertManager() {

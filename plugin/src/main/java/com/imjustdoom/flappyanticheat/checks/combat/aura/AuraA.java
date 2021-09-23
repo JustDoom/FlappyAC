@@ -5,7 +5,6 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 
 @CheckInfo(check = "Aura", checkType = "A", experimental = true, description = "check for correct order between packets", type = CheckType.COMBAT)
 public class AuraA extends Check {
@@ -20,7 +19,7 @@ public class AuraA extends Check {
     @Override
     public void handle(Packet packet) {
 
-        if(!isEnabled()) return;
+        /**if(!isEnabled()) return;
 
         if (packet.isFlying()) {
             this.lastSent = System.currentTimeMillis();
@@ -37,7 +36,7 @@ public class AuraA extends Check {
                         fail("diff=" + difference, false);
                 } else if(verbose > 0) verbose -= 0.5D;
             }
-        }
+        }**/
     }
 
 }

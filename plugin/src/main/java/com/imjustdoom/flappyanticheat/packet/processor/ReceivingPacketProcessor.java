@@ -5,51 +5,49 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
-import io.github.retrooper.packetevents.packetwrappers.play.in.steervehicle.WrappedPacketInSteerVehicle;
-import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
-import io.github.retrooper.packetevents.packetwrappers.play.in.vehiclemove.WrappedPacketInVehicleMove;
-import io.github.retrooper.packetevents.packetwrappers.play.in.windowclick.WrappedPacketInWindowClick;
+import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerRotationPacket;
+import net.minestom.server.network.packet.client.play.ClientSettingsPacket;
+import net.minestom.server.network.packet.client.play.ClientVehicleMovePacket;
 
 public class ReceivingPacketProcessor {
 
     /**
      * Handles incoming packets
+     *
      * @param player - Player to handle the packets for
      * @param packet - The packet to handle
      */
-    public void handle(final FlappyPlayer player, Packet packet){
-        if(packet.isFlying()){
-            final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
+    public void handle(final FlappyPlayer player, Packet packet) {
 
+        if (packet.isLook() || packet.isPositionLook()) {
+            final ClientPlayerRotationPacket wrapper = (ClientPlayerRotationPacket) packet.getRawPacket();
+            player.getRotationProcessor().handle(wrapper.yaw, wrapper.pitch);
+        }
+
+        if (packet.isPosition() || packet.isPositionLook()) {
+            final ClientPlayerPositionPacket wrapper = (ClientPlayerPositionPacket) packet.getRawPacket();
             PositionProcessor pos = player.getPositionProcessor();
-
-            if(packet.isLook() || packet.isPositionLook()) {
-                player.getRotationProcessor().handle(wrapper.getYaw(), wrapper.getPitch());
-            }
-
-            if(packet.isPosition() || packet.isPositionLook()) {
-                if (wrapper.getX() != pos.getX() || wrapper.getY() != pos.getY() || wrapper.getZ() != pos.getZ())
-                    player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround(), wrapper.getPosition());
-            }
+            if (wrapper.x != pos.getX() || wrapper.y != pos.getY() || wrapper.z != pos.getZ())
+                player.getPositionProcessor().handle(wrapper.x, wrapper.y, wrapper.z, wrapper.onGround);
         }
 
-        if(packet.isVehicleMove()) {
-            final WrappedPacketInVehicleMove wrapper = new WrappedPacketInVehicleMove(packet.getRawPacket());
+        if (packet.isVehicleMove()) {
+            final ClientVehicleMovePacket wrapper = (ClientVehicleMovePacket) packet.getRawPacket();
 
-            player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), false, wrapper.getPosition());
+            player.getPositionProcessor().handle(wrapper.x, wrapper.y, wrapper.z, false);
         }
 
-        if(packet.isSetting()){
-            final WrappedPacketInSettings wrapper = new WrappedPacketInSettings(packet.getRawPacket());
+        if (packet.isSetting()) {
+            final ClientSettingsPacket wrapper = (ClientSettingsPacket) packet.getRawPacket();
 
             player.getSettingProcessor().handle(wrapper);
         }
 
+        // TODO: transaction packet
         if (packet.isIncomingTransaction()) {
-            final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getRawPacket());
-            player.getVelocityProcessor().handleTransaction(wrapper);
+            //final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getRawPacket());
+            //player.getVelocityProcessor().handleTransaction(wrapper);
         }
 
         if (player.getPlayer().hasPermission("flappyac.bypass")) return;

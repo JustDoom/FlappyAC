@@ -1,70 +1,67 @@
 package com.imjustdoom.flappyanticheat.packet;
 
-import io.github.retrooper.packetevents.packettype.PacketType;
-import io.github.retrooper.packetevents.packetwrappers.NMSPacket;
 import lombok.Getter;
+import net.minestom.server.network.packet.client.ClientPacket;
+import net.minestom.server.network.packet.client.play.*;
 
 @Getter
 public class Packet {
 
     private final Direction direction;
-    private final NMSPacket rawPacket;
-    private final byte packetId;
+    private final ClientPacket rawPacket;
 
-    public Packet(Direction direction, NMSPacket rawPacket, byte packetId){
+    public Packet(Direction direction, ClientPacket rawPacket){
         this.rawPacket = rawPacket;
-        this.packetId = packetId;
         this.direction = direction;
     }
 
     public boolean isPosition(){
-        return packetId == PacketType.Play.Client.POSITION;
+        return rawPacket instanceof ClientPlayerPositionPacket;
     }
 
     public boolean isServerPosition(){
-        return packetId == PacketType.Play.Server.POSITION;
+        //return packetId == PacketType.Play.Server.POSITION;
+        return false;
     }
 
     public boolean isLook(){
-        return packetId == PacketType.Play.Client.LOOK;
+        return rawPacket instanceof ClientPlayerRotationPacket;
     }
 
     public boolean isPositionLook(){
-        return packetId == PacketType.Play.Client.POSITION_LOOK;
+        return rawPacket instanceof ClientPlayerPositionAndRotationPacket;
     }
 
     public boolean isSetting() {
-        return packetId == PacketType.Play.Client.SETTINGS;
+        return rawPacket instanceof ClientSettingsPacket;
     }
 
     public boolean isSteerVehicle() {
-        return packetId == PacketType.Play.Client.STEER_VEHICLE;
+        return rawPacket instanceof ClientSteerVehiclePacket;
     }
 
     public boolean isVehicleMove() {
-        return packetId == PacketType.Play.Client.VEHICLE_MOVE;
+        return rawPacket instanceof ClientVehicleMovePacket;
     }
 
     public boolean isBlockPlace() {
-        return PacketType.Play.Client.Util.isBlockPlace(packetId);
+        return rawPacket instanceof ClientPlayerBlockPlacementPacket;
     }
 
     public boolean isIncomingTransaction () {
-        return isReceiving() && packetId == PacketType.Play.Client.TRANSACTION;
+        //return isReceiving() && packetId == PacketType.Play.Client.TRANSACTION;
+        return false;
     }
 
     public boolean isReceiving() {
         return direction == Direction.RECEIVE;
     }
 
-    public boolean isFlying() {
-        return isReceiving() && PacketType.Play.Client.Util.isInstanceOfFlying(packetId);
-    }
+    public boolean isInventoryClick() { return rawPacket instanceof ClientClickWindowPacket; }
 
-    public boolean isInventoryClick() { return packetId == PacketType.Play.Client.WINDOW_CLICK; }
-
+    // Could be EntityInteract packet
     public boolean isUseEntity() {
-        return isReceiving() && packetId == PacketType.Play.Client.USE_ENTITY;
+        return isReceiving() && rawPacket instanceof ClientEntityActionPacket;
     }
 
     public enum Direction { SEND, RECEIVE }

@@ -1,4 +1,4 @@
-package com.imjustdoom.flappyanticheat.commands;
+/**package com.imjustdoom.flappyanticheat.commands;
 
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.api.check.FlappyCheck;
@@ -122,4 +122,4 @@ public class FlappyACCommand implements CommandExecutor {
         }
         return false;
     }
-}
+}**/

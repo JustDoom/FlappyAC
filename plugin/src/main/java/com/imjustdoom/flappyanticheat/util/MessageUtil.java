@@ -2,7 +2,8 @@ package com.imjustdoom.flappyanticheat.util;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.config.Config;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class MessageUtil {
 
@@ -12,7 +13,7 @@ public class MessageUtil {
      * @return - The message after being translated
      */
     public static String translate(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return LegacyComponentSerializer.legacyAmpersand().serialize(Component.text(message));
     }
 
     /**

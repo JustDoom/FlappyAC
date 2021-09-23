@@ -1,16 +1,15 @@
 package com.imjustdoom.flappyanticheat.data.processor;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
-import io.github.retrooper.packetevents.utils.vector.Vector3d;
 import lombok.Getter;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.*;
-import org.bukkit.util.NumberConversions;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.instance.Instance;
+import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +34,7 @@ public class PositionProcessor {
         this.player = player;
     }
 
-    public void handle(double x, double y, double z, boolean onGround, Vector3d location) {
-
-            if (x == lastX && y == lastY && z == lastZ) {
-                player.getPlayer().sendMessage("E");
-                return;
-            }
+    public void handle(double x, double y, double z, boolean onGround) {
 
                 // Set last pos
                 lastX = this.x;
@@ -78,7 +72,9 @@ public class PositionProcessor {
                 // Set fall distance
                 lastLastFallDistance = lastFallDistance;
                 lastFallDistance = fallDistance;
-                fallDistance = player.getPlayer().getFallDistance();
+                //fallDistance = player.getPlayer().getFallDistance();
+
+            // TODO: fall distance
 
                 // Handle collisions
                 handleCollisions(0);
@@ -112,8 +108,8 @@ public class PositionProcessor {
         for (double x = minX; x <= maxX; x += (maxX - minX)) {
             for (double y = minY; y <= maxY + 0.01; y += (maxY - minY) / 4) { //Expand max by 0.01 to compensate shortly for precision issues due to FP.
                 for (double z = minZ; z <= maxZ; z += (maxZ - minZ)) {
-                    final Location location = new Location(player.getPlayer().getWorld(), x, y, z);
-                    final Block block = this.getBlock(location);
+                    final Pos location = new Pos(x, y, z);
+                    final Block block = this.getBlock(location, player.getPlayer().getInstance());
 
                     if (block != null) {
                         switch (type) {
@@ -136,34 +132,34 @@ public class PositionProcessor {
                 nearVehicle = false;
                 nearPiston = false;
 
-                handleNearbyEntities();
+                handleNearbyEntities(player.getPlayer().getInstance());
 
                 for (final Block block : blocks) {
-                    final Material material = block.getType();
+                    final Material material = block.registry().material();
 
                     inLiquid |= block.isLiquid();
 
-                    if (material != XMaterial.AIR.parseMaterial()) inAir = false;
-                    nearPiston |= material == XMaterial.PISTON.parseMaterial()
-                            || material == XMaterial.PISTON_HEAD.parseMaterial();
+                    if (material != Material.AIR) inAir = false;
+                    nearPiston |= material == Material.PISTON
+                            || material == Block.PISTON_HEAD.registry().material();
 
-                    nearShulker |= material == XMaterial.SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.BLUE_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.PINK_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.BLACK_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.WHITE_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.PURPLE_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.CYAN_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.YELLOW_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.ORANGE_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.GREEN_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.LIME_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.BROWN_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.GRAY_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.LIGHT_BLUE_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.LIGHT_GRAY_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.RED_SHULKER_BOX.parseMaterial()
-                            || material == XMaterial.MAGENTA_SHULKER_BOX.parseMaterial();
+                    nearShulker |= material == Material.SHULKER_BOX
+                            || material == Material.BLUE_SHULKER_BOX
+                            || material == Material.PINK_SHULKER_BOX
+                            || material == Material.BLACK_SHULKER_BOX
+                            || material == Material.WHITE_SHULKER_BOX
+                            || material == Material.PURPLE_SHULKER_BOX
+                            || material == Material.CYAN_SHULKER_BOX
+                            || material == Material.YELLOW_SHULKER_BOX
+                            || material == Material.ORANGE_SHULKER_BOX
+                            || material == Material.GREEN_SHULKER_BOX
+                            || material == Material.LIME_SHULKER_BOX
+                            || material == Material.BROWN_SHULKER_BOX
+                            || material == Material.GRAY_SHULKER_BOX
+                            || material == Material.LIGHT_BLUE_SHULKER_BOX
+                            || material == Material.LIGHT_GRAY_SHULKER_BOX
+                            || material == Material.RED_SHULKER_BOX
+                            || material == Material.MAGENTA_SHULKER_BOX;
                 }
                 break;
             case 1:
@@ -176,32 +172,37 @@ public class PositionProcessor {
     public void handleTicks(){
         airTicks = inAir ? airTicks + 1 : 0;
         waterTicks = inLiquid ? waterTicks + 1 : 0;
-        inVehicle = player.getPlayer().isInsideVehicle();
+        inVehicle = player.getPlayer().getVehicle() != null;
         sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;
     }
 
+    public int floor(double num) {
+        int floor = (int)num;
+        return (double)floor == num ? floor : floor - (int)(Double.doubleToRawLongBits(num) >>> 63);
+    }
+
     public void handleClimbableCollision() {
-        final Location location = player.getPlayer().getLocation();
-        final int x = NumberConversions.floor(location.getX());
-        final int y = NumberConversions.floor(location.getY());
-        final int z = NumberConversions.floor(location.getZ());
-        final Block block = this.getBlock(new Location(location.getWorld(), x, y, z));
+        final Pos location = player.getPlayer().getPosition();
+        final int x = floor(location.x());
+        final int y = floor(location.y());
+        final int z = floor(location.z());
+        final Block block = this.getBlock(new Pos(x, y, z), player.getPlayer().getInstance());
         lastOnLadder = onLadder;
-        onLadder = block.getType() == Material.LADDER || block.getType() == Material.VINE;
+        onLadder = block.registry().material() == Material.LADDER || block.registry().material() == Material.VINE;
     }
 
 
-    public Block getBlock(final Location location) {
-        if (location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
-            return location.getWorld().getBlockAt(location);
+    public Block getBlock(final Pos location, final Instance instance) {
+        if (instance.isChunkLoaded(location.blockX() >> 4, location.blockZ() >> 4)) {
+            return instance.getBlock(location);
         } else {
             return null;
         }
     }
 
-    public void handleNearbyEntities() {
+    public void handleNearbyEntities(final Instance instance) {
         try {
-            nearbyEntities = PlayerUtil.getEntitiesWithinRadius(player.getPlayer().getLocation(), 2);
+            nearbyEntities = PlayerUtil.getEntitiesWithinRadius(player.getPlayer().getPosition(), 2, instance);
 
             if (nearbyEntities == null) {
                 nearVehicle = false;
@@ -209,8 +210,8 @@ public class PositionProcessor {
             }
 
             for (final Entity nearbyEntity : nearbyEntities) {
-                nearVehicle |= nearbyEntity instanceof Boat;
-                nearShulker |= nearbyEntity instanceof Shulker;
+                nearVehicle |= nearbyEntity.getEntityType() == EntityType.BOAT;
+                nearShulker |= nearbyEntity.getEntityType() == EntityType.SHULKER;
             }
         } catch (final Throwable ignored) {
 

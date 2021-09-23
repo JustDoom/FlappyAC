@@ -1,14 +1,13 @@
 package com.imjustdoom.api.data;
 
 import com.imjustdoom.api.check.FlappyCheck;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
-import org.bukkit.entity.Player;
+import net.minestom.server.entity.Player;
 
 import java.util.List;
 
 public interface FlappyPlayerAPI {
 
-    ClientVersion getClientVersion();
+    String getClientVersion();
 
     String getClientBrand();
 

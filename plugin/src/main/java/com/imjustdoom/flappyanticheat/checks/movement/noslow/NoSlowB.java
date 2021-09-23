@@ -6,7 +6,6 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
 
 @CheckInfo(check = "NoSlow", checkType = "B", experimental = false, description = "Checks if the player is sprinting while hunger is too low", type = CheckType.MOVEMENT)
 public class NoSlowB extends Check {
@@ -24,8 +23,8 @@ public class NoSlowB extends Check {
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED) || !isEnabled()) return;
 
         // Checks if player is sprinting and food level is smaller than 6
-        if(data.getPlayer().isSprinting() && data.getPlayer().getFoodLevel() < 6) {
-            fail("Food Level: " + data.getPlayer().getFoodLevel(), false);
+        if(data.getPlayer().isSprinting() && data.getPlayer().getFood() < 6) {
+            fail("Food Level: " + data.getPlayer().getFood(), false);
         }
     }
 }

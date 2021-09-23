@@ -1,45 +1,30 @@
 package com.imjustdoom.api.events;
 
 import com.imjustdoom.api.check.FlappyCheck;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.trait.CancellableEvent;
 
-public class FlappyFlagEvent extends Event implements Cancellable {
+public class FlappyFlagEvent implements Event, CancellableEvent {
 
     //TODO: Change config when options are changed through the api?
-
-    private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player flaggedPlayer;
     private boolean isCancelled;
     private FlappyCheck check;
 
     public FlappyFlagEvent(Player player, FlappyCheck check) {
-        super(true);
         this.flaggedPlayer = player;
         this.isCancelled = false;
         this.check = check;
     }
 
-    @Override
     public boolean isCancelled() {
         return this.isCancelled;
     }
 
-    @Override
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
     }
 
     public Player getFlaggedPlayer() {

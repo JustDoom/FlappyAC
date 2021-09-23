@@ -59,18 +59,18 @@ public class Config {
 
         // Create the config file
         try {
-            if(!FileUtil.doesFileExist(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder().getPath()))
-                FileUtil.createDirectory(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder().getPath());
+            if(!FileUtil.doesFileExist(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory().toString()))
+                FileUtil.createDirectory(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory().toString());
 
-            if(!FileUtil.doesFileExist(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder() + "/config.yml"))
-                FileUtil.addConfig(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder() + "/config.yml");
+            if(!FileUtil.doesFileExist(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory() + "/config.yml"))
+                FileUtil.addConfig(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory() + "/config.yml");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Set where we want to load and save the config from
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Paths.get(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder() + "/config.yml"))
+                .path(Paths.get(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory() + "/config.yml"))
                 .build();
 
         // Load the config

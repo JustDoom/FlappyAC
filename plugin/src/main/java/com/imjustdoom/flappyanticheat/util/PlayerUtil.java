@@ -1,14 +1,15 @@
 package com.imjustdoom.flappyanticheat.util;
 
-import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import com.imjustdoom.flappyanticheat.FlappyAnticheat;
+import com.imjustdoom.flappyanticheat.FlappyAnticheatPlugin;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.metadata.LivingEntityMeta;
+import net.minestom.server.instance.Instance;
+import net.minestom.server.item.Material;
+import net.minestom.server.potion.PotionEffect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -32,20 +33,10 @@ public final class PlayerUtil {
             return pingField.getInt(nmsHandle);
         } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException
                 | NoSuchFieldException e) {
-            Bukkit.getLogger().log(Level.SEVERE, "Exception while trying to get player ping.", e);
+            System.out.println("Exception while trying to get player ping.");
         }
 
         return -1;
-    }
-
-    /**
-     * Checks if the player is on a climbable block
-     * @param player - Player to check if they are on a climbable
-     * @return - Returns if the player is on a climbable
-     */
-    public static boolean isOnClimbable(final Player player) {
-        return player.getLocation().getBlock().getType() == XMaterial.LADDER.parseMaterial()
-                || player.getLocation().getBlock().getType() == XMaterial.VINE.parseMaterial();
     }
 
     /**
@@ -55,12 +46,12 @@ public final class PlayerUtil {
      * @param radius - Radius to check
      * @return - Returns the entities within the certain radius
      */
-    public static List<Entity> getEntitiesWithinRadius(final Location location, final double radius) {
+    public static List<Entity> getEntitiesWithinRadius(final Pos location, final double radius, final Instance instance) {
         try {
             final double expander = 16.0D;
 
-            final double x = location.getX();
-            final double z = location.getZ();
+            final double x = location.x();
+            final double z = location.z();
 
             final int minX = (int) Math.floor((x - radius) / expander);
             final int maxX = (int) Math.floor((x + radius) / expander);
@@ -68,25 +59,25 @@ public final class PlayerUtil {
             final int minZ = (int) Math.floor((z - radius) / expander);
             final int maxZ = (int) Math.floor((z + radius) / expander);
 
-            final World world = location.getWorld();
-
             final List<Entity> entities = new LinkedList<>();
 
             for (int xVal = minX; xVal <= maxX; xVal++) {
 
                 for (int zVal = minZ; zVal <= maxZ; zVal++) {
 
-                    if (!world.isChunkLoaded(xVal, zVal)) continue;
+                    if (!instance.isChunkLoaded(xVal, zVal)) continue;
 
-                    for (final Entity entity : world.getChunkAt(xVal, zVal).getEntities()) {
+                    // TODO: getEntities in a chunk
+
+                    /**for (final Entity entity : instance.getChunkAt(xVal, zVal).getEntities()) {
                         //We have to do this due to stupidness
                         if (entity == null) break;
 
                         //Make sure the entity is within the radius specified
-                        if (entity.getLocation().distanceSquared(location) > radius * radius) continue;
+                        if (entity.getPosition().distanceSquared(location) > radius * radius) continue;
 
                         entities.add(entity);
-                    }
+                    }**/
                 }
             }
 
@@ -97,14 +88,16 @@ public final class PlayerUtil {
         return null;
     }
 
+    // TODO: potion effects
+
     /**
      * Get the players potion level
      * @param player - Player to check the potion effect from
      * @param effect - The effect to check the level of
      * @return - Returns the level of the effect
      */
-    public int getPotionLevel(final Player player, final PotionEffectType effect) {
-        final int effectId = effect.getId();
+    /**public int getPotionLevel(final Player player, final PotionEffect effect) {
+        final int effectId = effect.id();
 
         if (!player.hasPotionEffect(effect)) return 0;
 
@@ -115,5 +108,16 @@ public final class PlayerUtil {
         }
 
         return 0;
+    }**/
+
+    // Credit to https://github.com/Bloepiloepi/MinestomPvP
+    public static boolean isBlocking(LivingEntity entity) {
+        LivingEntityMeta meta = (LivingEntityMeta) entity.getEntityMeta();
+
+        if (meta.isHandActive()) {
+            return entity.getItemInHand(meta.getActiveHand()).getMaterial() == Material.SHIELD;
+        }
+
+        return false;
     }
 }

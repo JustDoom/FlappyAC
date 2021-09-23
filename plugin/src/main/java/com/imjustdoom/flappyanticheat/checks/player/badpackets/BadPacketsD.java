@@ -5,7 +5,7 @@ import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.abilities.WrappedPacketInAbilities;
+import net.minestom.server.network.packet.client.play.ClientPlayerAbilitiesPacket;
 
 @CheckInfo(check = "BadPackets", checkType = "D", experimental = false, description = "Checks for spoofing the abilities packet", type = CheckType.PLAYER)
 public class BadPacketsD extends Check {
@@ -19,9 +19,11 @@ public class BadPacketsD extends Check {
 
         if(!isEnabled()) return;
 
-        final WrappedPacketInAbilities wrapper = new WrappedPacketInAbilities(packet.getRawPacket());
-        if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
-            fail("Spoofed Abilities Packet", false);
-        }
+        // TODO: abilities
+
+        final ClientPlayerAbilitiesPacket wrapper = (ClientPlayerAbilitiesPacket) packet.getRawPacket();
+        //if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
+            //fail("Spoofed Abilities Packet", false);
+        //}
     }
 }

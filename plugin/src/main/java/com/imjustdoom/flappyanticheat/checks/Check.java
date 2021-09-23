@@ -10,17 +10,18 @@ import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
-import io.github.retrooper.packetevents.PacketEvents;
+import com.imjustdoom.flappyanticheat.util.MessageUtil;
+import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.EventDispatcher;
+import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -60,41 +61,42 @@ public abstract class Check implements FlappyCheck {
         // Make sure player is online because punishing has some issues with this
         if(!data.getPlayer().isOnline()) return;
 
-        // Fire FlappyPreFlagEvent and check if it was cancelled
-        FlappyFlagEvent flagEvent = new FlappyFlagEvent(data.getPlayer(), this);
-        Bukkit.getPluginManager().callEvent(flagEvent);
-        if(flagEvent.isCancelled()) return;
+        // Fire FlappyFlagEvent and check if it was cancelled
+        FlappyFlagEvent event = new FlappyFlagEvent(data.getPlayer(), this);
+        EventDispatcher.call(event);
+        boolean cancelled = event.isCancelled();
+        if(cancelled) return;
 
         vl++;
 
         FlappyAnticheat.INSTANCE.getAlertExecutor().execute(() -> {
 
             // Create alert message
-            final TextComponent component = new TextComponent(MessageUtil.translate(Config.PREFIX
+            final Component component = Component.text(MessageUtil.translate(Config.PREFIX
                             + Config.Alerts.FAILED_CHECK
-                            .replaceAll("%player%", data.getPlayer().getName())
+                            .replaceAll("%player%", data.getPlayer().getName().toString())
                             .replaceAll("%check%", getCheck())
                             .replaceAll("%checktype%", getCheckType()))
                     .replaceAll("%vl%", String.valueOf(getVl()))
                     .replaceAll("%maxvl%", String.valueOf(getMaxVl())));
 
             // Create alert hover message
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(MessageUtil.translate(
+            component.hoverEvent(HoverEvent.showText(Component.text(MessageUtil.translate(
                     Config.Alerts.HOVER
                             .replaceAll("%description%", getDescription())
                             .replaceAll("%debug%", debug)
-                            .replaceAll("%tps%", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
-                            .replaceAll("%ping%", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
-                    )).create()));
+                            //.replaceAll("%tps%", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
+                            .replaceAll("%ping%", String.valueOf(PlayerUtil.getPing(data.getPlayer())))
+                    ))));
 
-            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));
+            component.clickEvent(ClickEvent.runCommand("/flappyachoverclick " + data.getPlayer().getName()));
 
             // Loop through players with alerts enabled
             //TODO: Improve alert toggle
             for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
-                Player player = Bukkit.getPlayer(uuid);
+                Player player = MinecraftServer.getConnectionManager().findPlayer(String.valueOf(uuid));
                 if (!player.hasPermission("flappyac.alerts")) continue;
-                player.spigot().sendMessage(component);
+                player.sendMessage(component);
             }
 
             // Send discord message
@@ -110,7 +112,7 @@ public abstract class Check implements FlappyCheck {
                             .build()).queue();**/
 
             // Send console message
-            MessageUtil.toConsole(component.getText());
+            MessageUtil.toConsole(component.toString());
 
             // Add violation to violation file if enabled
             if(Config.Logs.ViolationLog.ENABLED)
@@ -118,7 +120,7 @@ public abstract class Check implements FlappyCheck {
                         Config.Logs.ViolationLog.MESSAGE
                                 .replaceAll("%check%", getCheck())
                                 .replaceAll("%checktype%", getCheckType())
-                                .replaceAll("%player%", data.getPlayer().getName())
+                                .replaceAll("%player%", data.getPlayer().getName().toString())
                                 .replaceAll("%vl%", String.valueOf(getVl()))
                                 .replaceAll("%maxvl%", String.valueOf(getMaxVl())));
 
@@ -137,18 +139,17 @@ public abstract class Check implements FlappyCheck {
             if (getVl() >= getMaxVl() && punishable) {
 
                 // Fire FlappyPunishPlayerEvent and check if it was cancelled
-                FlappyPunishPlayerEvent punishEvent = new FlappyPunishPlayerEvent(data.getPlayer(), this);
-                Bukkit.getPluginManager().callEvent(punishEvent);
-                if(punishEvent.isCancelled()) return;
+                FlappyPunishPlayerEvent punishPlayerEvent = new FlappyPunishPlayerEvent(data.getPlayer(), this);
+                EventDispatcher.call(punishPlayerEvent);
+                boolean punishPlayerEventCancelled = punishPlayerEvent.isCancelled();
+                if(punishPlayerEventCancelled) return;
 
                 setVl(0);
 
                 // Run punishment keys
                 for (String command : getCommands()) {
-                    command = command.replaceAll("%player%", data.getPlayer().getName());
-                    String finalCommand = command;
-                    Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand));
+                    command = command.replaceAll("%player%", data.getPlayer().getName().toString());
+                    MinecraftServer.getCommandManager().getDispatcher().execute(MinecraftServer.getCommandManager().getConsoleSender(), command);
                 }
 
                 // Add punishment to punishment file if enabled
@@ -157,7 +158,7 @@ public abstract class Check implements FlappyCheck {
                             Config.Logs.PunishmentLog.MESSAGE
                                     .replaceAll("%check%", getCheck())
                                     .replaceAll("%checktype%", getCheckType())
-                                    .replaceAll("%player%", data.getPlayer().getName()));
+                                    .replaceAll("%player%", data.getPlayer().getName().toString()));
             }
         });
     }

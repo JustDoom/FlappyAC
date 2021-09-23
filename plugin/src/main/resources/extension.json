@@ -1,0 +1,14 @@
+
+{
+  "entrypoint": "com.imjustdoom.flappyanticheat.FlappyAnticheatPlugin",
+  "name": "FlappyAC",
+  "version": "1.0.0",
+  "externalDependencies": {
+    "repositories": [
+      {"name": "Central", "url": "https://repo1.maven.org/maven2/"}
+    ],
+    "artifacts": [
+      "org.spongepowered:configurate-yaml:4.1.1"
+    ]
+  }
+}

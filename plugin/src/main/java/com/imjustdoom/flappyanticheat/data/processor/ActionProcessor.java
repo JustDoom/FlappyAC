@@ -2,14 +2,14 @@ package com.imjustdoom.flappyanticheat.data.processor;
 
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import lombok.Getter;
-import org.bukkit.block.Block;
+import net.minestom.server.instance.block.Block;
 
 @Getter
 public class ActionProcessor {
 
     private FlappyPlayer player;
 
-    private Block lastBlockPlaced, blockPlacedAgainst;
+    private Block blockPlaced, blockPlacedAgainst;
     private boolean open;
 
     public ActionProcessor(FlappyPlayer player){
@@ -17,7 +17,7 @@ public class ActionProcessor {
     }
 
     public void handleBlockPlace(Block blockPlaced, Block blockAgainst){
-        lastBlockPlaced = blockPlaced;
+        this.blockPlaced = blockPlaced;
         blockPlacedAgainst = blockAgainst;
     }
 

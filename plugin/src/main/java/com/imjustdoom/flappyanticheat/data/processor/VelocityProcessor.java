@@ -2,9 +2,6 @@ package com.imjustdoom.flappyanticheat.data.processor;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
-import io.github.retrooper.packetevents.packetwrappers.play.out.transaction.WrappedPacketOutTransaction;
 import lombok.Getter;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,7 +40,8 @@ public class VelocityProcessor {
         return Math.abs(FlappyAnticheat.INSTANCE.getTickManager().getTicks() - this.velocityTicks) < this.maxVelocityTicks;
     }
 
-    public void handleTransaction(final WrappedPacketInTransaction wrapper) {
+    // TODO: handle transaction
+    /**public void handleTransaction(final WrappedPacketInTransaction wrapper) {
 
         if (this.verifyingVelocity && wrapper.getActionNumber() == this.velocityID) {
             this.verifyingVelocity = false;
@@ -58,5 +56,5 @@ public class VelocityProcessor {
             PacketEvents.get().getPlayerUtils().sendPacket(data.getPlayer(), new WrappedPacketOutTransaction(0, transactionID, false));
             transactionReply = System.currentTimeMillis();
         }
-    }
+    }**/
 }

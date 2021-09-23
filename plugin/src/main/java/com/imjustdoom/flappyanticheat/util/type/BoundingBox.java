@@ -2,13 +2,14 @@ package com.imjustdoom.flappyanticheat.util.type;
 
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import lombok.Getter;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.instance.Instance;
+import net.minestom.server.instance.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 @Getter
 //Credit to AntiHaxerman for this part
@@ -50,13 +51,13 @@ public final class BoundingBox {
         this.maxZ = data.getPositionProcessor().getZ() + 0.3D;
     }
 
-    public BoundingBox(final Vector data) {
-        this.minX = data.getX() - 0.4D;
-        this.minY = data.getY();
-        this.minZ = data.getZ() - 0.4D;
-        this.maxX = data.getX() + 0.4D;
-        this.maxY = data.getY() + 1.9D;
-        this.maxZ = data.getZ() + 0.4D;
+    public BoundingBox(final Vec data) {
+        this.minX = data.x() - 0.4D;
+        this.minY = data.y();
+        this.minZ = data.z() - 0.4D;
+        this.maxX = data.x() + 0.4D;
+        this.maxY = data.y() + 1.9D;
+        this.maxZ = data.z() + 0.4D;
     }
 
     public BoundingBox move(final double x, final double y, final double z) {
@@ -71,7 +72,7 @@ public final class BoundingBox {
         return this;
     }
 
-    public List<Block> getBlocks(final World world) {
+    public List<Block> getBlocks(final Instance world) {
         final List<Block> blockList = new ArrayList<>();
 
         final double minX = this.minX;
@@ -84,7 +85,7 @@ public final class BoundingBox {
         for (double x = minX; x <= maxX; x += (maxX - minX)) {
             for (double y = minY; y <= maxY; y += (maxY - minY)) {
                 for (double z = minZ; z <= maxZ; z += (maxZ - minZ)) {
-                    final Block block = world.getBlockAt(new Location(world, x, y, z));
+                    final Block block = world.getBlock(new Pos(x, y, z));
                     blockList.add(block);
                 }
             }

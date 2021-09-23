@@ -6,7 +6,7 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import org.bukkit.entity.Player;
+import net.minestom.server.entity.Player;
 
 @CheckInfo(check = "Inventory", checkType = "A", experimental = false, description = "Sprinting/Crouching while clicking in an inventory", type = CheckType.PLAYER)
 public class InventoryA extends Check {

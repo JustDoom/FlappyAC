@@ -1,4 +1,4 @@
-package com.imjustdoom.flappyanticheat.commands;
+/**package com.imjustdoom.flappyanticheat.commands;
 
 import com.imjustdoom.flappyanticheat.config.Config;
 import org.bukkit.Bukkit;
@@ -34,4 +34,4 @@ public class FlappyACHoverClick implements CommandExecutor {
 
         return false;
     }
-}
+}**/

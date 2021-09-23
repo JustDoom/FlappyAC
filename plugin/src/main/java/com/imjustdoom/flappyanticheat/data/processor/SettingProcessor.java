@@ -1,8 +1,8 @@
 package com.imjustdoom.flappyanticheat.data.processor;
 
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
 import lombok.Getter;
+import net.minestom.server.network.packet.client.play.ClientSettingsPacket;
 
 @Getter
 public class SettingProcessor {
@@ -15,10 +15,10 @@ public class SettingProcessor {
         this.player = player;
     }
 
-    public void handle(final WrappedPacketInSettings wrapper){
+    public void handle(final ClientSettingsPacket wrapper){
 
         // Set last and current skin
         lastSkin = skin;
-        skin = wrapper.getDisplaySkinPartsMask();
+        skin = wrapper.displayedSkinParts;
     }
 }

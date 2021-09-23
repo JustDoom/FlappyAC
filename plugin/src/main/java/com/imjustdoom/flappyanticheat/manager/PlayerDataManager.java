@@ -1,7 +1,7 @@
 package com.imjustdoom.flappyanticheat.manager;
 
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import org.bukkit.entity.Player;
+import net.minestom.server.entity.Player;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

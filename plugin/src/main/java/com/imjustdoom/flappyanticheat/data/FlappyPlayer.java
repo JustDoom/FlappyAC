@@ -3,29 +3,26 @@ package com.imjustdoom.flappyanticheat.data;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.data.FlappyPlayerAPI;
 import com.imjustdoom.api.events.FlappyLoadPlayerEvent;
-import com.imjustdoom.flappyanticheat.FlappyAnticheat;
+import com.imjustdoom.api.events.FlappyPunishPlayerEvent;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.processor.*;
-import com.imjustdoom.flappyanticheat.manager.CheckManager;
 import com.imjustdoom.flappyanticheat.exempt.ExemptManager;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
+import com.imjustdoom.flappyanticheat.manager.CheckManager;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.EventDispatcher;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 public class FlappyPlayer implements FlappyPlayerAPI {
 
     private final Player player;
-    private final ClientVersion clientVersion;
+    private final String clientVersion;
     private String clientBrand;
 
     private final long joinTime = System.currentTimeMillis();
@@ -41,7 +38,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     public FlappyPlayer(Player player){
 
         this.player = player;
-        this.clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+        this.clientVersion = "1.17.1";
 
         // Load the processors and exempt manager
         this.positionProcessor = new PositionProcessor(this);
@@ -54,8 +51,8 @@ public class FlappyPlayer implements FlappyPlayerAPI {
         //TODO: Improve alert toggle and join message
 
         // Fire FlappyLoadPlayerEvent
-        FlappyLoadPlayerEvent loadPlayerEvent = new FlappyLoadPlayerEvent(this);
-        Bukkit.getPluginManager().callEvent(loadPlayerEvent);
+        FlappyLoadPlayerEvent punishPlayerEvent = new FlappyLoadPlayerEvent(this);
+        EventDispatcher.call(punishPlayerEvent);
     }
 
     @Override

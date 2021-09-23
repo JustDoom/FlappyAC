@@ -1,23 +1,19 @@
 package com.imjustdoom.api.events;
 
 import com.imjustdoom.api.check.FlappyCheck;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.trait.CancellableEvent;
 
-public class FlappyPunishPlayerEvent extends Event implements Cancellable {
+public class FlappyPunishPlayerEvent implements Event, CancellableEvent {
 
     //TODO: Change config when options are changed through the api?
-
-    private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player punishedPlayer;
     private boolean isCancelled;
     private FlappyCheck check;
 
     public FlappyPunishPlayerEvent(Player player, FlappyCheck check) {
-        super(true);
         this.punishedPlayer = player;
         this.isCancelled = false;
         this.check = check;
@@ -31,15 +27,6 @@ public class FlappyPunishPlayerEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
     }
 
     public Player getPunishedPlayer() {

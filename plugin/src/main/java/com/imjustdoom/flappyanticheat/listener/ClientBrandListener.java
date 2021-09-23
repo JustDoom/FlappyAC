@@ -1,12 +1,9 @@
-package com.imjustdoom.flappyanticheat.listener;
+/**package com.imjustdoom.flappyanticheat.listener;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +42,7 @@ public class ClientBrandListener implements PluginMessageListener {
                                     "Client Brand: " + data.getClientBrand()
                                             + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
                                     false))
-                            .build()).queue();**/
+                            .build()).queue();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -60,3 +57,4 @@ public class ClientBrandListener implements PluginMessageListener {
         }
     }
 }
+**/

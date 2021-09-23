@@ -1,13 +1,16 @@
 package com.imjustdoom.flappyaddon;
 
-import com.imjustdoom.flappyaddon.events.FlappyPlayerLoadListener;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.minestom.server.extensions.Extension;
 
-public class Main extends JavaPlugin {
+public class Main extends Extension {
 
     @Override
-    public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(new FlappyPlayerLoadListener(), this);
+    public void initialize() {
+
+    }
+
+    @Override
+    public void terminate() {
+
     }
 }

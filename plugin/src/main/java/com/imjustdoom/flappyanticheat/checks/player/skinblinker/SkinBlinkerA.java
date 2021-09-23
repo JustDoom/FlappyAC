@@ -6,6 +6,7 @@ import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
+import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 
 @CheckInfo(check = "SkinBlinker", checkType = "A", experimental = false, description = "Skin settings being changed when crouching/sprinting", type = CheckType.PLAYER)
 public class SkinBlinkerA extends Check {
@@ -32,7 +33,7 @@ public class SkinBlinkerA extends Check {
         // and if the skin is different to the last skin
         if ((data.getPlayer().isSprinting()
                 || data.getPlayer().isSneaking()
-                || data.getPlayer().isBlocking()
+                || PlayerUtil.isBlocking(data.getPlayer())
                 || data.getActionProcessor().isOpen())
                 && lastSkin != data.getSettingProcessor().getSkin())
             fail("&7last=&2" + lastSkin + " &7current=&2" + data.getSettingProcessor().getSkin(), false);

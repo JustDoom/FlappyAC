@@ -3,9 +3,8 @@ package com.imjustdoom.flappyanticheat.exempt.type;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
-import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
-import org.bukkit.GameMode;
+import net.minestom.server.entity.GameMode;
 
 import java.util.function.Function;
 
@@ -16,7 +15,8 @@ public enum ExemptType {
 
     JOINED(player -> System.currentTimeMillis() - player.getJoinTime() < 5000L),
 
-    TPS(player -> PacketEvents.get().getServerUtils().getTPS() < Config.Settings.JOIN_EXEMPTION),
+    // TODO: tps exempt
+    TPS(player -> 20.0 < Config.Settings.JOIN_EXEMPTION),
 
     LIQUID(data -> data.getPositionProcessor().isInLiquid()),
 
@@ -30,9 +30,9 @@ public enum ExemptType {
 
     INSIDE_VEHICLE(data -> data.getPositionProcessor().getSinceVehicleTicks() < 10),
 
-    CLIMBABLE(data -> PlayerUtil.isOnClimbable(data.getPlayer())),
+    CLIMBABLE(data -> data.getPositionProcessor().isOnLadder()),
 
-    FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isGliding()),
+    FLYING(data -> data.getPlayer().isFlying() || data.getPlayer().isFlyingWithElytra()),
 
     STEPPED(data -> data.getPositionProcessor().isOnGround() && data.getPositionProcessor().getDeltaY() > 0),
 

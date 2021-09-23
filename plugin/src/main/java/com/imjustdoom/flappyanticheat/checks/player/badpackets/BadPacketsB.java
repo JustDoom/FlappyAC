@@ -8,7 +8,7 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.steervehicle.WrappedPacketInSteerVehicle;
+import net.minestom.server.network.packet.client.play.ClientSteerVehiclePacket;
 
 @CheckInfo(check = "BadPackets", checkType = "B", experimental = false, description = "Checks for common exploit in disablers", type = CheckType.PLAYER)
 public class BadPacketsB extends Check {
@@ -23,10 +23,11 @@ public class BadPacketsB extends Check {
         // Check if the packet is not a steering packet, if true return
         if (!packet.isSteerVehicle() || !isEnabled()) return;
 
-        final WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
+        final ClientSteerVehiclePacket wrapper = (ClientSteerVehiclePacket) packet.getRawPacket();
 
-        final boolean unmount = wrapper.isDismount();
-        final boolean invalid = data.getPlayer().getVehicle() == null && !unmount;
+        // TODO: dismount
+        //final boolean unmount = wrapper.isDismount();
+        final boolean invalid = data.getPlayer().getVehicle() == null /*&& !unmount*/;
 
         if (invalid) {
             if (++buffer > 8) {

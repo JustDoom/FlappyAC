@@ -1,4 +1,4 @@
-package com.imjustdoom.flappyaddon.events;
+/**package com.imjustdoom.flappyaddon.events;
 
 import com.imjustdoom.api.events.FlappyLoadPlayerEvent;
 import io.github.retrooper.packetevents.utils.player.ClientVersion;
@@ -17,4 +17,4 @@ public class FlappyPlayerLoadListener implements Listener {
             event.getPlayer().sendMessage("You are on the " + event.getClientBrand() + " client but hack clients can spoof this");
         }
     }
-}
+}**/

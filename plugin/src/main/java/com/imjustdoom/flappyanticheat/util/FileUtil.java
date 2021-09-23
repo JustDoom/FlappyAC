@@ -1,7 +1,8 @@
 package com.imjustdoom.flappyanticheat.util;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -49,13 +50,13 @@ public class FileUtil {
      * @param message - The message to add to the file
      */
     public static void addToFile(String fileName, String message) {
-        File log = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), fileName);
+        File log = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory().toString(), fileName);
         try {
             if(!log.exists()){
                 createFiles(fileName);
             }
             PrintWriter out = new PrintWriter(new FileWriter(log, true));
-            out.append(ChatColor.stripColor(message));
+            out.append(PlainTextComponentSerializer.plainText().serialize(Component.text(message)));
             out.close();
         } catch(IOException e){
             e.printStackTrace();
@@ -67,8 +68,8 @@ public class FileUtil {
      * @param name - Name of the file to create
      */
     public static void createFiles(String name) {
-        if (!new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name).exists()) {
-            File todayFile = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder(), name);
+        if (!new File(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory().toString(), name).exists()) {
+            File todayFile = new File(FlappyAnticheat.INSTANCE.getPlugin().getDataDirectory().toString(), name);
             try {
                 todayFile.createNewFile(); // Error
             } catch (IOException e) {
