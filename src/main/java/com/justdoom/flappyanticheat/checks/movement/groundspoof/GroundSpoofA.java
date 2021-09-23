@@ -105,30 +105,6 @@ public class GroundSpoofA extends Check {
                     }
                 }
             } else if (buffer > 0) buffer-=0.5;
-
-            boolean inAir = true;
-
-            boolean lastInAir = this.lastInAir.getOrDefault(player.getUniqueId(), false);
-
-            for (Block block : PlayerUtil.getNearbyBlocksConfigurable(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY() -1, player.getLocation().getZ()), 1, 0, 1)) {
-                if (block.getType() != Material.AIR) {
-                    inAir = false;
-                    break;
-                }
-            }
-
-            boolean lastOnGround = this.lastOnGround.getOrDefault(player.getUniqueId(), true);
-
-            //check if they have packet on ground, are in the air, and were last in the air.
-            if (packet.isOnGround() && lastOnGround && inAir && lastInAir) {
-                String suspectedHack = "NoFall";
-
-                fail("mod=" + packet.getY() % groundY + " &7Client: &2" + client + " &7Server: &2" + server + " &7Suspected Hack: &2" + suspectedHack, player);
-
-            }
-
-            this.lastOnGround.put(player.getUniqueId(), packet.isOnGround());
-            this.lastInAir.put(player.getUniqueId(), inAir);
         }
     }
 }

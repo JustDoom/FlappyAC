@@ -1,6 +1,7 @@
 package com.justdoom.flappyanticheat.checks.movement.fly;
 
 import com.justdoom.flappyanticheat.checks.Check;
+import com.justdoom.flappyanticheat.utils.BoundingBox;
 import com.justdoom.flappyanticheat.utils.PlayerUtil;
 import com.justdoom.flappyanticheat.utils.ServerUtil;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -12,9 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class FlyA extends Check {
 
@@ -23,6 +22,9 @@ public class FlyA extends Check {
     private Map<UUID, Double> lastDeltaY = new HashMap<>();
 
     private Map<UUID, Boolean> inAir = new HashMap<>();
+
+    private final Map<UUID, List<Block>> blocks = new HashMap<>();
+    private final Map<UUID, List<Block>> blocksNear = new HashMap<>();
 
     public FlyA(){
         super("Fly", "A", false);
@@ -36,13 +38,8 @@ public class FlyA extends Check {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        double airTicks = this.airTicks.getOrDefault(uuid, 0.0);
-        boolean inAir = this.inAir.getOrDefault(uuid, false);
-
-        //measuring how many ticks the player has an air block below them for
-        airTicks = inAir ? airTicks + 1 : 0;
-
-        this.airTicks.put(uuid, airTicks);
+        getBlocks(player, 0);
+        getBlocks(player, 1);
 
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
 
@@ -54,16 +51,6 @@ public class FlyA extends Check {
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
 
-            //check if the blocks below the player are air blocks. not entirely accurate.
-            for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(),
-                    player.getLocation().getX(), player.getLocation().getY() - 1, player.getLocation().getZ()), 1)) {
-                if (block.getType() != Material.AIR) {
-                    this.inAir.put(uuid, false);
-                    break;
-                } else {
-                    this.inAir.put(uuid, true);
-                }
-            }
 
             final double deltaY = packet.getPosition().getY() - player.getLocation().getY();
 
@@ -75,7 +62,7 @@ public class FlyA extends Check {
             final double difference = Math.abs(deltaY - prediction);
 
             final boolean invalid = difference > 0.00001D
-                    && airTicks > 8
+                    && airTicks.get(player.getUniqueId()) > 8
                     //was able to replace this all due to my new air block check LMFAO.
                     //note: this is not accurate if youre inside an enclosed space/near blocks. simply a quick fix i made
                     ;
@@ -92,6 +79,97 @@ public class FlyA extends Check {
             }
 
             this.buffer.put(uuid, buffer);
+        }
+    }
+
+    public void getBlocks(final Player player, final int type) {
+        blocks.put(player.getUniqueId(), new ArrayList<>());
+        blocksNear.put(player.getUniqueId(), new ArrayList<>());
+
+        final BoundingBox boundingBox = new BoundingBox(player);
+
+        switch (type) {
+            case 0:
+                boundingBox.expandSpecific(0, 0, 0.55, 0.6, 0, 0);
+                break;
+            case 1:
+                boundingBox.expandSpecific(0.1, 0.1, 0.55, 0.6, 0.1, 0.1);
+                break;
+        }
+
+        final double minX = boundingBox.getMinX();
+        final double minY = boundingBox.getMinY();
+        final double minZ = boundingBox.getMinZ();
+        final double maxX = boundingBox.getMaxX();
+        final double maxY = boundingBox.getMaxY();
+        final double maxZ = boundingBox.getMaxZ();
+
+        for (double x = minX; x <= maxX; x += (maxX - minX)) {
+            for (double y = minY; y <= maxY + 0.01; y += (maxY - minY) / 4) { //Expand max by 0.01 to compensate shortly for precision issues due to FP.
+                for (double z = minZ; z <= maxZ; z += (maxZ - minZ)) {
+                    final Location location = new Location(player.getPlayer().getWorld(), x, y, z);
+                    final Block block = this.getBlock(location);
+
+                    if (block != null) {
+                        switch (type) {
+                            case 0:
+                                List<Block> array = blocks.get(player.getUniqueId());
+                                array.add(block);
+                                blocks.put(player.getUniqueId(), array);
+                                break;
+                            case 1:
+                                List<Block> array1 = blocksNear.get(player.getUniqueId());
+                                array1.add(block);
+                                blocksNear.put(player.getUniqueId(), array1);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        switch (type) {
+            case 0:
+                inAir.put(player.getUniqueId(), true);
+
+                for (final Block block : blocks.getOrDefault(player.getUniqueId(), new ArrayList<>())) {
+                    final Material material = block.getType();
+
+                    if (material != Material.AIR) inAir.put(player.getUniqueId(), false);
+                }
+                break;
+            case 1:
+        }
+
+        handleTicks(player);
+    }
+
+    public void handleTicks(Player player) {
+        double airTicks = this.airTicks.getOrDefault(player.getUniqueId(), 0.0);
+        boolean inAir = this.inAir.getOrDefault(player.getUniqueId(), false);
+
+        //measuring how many ticks the player has an air block below them for
+        airTicks = inAir ? airTicks + 1 : 0;
+
+        this.airTicks.put(player.getUniqueId(), airTicks);
+
+        //check if the blocks below the player are air blocks. not entirely accurate.
+        for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(),
+                player.getLocation().getX(), player.getLocation().getY() - 1, player.getLocation().getZ()), 1)) {
+            if (block.getType() != Material.AIR) {
+                this.inAir.put(player.getUniqueId(), false);
+                break;
+            } else {
+                this.inAir.put(player.getUniqueId(), true);
+            }
+        }
+    }
+
+    public Block getBlock(final Location location) {
+        if (location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
+            return location.getWorld().getBlockAt(location);
+        } else {
+            return null;
         }
     }
 }
