@@ -38,8 +38,6 @@
             <groupId>com.imjustdoom</groupId>
             <artifactId>FlappyAPI</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
-            <type>jar</type>
         </dependency>
         <!-- <dependency>
             <groupId>net.dv8tion</groupId>
