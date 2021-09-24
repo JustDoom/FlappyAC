@@ -31,10 +31,12 @@ public class ClientBrandListener implements PluginMessageListener {
             for (final UUID uuid : FlappyAnticheat.INSTANCE.getAlertManager().getToggledAlerts()) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (!player.hasPermission("flappyac.alerts")) continue;
-                player.sendMessage(message);
+                if(Config.Settings.SEND_BRAND_MESSAGE)
+                    player.sendMessage(message);
             }
 
-            MessageUtil.toConsole(message);
+            if(Config.Settings.SEND_BRAND_MESSAGE)
+                MessageUtil.toConsole(message);
 
             data.setClientBrand(brand);
 

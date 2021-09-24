@@ -24,9 +24,8 @@ public class NetworkListener extends PacketListenerAbstract {
         FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
         FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
 
-        if(Config.Settings.SEND_BRAND_MESSAGE)
-            Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                    ClientBrandListener.addChannel(event.getPlayer(), "minecraft:brand"));
+        Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+                ClientBrandListener.addChannel(event.getPlayer(), "minecraft:brand"));
     }
 
     @Override
