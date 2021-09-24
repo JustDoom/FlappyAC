@@ -26,6 +26,7 @@ public class Config {
     public static class Settings {
         public static boolean OUTPUT_TO_CONSOLE;
         public static int JOIN_EXEMPTION;
+        public static boolean SEND_BRAND_MESSAGE;
     }
 
     public static class Alerts {
@@ -93,13 +94,15 @@ public class Config {
         DISCORD_BOT.CHANNEL_ID = configFile.node("discord-bot", "channel").getString();
 
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
-        Settings.JOIN_EXEMPTION = configFile.node("join-exemption").getInt();
+        Settings.JOIN_EXEMPTION = configFile.node("settings", "join-exemption").getInt();
+        Settings.SEND_BRAND_MESSAGE = configFile.node("settings", "send-brand-message").getBoolean();
 
         Alerts.FAILED_CHECK = configFile.node("alerts", "failed-check").getString();
         Alerts.PLAYER_JOIN = configFile.node("alerts", "player-join").getString();
         Alerts.HOVER = configFile.node("alerts", "hover").getString();
         Alerts.TOGGLE_ALERTS_ON = configFile.node("alerts", "toggle-alerts-on").getString();
         Alerts.TOGGLE_ALERTS_OFF = configFile.node("alerts", "toggle-alerts-off").getString();
+
         try {
             Alerts.CLICK_COMMANDS = configFile.node("alerts", "click-commands").getList(String.class);
         } catch (SerializationException e) {

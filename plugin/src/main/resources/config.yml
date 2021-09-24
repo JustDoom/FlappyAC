@@ -6,6 +6,7 @@ prefix: "&9FlappyAC "
 settings:
   output-to-console: false
   join-exemption: 5000
+  send-brand-message: true
 
 discord-bot:
   token: "token"
