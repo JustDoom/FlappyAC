@@ -17,8 +17,6 @@ public class BadPacketsD extends Check {
     @Override
     public void handle(Packet packet) {
 
-        if(!isEnabled()) return;
-
         final WrappedPacketInAbilities wrapper = new WrappedPacketInAbilities(packet.getRawPacket());
         if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
             fail("Spoofed Abilities Packet", false);

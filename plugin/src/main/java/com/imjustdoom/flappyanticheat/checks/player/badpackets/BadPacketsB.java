@@ -21,7 +21,7 @@ public class BadPacketsB extends Check {
     public void handle(Packet packet) {
 
         // Check if the packet is not a steering packet, if true return
-        if (!packet.isSteerVehicle() || !isEnabled()) return;
+        if (!packet.isSteerVehicle()) return;
 
         final WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
 

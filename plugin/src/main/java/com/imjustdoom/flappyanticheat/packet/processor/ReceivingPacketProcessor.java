@@ -55,7 +55,7 @@ public class ReceivingPacketProcessor {
         if (player.getPlayer().hasPermission("flappyac.bypass")) return;
 
         for (final FlappyCheck check : player.getChecks()) {
-            ((Check) check).handle(packet);
+            if(((Check) check).isEnabled()) ((Check) check).handle(packet);
         }
     }
 }

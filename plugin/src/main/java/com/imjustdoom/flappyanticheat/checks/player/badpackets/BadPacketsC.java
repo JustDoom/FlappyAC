@@ -19,7 +19,7 @@ public class BadPacketsC extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if (!packet.isSteerVehicle() || !isEnabled()) return;
+        if (!packet.isSteerVehicle()) return;
         WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
 
         float forwardValue = Math.abs(wrapper.getForwardValue()), sideValue = Math.abs(wrapper.getSideValue());

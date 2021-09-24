@@ -15,7 +15,7 @@ public class StepA extends Check {
 
     @Override
     public void handle(final Packet packet) {
-        if(!packet.isPosition() && !packet.isPositionLook() || !isEnabled()) return;
+        if(!packet.isPosition() && !packet.isPositionLook()) return;
 
         if(data.getPositionProcessor().getDeltaY() > 0.6 && data.getPositionProcessor().isMathematicallyOnGround()
                 && data.getPositionProcessor().isLastMathematicallyOnGround()) {

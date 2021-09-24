@@ -21,7 +21,7 @@ public class NoSlowB extends Check {
         // Check if the packet is not a position or position look packet,
         // if exempts are true, if true return
         if(!packet.isPosition() && !packet.isPositionLook()
-                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED) || !isEnabled()) return;
+                || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)) return;
 
         // Checks if player is sprinting and food level is smaller than 6
         if(data.getPlayer().isSprinting() && data.getPlayer().getFoodLevel() < 6) {
