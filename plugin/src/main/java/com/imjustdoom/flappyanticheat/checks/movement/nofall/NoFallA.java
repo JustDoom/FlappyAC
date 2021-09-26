@@ -28,7 +28,7 @@ public class NoFallA extends Check {
 
         // Get the clients onGround and servers onGround
         double groundY = 0.015625;
-        boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
+        boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;
 
         // Check if the client says its on the ground but the server says it isn't
         if (client && !server && !PlayerUtil.isOnClimbable(data.getPlayer())) {

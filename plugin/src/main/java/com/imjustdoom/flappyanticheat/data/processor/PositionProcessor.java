@@ -37,52 +37,47 @@ public class PositionProcessor {
 
     public void handle(double x, double y, double z, boolean onGround, Vector3d location) {
 
-            if (x == lastX && y == lastY && z == lastZ) {
-                player.getPlayer().sendMessage("E");
-                return;
-            }
+        // Set last pos
+        lastX = this.x;
+        lastY = this.y;
+        lastZ = this.z;
 
-                // Set last pos
-                lastX = this.x;
-                lastY = this.y;
-                lastZ = this.z;
+        // Set current pos
+        this.x = x;
+        this.y = y;
+        this.z = z;
 
-                // Set current pos
-                this.x = x;
-                this.y = y;
-                this.z = z;
+        // Set on ground
+        lastOnGround = this.onGround;
+        this.onGround = onGround;
 
-                // Set on ground
-                lastOnGround = this.onGround;
-                this.onGround = onGround;
+        // Set mathematically onGround
+        lastMathematicallyOnGround = mathematicallyOnGround;
+        mathematicallyOnGround = y % (1D / 64) == 0;
 
-                // Set mathematically onGround
-                lastMathematicallyOnGround = mathematicallyOnGround;
-                mathematicallyOnGround = y % (1D / 64) == 0;
+        // Set last last delta Y
+        lastLastDeltaY = lastDeltaY;
 
-                // Set last last delta Y
-                lastLastDeltaY = lastDeltaY;
+        // Set last delta
+        lastDeltaX = deltaX;
+        lastDeltaY = deltaY;
+        lastDeltaZ = deltaZ;
+        lastDeltaXZ = deltaXZ;
 
-                // Set last delta
-                lastDeltaX = deltaX;
-                lastDeltaY = deltaY;
-                lastDeltaZ = deltaZ;
-                lastDeltaXZ = deltaXZ;
+        // Set current delta
+        deltaX = this.x - lastX;
+        deltaY = this.y - lastY;
+        deltaZ = this.z - lastZ;
+        deltaXZ = Math.hypot(deltaX, deltaZ);
 
-                // Set current delta
-                deltaX = this.x - lastX;
-                deltaY = this.y - lastY;
-                deltaZ = this.z - lastZ;
-                deltaXZ = Math.hypot(deltaX, deltaZ);
+        // Set fall distance
+        lastLastFallDistance = lastFallDistance;
+        lastFallDistance = fallDistance;
+        fallDistance = player.getPlayer().getFallDistance();
 
-                // Set fall distance
-                lastLastFallDistance = lastFallDistance;
-                lastFallDistance = fallDistance;
-                fallDistance = player.getPlayer().getFallDistance();
-
-                // Handle collisions
-                handleCollisions(0);
-                handleCollisions(1);
+        // Handle collisions
+        handleCollisions(0);
+        handleCollisions(1);
 
     }
 
@@ -173,7 +168,7 @@ public class PositionProcessor {
         handleTicks();
     }
 
-    public void handleTicks(){
+    public void handleTicks() {
         airTicks = inAir ? airTicks + 1 : 0;
         waterTicks = inLiquid ? waterTicks + 1 : 0;
         inVehicle = player.getPlayer().isInsideVehicle();
