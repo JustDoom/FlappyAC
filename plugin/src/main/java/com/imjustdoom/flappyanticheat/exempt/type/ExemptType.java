@@ -36,7 +36,9 @@ public enum ExemptType {
 
     STEPPED(data -> data.getPositionProcessor().isOnGround() && data.getPositionProcessor().getDeltaY() > 0),
 
-    VOID(data -> data.getPositionProcessor().getY() < 0);
+    VOID(data -> data.getPositionProcessor().getY() < 0),
+
+    ENTITIES(data -> data.getPositionProcessor().getNearbyEntities().size() > 0);
 
     private final Function<FlappyPlayer, Boolean> exception;
 
