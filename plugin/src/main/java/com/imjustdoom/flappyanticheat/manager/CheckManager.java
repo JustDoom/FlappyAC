@@ -16,6 +16,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowB;
 import com.imjustdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.imjustdoom.flappyanticheat.checks.movement.step.StepA;
+import com.imjustdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
@@ -65,7 +66,8 @@ public class CheckManager {
             BadPacketsD.class,
             InventoryA.class,
             InventoryB.class,
-            InventoryC.class
+            InventoryC.class,
+            AntiCactusA.class
     };
 
     public static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
