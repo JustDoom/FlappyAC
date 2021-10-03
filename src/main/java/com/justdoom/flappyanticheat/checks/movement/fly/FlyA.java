@@ -38,10 +38,10 @@ public class FlyA extends Check {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        getBlocks(player, 0);
-        getBlocks(player, 1);
-
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
+
+            getBlocks(player, 0);
+            getBlocks(player, 1);
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 

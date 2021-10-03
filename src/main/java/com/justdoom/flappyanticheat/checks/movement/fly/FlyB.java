@@ -42,6 +42,11 @@ public class FlyB extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
+            if(packet.getX() == player.getLocation().getX() && packet.getY() == player.getLocation().getY() && packet.getZ() == player.getLocation().getZ()) return;
+
+            getBlocks(player, 0);
+            getBlocks(player, 1);
+
             if (player.isFlying() || player.isGliding()) return;
 
             if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
@@ -49,7 +54,7 @@ public class FlyB extends Check {
 
             double stableY = this.stableY.getOrDefault(uuid, 0.0);
 
-            if(packet.getY() == player.getLocation().getY() && inAir.getOrDefault(      player.getUniqueId(), false)){
+            if(packet.getY() == player.getLocation().getY() && inAir.getOrDefault(player.getUniqueId(), false)){
                 stableY++;
             } else {
                 stableY = 0.0;
