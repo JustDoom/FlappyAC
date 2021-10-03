@@ -35,6 +35,7 @@ public class PositionProcessor {
         this.player = player;
     }
 
+<<<<<<< Updated upstream
     public void handle(double x, double y, double z, boolean onGround, Vector3d location) {
 
         // Set last pos
@@ -78,6 +79,51 @@ public class PositionProcessor {
         // Handle collisions
         handleCollisions(0);
         handleCollisions(1);
+=======
+    public void handle(double x, double y, double z, boolean onGround) {
+
+                // Set last pos
+                lastX = this.x;
+                lastY = this.y;
+                lastZ = this.z;
+
+                // Set current pos
+                this.x = x;
+                this.y = y;
+                this.z = z;
+
+                // Set on ground
+                lastOnGround = this.onGround;
+                this.onGround = onGround;
+
+                // Set mathematically onGround
+                lastMathematicallyOnGround = mathematicallyOnGround;
+                mathematicallyOnGround = y % (1D / 64) == 0;
+
+                // Set last last delta Y
+                lastLastDeltaY = lastDeltaY;
+
+                // Set last delta
+                lastDeltaX = deltaX;
+                lastDeltaY = deltaY;
+                lastDeltaZ = deltaZ;
+                lastDeltaXZ = deltaXZ;
+
+                // Set current delta
+                deltaX = this.x - lastX;
+                deltaY = this.y - lastY;
+                deltaZ = this.z - lastZ;
+                deltaXZ = Math.hypot(deltaX, deltaZ);
+
+                // Set fall distance
+                lastLastFallDistance = lastFallDistance;
+                lastFallDistance = fallDistance;
+                fallDistance = player.getPlayer().getFallDistance();
+
+                // Handle collisions
+                handleCollisions(0);
+                handleCollisions(1);
+>>>>>>> Stashed changes
 
     }
 

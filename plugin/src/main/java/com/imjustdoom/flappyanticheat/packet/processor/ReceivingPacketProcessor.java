@@ -31,14 +31,14 @@ public class ReceivingPacketProcessor {
 
             if(packet.isPosition() || packet.isPositionLook()) {
                 if (wrapper.getX() != pos.getX() || wrapper.getY() != pos.getY() || wrapper.getZ() != pos.getZ())
-                    player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround(), wrapper.getPosition());
+                    player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround());
             }
         }
 
         if(packet.isVehicleMove()) {
             final WrappedPacketInVehicleMove wrapper = new WrappedPacketInVehicleMove(packet.getRawPacket());
 
-            player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), false, wrapper.getPosition());
+            player.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), false);
         }
 
         if(packet.isSetting()){
