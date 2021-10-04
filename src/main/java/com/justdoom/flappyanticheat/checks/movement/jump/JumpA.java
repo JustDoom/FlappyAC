@@ -10,7 +10,9 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPac
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -26,35 +28,34 @@ public class JumpA extends Check {
     private Map<UUID, Boolean> onSlime = new HashMap<>();
     private Map<UUID, Boolean> onInvalid = new HashMap<>();
     private Map<UUID, Boolean> stairsDeserveTheDeathSentence = new HashMap<>();
-
-    public JumpA(){
+    public JumpA() {
         super("Jump", "A", false);
     }
 
     @Override
     public void onPacketPlayReceive(PacketPlayReceiveEvent event) {
 
-        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
-
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
+
+        if (PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         double sinceSlimeTicks = this.sinceSlimeTicks.getOrDefault(uuid, 0.0);
 
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
-
-            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
+            if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
-            if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding()) return;
+            if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding()
+                    || player.getInventory().getChestplate().getType() == Material.ELYTRA) return;
 
             //0.42 is not the real jump height of the player. if youre gonna make it false atleast use the right number.
             //vehicle desync may false this, thats why it was originally 0.43. it seems like izibane likes false flags
             //though, so ill go along with it
             //0.41999998688697815 is our exact value.
-            double jumpSize = 0.41999998688697815f + (double) + ((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.11f);
+            double jumpSize = 0.41999998688697815f + (double) +((float) PlayerUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.11f);
 
             double lastY = player.getLocation().getY();
             final double deltaY = packet.getPosition().getY() - lastY;
@@ -62,7 +63,7 @@ public class JumpA extends Check {
 
             //we use this to check if they actually jumped. if their y changed and if their previous y divided by 1/64th
             //had a remainder of 0
-            boolean jumped = deltaY > 0 && lastY % (1D/64) == 0;
+            boolean jumped = deltaY > 0 && lastY % (1D / 64) == 0;
 
             //this is probably really intensive, but theres no current better method
 
@@ -131,14 +132,14 @@ public class JumpA extends Check {
 
             //flag the player if theyre under the normal jump size, jumped, and are eligible for flag.
             if (deltaY < (jumpSize - 0.02) && jumped && canFlag) {
-                fail("low jump" + deltaY,player);
+                fail("low jump" + deltaY, player);
             }
 
             //so we check if theyre packet onground first. if they are, then we use 0.6 as their jump height. its not
             //worth going for the exact number. if theyre off the ground, their max jump size is outlines by our jumpsize
             //double. we also want to make sure theyve been off of slime for atleast 15 ticks
             if (deltaY > (onGround ? 0.6 : jumpSize) && sinceSlimeTicks >= 15 && !onInvalid && !deathSentence) {
-                fail("high jump" + deltaY , player);
+                fail("high jump" + deltaY, player);
             }
         }
 

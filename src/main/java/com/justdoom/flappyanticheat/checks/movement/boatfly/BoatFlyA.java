@@ -47,15 +47,6 @@ public class BoatFlyA extends Check {
 
         if (event.getPacketId() == PacketType.Play.Client.VEHICLE_MOVE) {
 
-            lastY.put(uuid, y.getOrDefault(uuid, 0.0));
-            y.put(uuid, player.getLocation().getY());
-
-            //dont run the check if they have /fly on or are creative flying
-            if (player.isFlying() || player.isGliding()) return;
-
-            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
-                return;
-
             //check if the blocks below the player are air blocks. not entirely accurate.
             for (Block block : PlayerUtil.getNearbyBlocksHorizontally(new Location(player.getWorld(),
                     player.getLocation().getX(), player.getLocation().getY() - 1, player.getLocation().getZ()), 1)) {
@@ -66,6 +57,15 @@ public class BoatFlyA extends Check {
                     this.inAir.put(uuid, true);
                 }
             }
+
+            lastY.put(uuid, y.getOrDefault(uuid, 0.0));
+            y.put(uuid, player.getLocation().getY());
+
+            //dont run the check if they have /fly on or are creative flying
+            if (player.isFlying() || player.isGliding()) return;
+
+            if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
+                return;
 
             if(player.isInsideVehicle() && airTicks > 10
                     && y.getOrDefault(uuid, 0.0) > 1 + lastY.getOrDefault(uuid, 0.0)

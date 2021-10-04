@@ -56,7 +56,7 @@ public class SpeedA extends Check implements Listener {
         if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
 
-        if(player.isGliding()) return;
+        if(player.isGliding() || player.getInventory().getChestplate().getType() == Material.ELYTRA) return;
 
 
         //Thanks to sprit for this check - modified it to fit with the base, its usually much better :/
