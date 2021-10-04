@@ -67,8 +67,6 @@ public class BoatFlyA extends Check {
                 }
             }
 
-            player.sendMessage(String.valueOf(y.getOrDefault(uuid, 0.0)));
-            player.sendMessage(String.valueOf(lastY.getOrDefault(uuid, 0.0)));
             if(player.isInsideVehicle() && airTicks > 10
                     && y.getOrDefault(uuid, 0.0) > 1 + lastY.getOrDefault(uuid, 0.0)
                     && player.getVehicle().getType() == EntityType.BOAT) {
