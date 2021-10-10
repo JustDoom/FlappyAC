@@ -19,7 +19,7 @@ public class BadPacketsD extends Check {
 
         final WrappedPacketInAbilities wrapper = new WrappedPacketInAbilities(packet.getRawPacket());
         if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
-            fail("Spoofed Abilities Packet", false);
+            fail("No Info", false);
         }
     }
 }

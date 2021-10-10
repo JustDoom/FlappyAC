@@ -11,17 +11,23 @@ public class ActionProcessor {
 
     private Block lastBlockPlaced, blockPlacedAgainst;
     private boolean open;
+    private int slot, lastSlot;
 
     public ActionProcessor(FlappyPlayer player){
         this.player = player;
     }
 
     public void handleBlockPlace(Block blockPlaced, Block blockAgainst){
-        lastBlockPlaced = blockPlaced;
-        blockPlacedAgainst = blockAgainst;
+        this.lastBlockPlaced = blockPlaced;
+        this.blockPlacedAgainst = blockAgainst;
     }
 
     public void handleInventory(boolean isOpen) {
         this.open = isOpen;
+    }
+
+    public void handleSlots(int slot) {
+        this.lastSlot = this.slot;
+        this.slot = slot;
     }
 }

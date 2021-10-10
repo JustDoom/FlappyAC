@@ -6,6 +6,7 @@ import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
+import io.github.retrooper.packetevents.packetwrappers.play.in.helditemslot.WrappedPacketInHeldItemSlot;
 import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
 import io.github.retrooper.packetevents.packetwrappers.play.in.steervehicle.WrappedPacketInSteerVehicle;
 import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
@@ -50,6 +51,11 @@ public class ReceivingPacketProcessor {
         if (packet.isIncomingTransaction()) {
             final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getRawPacket());
             player.getVelocityProcessor().handleTransaction(wrapper);
+        }
+
+        if (packet.isSlotChange()) {
+            final WrappedPacketInHeldItemSlot wrapper = new WrappedPacketInHeldItemSlot(packet.getRawPacket());
+            player.getActionProcessor().handleSlots(wrapper.getCurrentSelectedSlot());
         }
 
         if (player.getPlayer().hasPermission("flappyac.bypass")) return;

@@ -16,11 +16,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowB;
 import com.imjustdoom.flappyanticheat.checks.movement.speed.SpeedA;
 import com.imjustdoom.flappyanticheat.checks.movement.step.StepA;
-import com.imjustdoom.flappyanticheat.checks.player.anticactus.AntiCactusA;
-import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsA;
-import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsB;
-import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsC;
-import com.imjustdoom.flappyanticheat.checks.player.badpackets.BadPacketsD;
+import com.imjustdoom.flappyanticheat.checks.player.badpackets.*;
 import com.imjustdoom.flappyanticheat.checks.player.inventory.InventoryA;
 import com.imjustdoom.flappyanticheat.checks.player.inventory.InventoryB;
 import com.imjustdoom.flappyanticheat.checks.player.inventory.InventoryC;
@@ -64,10 +60,11 @@ public class CheckManager {
             BadPacketsB.class,
             BadPacketsC.class,
             BadPacketsD.class,
+            BadPacketsE.class,
+            BadPacketsF.class,
             InventoryA.class,
             InventoryB.class,
-            InventoryC.class,
-            AntiCactusA.class
+            InventoryC.class
     };
 
     public static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();

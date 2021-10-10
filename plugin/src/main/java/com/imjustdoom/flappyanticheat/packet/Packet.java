@@ -67,5 +67,7 @@ public class Packet {
         return isReceiving() && packetId == PacketType.Play.Client.USE_ENTITY;
     }
 
+    public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_SLOT; }
+
     public enum Direction { SEND, RECEIVE }
 }
