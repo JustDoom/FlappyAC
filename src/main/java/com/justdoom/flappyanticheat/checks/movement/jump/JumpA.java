@@ -48,8 +48,10 @@ public class JumpA extends Check {
 
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
+
+
             if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding()
-                    || player.getInventory().getChestplate().getType() == Material.ELYTRA) return;
+                    || (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)) return;
 
             //0.42 is not the real jump height of the player. if youre gonna make it false atleast use the right number.
             //vehicle desync may false this, thats why it was originally 0.43. it seems like izibane likes false flags

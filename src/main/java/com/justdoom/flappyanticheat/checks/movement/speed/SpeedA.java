@@ -55,10 +55,10 @@ public class SpeedA extends Check implements Listener {
 
         if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
             return;
+        player.
 
-        if(player.isGliding() || player.getInventory().getChestplate().getType() == Material.ELYTRA) return;
-
-
+        if(player.isGliding() || (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)) return;
+        
         //Thanks to sprit for this check - modified it to fit with the base, its usually much better :/
         if (!data.onGround && !data.lastOnGround && !(data.entities.size() > 0)) {
             double prediction = data.lastDeltaXZ * 0.91F + 0.0259F;
