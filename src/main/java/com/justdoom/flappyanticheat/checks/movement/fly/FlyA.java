@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -46,7 +47,7 @@ public class FlyA extends Check {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(event.getNMSPacket());
 
             //dont run the check if they have /fly on or are creative flying
-            if (player.isFlying() || player.isGliding()) return;
+            if (player.isFlying() || player.isGliding() || player.hasPotionEffect(PotionEffectType.LEVITATION)) return;
 
             if(ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;

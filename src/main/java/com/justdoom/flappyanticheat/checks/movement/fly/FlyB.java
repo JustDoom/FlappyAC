@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class FlyB extends Check {
             getBlocks(player, 0);
             getBlocks(player, 1);
 
-            if (player.isFlying() || player.isGliding()) return;
+            if (player.isFlying() || player.isGliding() || player.hasPotionEffect(PotionEffectType.LEVITATION)) return;
 
             if (ServerUtil.lowTPS(("checks." + check + "." + checkType).toLowerCase()))
                 return;
