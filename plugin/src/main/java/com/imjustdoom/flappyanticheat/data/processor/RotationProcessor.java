@@ -8,7 +8,7 @@ public class RotationProcessor {
 
     private FlappyPlayer data;
 
-    private float yaw, pitch, lastYaw, lastPitch;
+    private float yaw, pitch, lastYaw, lastPitch, deltaYaw, deltaPitch;
 
     public RotationProcessor(FlappyPlayer data) {
         this.data = data;
@@ -22,5 +22,8 @@ public class RotationProcessor {
 
         this.yaw = yaw;
         this.pitch = pitch;
+
+        this.deltaPitch = this.pitch - this.lastPitch;
+        this.deltaYaw = this.yaw - this.lastYaw;
     }
 }

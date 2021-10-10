@@ -62,6 +62,7 @@ public class CheckManager {
             BadPacketsD.class,
             BadPacketsE.class,
             BadPacketsF.class,
+            BadPacketsG.class,
             InventoryA.class,
             InventoryB.class,
             InventoryC.class
