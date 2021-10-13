@@ -57,6 +57,10 @@ public class Packet {
         return direction == Direction.RECEIVE;
     }
 
+    public boolean isSending() {
+        return direction == Direction.SEND;
+    }
+
     public boolean isFlying() {
         return isReceiving() && PacketType.Play.Client.Util.isInstanceOfFlying(packetId);
     }
@@ -68,6 +72,10 @@ public class Packet {
     }
 
     public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_SLOT; }
+
+    public boolean isOutPosition() {
+        return isSending() && packetId == PacketType.Play.Server.POSITION;
+    }
 
     public enum Direction { SEND, RECEIVE }
 }

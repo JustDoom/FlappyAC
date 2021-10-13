@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
+import io.github.retrooper.packetevents.packetwrappers.play.out.position.WrappedPacketOutPosition;
 import io.github.retrooper.packetevents.utils.vector.Vector3d;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -20,7 +21,8 @@ public class PositionProcessor {
 
     private FlappyPlayer player;
 
-    private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid, nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder;
+    private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid,
+            nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
@@ -209,5 +211,9 @@ public class PositionProcessor {
         } catch (final Throwable ignored) {
 
         }
+    }
+
+    public void handleServerPosition(final WrappedPacketOutPosition wrapper) {
+
     }
 }

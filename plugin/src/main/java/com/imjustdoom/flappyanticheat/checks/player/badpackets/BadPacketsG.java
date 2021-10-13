@@ -6,7 +6,7 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "BadPackets", checkType = "G", experimental = false, description = "Checks for sprinting while not moving", type = CheckType.PLAYER)
+@CheckInfo(check = "BadPackets", checkType = "G", experimental = false, description = "Checks for look packet without yaw/pitch changes", type = CheckType.PLAYER)
 public class BadPacketsG extends Check {
 
     public BadPacketsG(FlappyPlayer data) {
