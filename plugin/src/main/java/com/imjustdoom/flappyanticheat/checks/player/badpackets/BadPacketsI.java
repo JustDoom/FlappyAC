@@ -6,10 +6,10 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "BadPackets", checkType = "E", experimental = false, description = "Checks for held item slot changing to itself", type = CheckType.PLAYER)
-public class BadPacketsE extends Check {
+@CheckInfo(check = "BadPackets", checkType = "I", experimental = false, description = "Checks for invalid held item slot", type = CheckType.PLAYER)
+public class BadPacketsI extends Check {
 
-    public BadPacketsE(FlappyPlayer data) {
+    public BadPacketsI(FlappyPlayer data) {
         super(data);
     }
 
@@ -17,8 +17,10 @@ public class BadPacketsE extends Check {
     public void handle(Packet packet) {
         if(!packet.isSlotChange()) return;
 
-        if(data.getActionProcessor().getSlot() == data.getActionProcessor().getLastSlot()) {
-            fail("No Info", false);
+        int slot = data.getActionProcessor().getSlot();
+
+        if(slot > 8 || slot < 0) {
+            fail("slot=" + slot, false);
         }
     }
 }
