@@ -18,9 +18,8 @@ public class SpeedA extends Check {
     public void handle(final Packet packet) {
 
         if (!packet.isPosition() && !packet.isPositionLook()
-                || data.getPlayer().isFlying()
                 || data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY()
-                || isExempt(ExemptType.JOINED, ExemptType.ENTITIES/**ExemptType.WEB, ExemptType.TELEPORT**/)) return;
+                || isExempt(ExemptType.JOINED, ExemptType.ENTITIES, ExemptType.FLYING/**ExemptType.WEB, ExemptType.TELEPORT**/)) return;
 
 
         if (!data.getPositionProcessor().isOnGround() && !data.getPositionProcessor().isLastOnGround()) {
