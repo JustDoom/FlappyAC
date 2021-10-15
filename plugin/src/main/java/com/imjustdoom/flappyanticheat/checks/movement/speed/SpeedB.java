@@ -19,6 +19,7 @@ public class SpeedB extends Check {
 
         //TODO: Falses when landing with an elytra and turning
 
+        // Check for look packets
         if (!packet.isLook() && !packet.isPositionLook()
                 || isExempt(ExemptType.JOINED)) return;
 
@@ -27,11 +28,12 @@ public class SpeedB extends Check {
         final double deltaXZ = data.getPositionProcessor().getDeltaXZ();
         final double lastDeltaXZ = data.getPositionProcessor().getLastDeltaXZ();
 
+        // Get acceleration and squaredAcceleration
         final double accel = Math.abs(deltaXZ - lastDeltaXZ);
         final double squaredAccel = accel * 100;
 
-        if(squaredAccel < 1.0E-5 && deltaXZ > 0.15 && deltaYaw > 1.5) {
+        // Check if squaredAccel is smaller than 0.00001, if player is moving and if player is rotating
+        if(squaredAccel < 1.0E-5 && deltaXZ > 0.15 && deltaYaw > 1.5)
             fail("deltaXZ=" + deltaXZ + " squaredAccel=" + squaredAccel, false);
-        }
     }
 }
