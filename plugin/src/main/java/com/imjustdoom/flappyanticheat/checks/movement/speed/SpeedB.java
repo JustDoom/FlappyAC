@@ -1,3 +1,5 @@
+// Credit to Nik for the check
+
 package com.imjustdoom.flappyanticheat.checks.movement.speed;
 
 import com.imjustdoom.api.check.CheckInfo;
@@ -17,7 +19,7 @@ public class SpeedB extends Check {
     @Override
     public void handle(final Packet packet) {
 
-        //TODO: Falses when landing with an elytra and turning
+        //TODO: Falses when landing with an elytra and turning - also not finished check yet
 
         // Check for look packets
         if (!packet.isLook() && !packet.isPositionLook()
