@@ -162,6 +162,17 @@ public abstract class Check implements FlappyCheck {
         });
     }
 
+    /**
+     * Send debug message to player flagging check only if they have notify permission
+     * helps stop random debug messages being sent to any random player
+     * @param debug
+     */
+    public void debug(String debug) {
+        if(!data.getPlayer().hasPermission("flappyac.alerts")) return;
+        data.getPlayer().sendMessage(debug);
+    }
+
+
     // Credit to medusa anticheat
     public CheckInfo getCheckInfo() {
         if (this.getClass().isAnnotationPresent(CheckInfo.class)) {

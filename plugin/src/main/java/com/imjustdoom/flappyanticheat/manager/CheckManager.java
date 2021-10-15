@@ -15,6 +15,7 @@ import com.imjustdoom.flappyanticheat.checks.movement.nofall.NoFallB;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowA;
 import com.imjustdoom.flappyanticheat.checks.movement.noslow.NoSlowB;
 import com.imjustdoom.flappyanticheat.checks.movement.speed.SpeedA;
+import com.imjustdoom.flappyanticheat.checks.movement.speed.SpeedB;
 import com.imjustdoom.flappyanticheat.checks.movement.step.StepA;
 import com.imjustdoom.flappyanticheat.checks.player.badpackets.*;
 import com.imjustdoom.flappyanticheat.checks.player.inventory.InventoryA;
@@ -42,6 +43,7 @@ public class CheckManager {
             ScaffoldA.class,
             ScaffoldB.class,
             SpeedA.class,
+            SpeedB.class,
             NoSlowA.class,
             NoSlowB.class,
             BoatFlyA.class,
