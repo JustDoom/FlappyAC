@@ -4,6 +4,7 @@ import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
+import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
 @CheckInfo(check = "BadPackets", checkType = "G", experimental = false, description = "Checks for look packet without yaw/pitch changes", type = CheckType.PLAYER)
@@ -15,7 +16,7 @@ public class BadPacketsG extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if(!packet.isPositionLook() && !packet.isLook()) return;
+        if(!packet.isPositionLook() && !packet.isLook() || isExempt(ExemptType.JOINED)) return;
 
         if(data.getRotationProcessor().getDeltaPitch() == 0 && data.getRotationProcessor().getDeltaYaw() == 0) {
             fail("No Info", false);

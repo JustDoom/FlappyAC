@@ -28,6 +28,7 @@ public class FlappyACCommand implements CommandExecutor {
             // Check if the command has any arguments
             if(args.length == 0) {
                 sender.sendMessage("FlappyAC %version%");
+                FlappyAnticheat.INSTANCE.getMenuGUI().load((Player) sender);
                 return true;
             }
 

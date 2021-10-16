@@ -133,7 +133,7 @@ Full release goals
 - View player profile command (player client brand, violations etc)
 - Ban wave
 - GUI for enabling checks etc
-- Stop certain client brands joining
+- Stop certain client brands joining?
 - make flag output to console in compacted messages (Player flagged Speed A 1000 times)
 - worldguard support because has to many issues (groundspoof breaking below block and badpackets (a or b?) when attacking)
 

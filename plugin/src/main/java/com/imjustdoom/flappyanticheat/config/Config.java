@@ -3,6 +3,7 @@ package com.imjustdoom.flappyanticheat.config;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
@@ -14,6 +15,7 @@ import java.util.List;
 public class Config {
 
     public static CommentedConfigurationNode configFile;
+    private static YamlConfigurationLoader loader;
 
     public static String PREFIX;
     public static int CONFIG_VERSION;
@@ -70,7 +72,7 @@ public class Config {
         }
 
         // Set where we want to load and save the config from
-        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+        loader = YamlConfigurationLoader.builder()
                 .path(Paths.get(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder() + "/config.yml"))
                 .build();
 
@@ -126,5 +128,9 @@ public class Config {
 
     public static ConfigurationNode getConfigurationSection(String check, String type) {
         return configFile.node("checks", check, type);
+    }
+
+    public static void saveConfig(ConfigurationNode file) throws ConfigurateException {
+        loader.save(file);
     }
 }

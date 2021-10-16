@@ -164,6 +164,16 @@ checks:
       punish-vl: 20
       punish-commands:
         - "kick %player% FlappyAC > Suspicious Activity"
+  step:
+    a:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 10
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
 
   #-------------------------
   #         Combat
@@ -286,5 +296,59 @@ checks:
       broadcast-punishment: true
       vl: 1
       punish-vl: 20
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    d:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    e:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    f:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    g:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    h:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    i:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 5
       punish-commands:
         - "kick %player% FlappyAC > Suspicious Activity"
