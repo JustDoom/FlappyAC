@@ -26,6 +26,14 @@ alerts:
     - "tp %player%"
     - "gamemode spectator"
 
+menu:
+  name: "FlappyAC Menu"
+  checks:
+    name: "&b%check%"
+    lore:
+      - "%description%"
+      - "Enabled: %enabled%"
+
 #Messages should not have colour codes
 logs:
   punishment-log:

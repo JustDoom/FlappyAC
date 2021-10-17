@@ -20,7 +20,7 @@ public class MenuClickListener implements Listener {
 
     @EventHandler
     public void menuClick(InventoryClickEvent event) {
-        if(!event.getView().getTitle().equals("Menu") || event.getCurrentItem() == null) return;
+        if(!event.getView().getTitle().equals(Config.Menu.NAME) || event.getCurrentItem() == null) return;
 
         event.setCancelled(true);
 

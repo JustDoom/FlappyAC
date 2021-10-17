@@ -19,7 +19,7 @@ public class MenuGUI {
     private Inventory menu;
 
     public MenuGUI() {
-        menu = Bukkit.createInventory(null, 54, "Menu");
+        menu = Bukkit.createInventory(null, 54, Config.Menu.NAME);
     }
 
     public void load(final Player player) {
