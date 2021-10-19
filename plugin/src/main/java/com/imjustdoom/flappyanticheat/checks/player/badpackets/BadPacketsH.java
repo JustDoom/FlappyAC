@@ -26,7 +26,7 @@ public class BadPacketsH extends Check {
             //if (pos.isTeleporting()) return;
             if (checkNextPosition) {
                 if (!pos.isOnGround() && pos.getDeltaY() < 0) {
-                    data.getPlayer().sendMessage("checked next position - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
+                    debug("checked next position - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
                     WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
                     wrapper.setOnGround(false);
                 }
@@ -44,11 +44,11 @@ public class BadPacketsH extends Check {
                 } else {**/
                     if (Math.abs(pos.getDeltaX()) < 0.03 || Math.abs(pos.getDeltaZ()) < 0.03) {
                         if (pos.getDeltaY() < -0.1553) {
-                            data.getPlayer().sendMessage("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
+                            debug("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
                             wrapper.setOnGround(false);
                         }
                     } else {
-                        data.getPlayer().sendMessage("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
+                        debug("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
                         wrapper.setOnGround(false);
                     }
 
