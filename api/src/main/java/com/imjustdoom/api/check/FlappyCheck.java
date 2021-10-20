@@ -12,6 +12,8 @@ public interface FlappyCheck {
 
     boolean isPunishable();
 
+    boolean isPunishableBroadcastable();
+
     boolean isLagbackable();
 
     boolean isEnabled();

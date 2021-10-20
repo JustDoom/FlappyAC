@@ -14,6 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.spongepowered.configurate.ConfigurationNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuGUI {
 
     private Inventory menu;
@@ -30,6 +33,14 @@ public class MenuGUI {
             ItemStack itemStack = new ItemStack(material);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(check.getCheckInfo().check() + " " + check.getCheckInfo().checkType());
+
+            List<String> lore = new ArrayList<>();
+            lore.add("Enabled: " + check.isEnabled());
+            lore.add("Punishable: " + check.isPunishable());
+            lore.add("Broadcast Punishment: " + check.isPunishableBroadcastable());
+            lore.add("VL: " + check.getVl());
+            lore.add("Punish VL: " + check.getMaxVl());
+            itemMeta.setLore(lore);
 
             itemStack.setItemMeta(itemMeta);
 
