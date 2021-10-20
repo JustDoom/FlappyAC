@@ -12,6 +12,7 @@ import com.imjustdoom.flappyanticheat.manager.TickManager;
 import com.imjustdoom.flappyanticheat.menu.MenuGUI;
 import com.imjustdoom.flappyanticheat.metrics.Metrics;
 import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
+import com.imjustdoom.flappyanticheat.util.DiscordWebhook;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -37,6 +38,8 @@ public enum FlappyAnticheat {
 
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
     private final ExecutorService alertExecutor = Executors.newSingleThreadExecutor();
+
+    DiscordWebhook webhook;
 
     private MenuGUI menuGUI;
 
@@ -73,6 +76,12 @@ public enum FlappyAnticheat {
         getPlugin().getCommand("flappyac").setExecutor(new FlappyACCommand());
         getPlugin().getCommand("flappyachoverclick").setExecutor(new FlappyACHoverClick());
         getPlugin().getCommand("flappyac").setTabCompleter(new FlappyACTabCompletion());
+
+        // Register discord webhook
+        webhook = new DiscordWebhook(Config.Discord.WEBHOOK);
+        webhook.setContent(Config.Discord.STATUS);
+        webhook.setAvatarUrl(Config.Discord.PROFILE);
+        webhook.setUsername(Config.Discord.USERNAME);
 
         // Load GUI
         menuGUI = new MenuGUI();

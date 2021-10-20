@@ -10,6 +10,7 @@ import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
+import com.imjustdoom.flappyanticheat.util.DiscordWebhook;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -24,6 +25,8 @@ import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,12 +61,12 @@ public abstract class Check implements FlappyCheck {
 
     public void fail(final String debug, final boolean lagBack) {
         // Make sure player is online because punishing has some issues with this
-        if(!data.getPlayer().isOnline()) return;
+        if (!data.getPlayer().isOnline()) return;
 
         // Fire FlappyPreFlagEvent and check if it was cancelled
         FlappyFlagEvent flagEvent = new FlappyFlagEvent(data.getPlayer(), this);
         Bukkit.getPluginManager().callEvent(flagEvent);
-        if(flagEvent.isCancelled()) return;
+        if (flagEvent.isCancelled()) return;
 
         vl++;
 
@@ -85,7 +88,7 @@ public abstract class Check implements FlappyCheck {
                             .replaceAll("%debug%", debug)
                             .replaceAll("%tps%", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
                             .replaceAll("%ping%", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
-                    )).create()));
+            )).create()));
 
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));
 
@@ -97,23 +100,28 @@ public abstract class Check implements FlappyCheck {
                 player.spigot().sendMessage(component);
             }
 
-            // Send discord message
-            /**FlappyAnticheat.INSTANCE.getApi().getTextChannelById(Config.DISCORD_BOT.CHANNEL_ID).sendMessage(
-                    new EmbedBuilder()
-                            .setTitle("FlappyAC Alert")
-                            .addField(new MessageEmbed.Field(data.getPlayer().getName() + " flagged",
-                                    getCheck() + " (" + getCheckType() + ")"
-                                            + "\nViolations: " + getVl() + "/" + getMaxVl()
-                                            + "\nClient Brand: " + data.getClientBrand()
-                                            + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
-                                    false))
-                            .build()).queue();**/
+            try {
+                // Send discord message
+                FlappyAnticheat.INSTANCE.getWebhook().addEmbed(new DiscordWebhook.EmbedObject()
+                        .setTitle(check + " " + checkType)
+                        .setDescription(description)
+                        .setColor(Color.BLUE)
+                        .addField(data.getPlayer().getName() + " flagged",
+                                getCheck() + " (" + getCheckType() + ")"
+                                        + "\nViolations: " + getVl() + "/" + getMaxVl()
+                                        + "\nClient Brand: " + data.getClientBrand()
+                                        + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
+                                false));
+                FlappyAnticheat.INSTANCE.getWebhook().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             // Send console message
             MessageUtil.toConsole(component.getText());
 
             // Add violation to violation file if enabled
-            if(Config.Logs.ViolationLog.ENABLED)
+            if (Config.Logs.ViolationLog.ENABLED)
                 FileUtil.addToFile("violations.txt",
                         Config.Logs.ViolationLog.MESSAGE
                                 .replaceAll("%check%", getCheck())
@@ -126,12 +134,12 @@ public abstract class Check implements FlappyCheck {
              * Disabled lagBacks for now
              */
             /**if (lagBack){
-                Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                        this.data.getPlayer().teleport(new Location(this.data.getPlayer().getWorld(),
-                                this.data.getPositionProcessor().getLastX(),
-                                this.data.getPositionProcessor().getLastY() - 0.05,
-                                this.data.getPositionProcessor().getLastZ())));
-            }**/
+             Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
+             this.data.getPlayer().teleport(new Location(this.data.getPlayer().getWorld(),
+             this.data.getPositionProcessor().getLastX(),
+             this.data.getPositionProcessor().getLastY() - 0.05,
+             this.data.getPositionProcessor().getLastZ())));
+             }**/
 
             // Check if violations are equal to or bigger than the max violations
             if (getVl() >= getMaxVl() && punishable) {
@@ -139,7 +147,7 @@ public abstract class Check implements FlappyCheck {
                 // Fire FlappyPunishPlayerEvent and check if it was cancelled
                 FlappyPunishPlayerEvent punishEvent = new FlappyPunishPlayerEvent(data.getPlayer(), this);
                 Bukkit.getPluginManager().callEvent(punishEvent);
-                if(punishEvent.isCancelled()) return;
+                if (punishEvent.isCancelled()) return;
 
                 setVl(0);
 
@@ -152,7 +160,7 @@ public abstract class Check implements FlappyCheck {
                 }
 
                 // Add punishment to punishment file if enabled
-                if(Config.Logs.PunishmentLog.ENABLED)
+                if (Config.Logs.PunishmentLog.ENABLED)
                     FileUtil.addToFile("punishments.txt",
                             Config.Logs.PunishmentLog.MESSAGE
                                     .replaceAll("%check%", getCheck())
@@ -165,13 +173,13 @@ public abstract class Check implements FlappyCheck {
     /**
      * Send debug message to player flagging check only if they have notify permission
      * helps stop random debug messages being sent to any random player
+     *
      * @param debug
      */
     public void debug(String debug) {
-        if(!data.getPlayer().hasPermission("flappyac.alerts")) return;
+        if (!data.getPlayer().hasPermission("flappyac.alerts")) return;
         data.getPlayer().sendMessage(debug);
     }
-
 
     // Credit to medusa anticheat
     public CheckInfo getCheckInfo() {

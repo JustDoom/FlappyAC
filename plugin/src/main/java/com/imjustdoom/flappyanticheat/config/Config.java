@@ -20,11 +20,6 @@ public class Config {
     public static String PREFIX;
     public static int CONFIG_VERSION;
 
-    public static class DISCORD_BOT {
-        public static String TOKEN;
-        public static String CHANNEL_ID;
-    }
-
     public static class Settings {
         public static boolean OUTPUT_TO_CONSOLE;
         public static int JOIN_EXEMPTION;
@@ -62,6 +57,13 @@ public class Config {
         public static String NAME;
     }
 
+    public static class Discord {
+        public static String WEBHOOK;
+        public static String PROFILE;
+        public static String USERNAME;
+        public static String STATUS;
+    }
+
     public static void load() {
 
         // Create the config file
@@ -96,9 +98,6 @@ public class Config {
         PREFIX = configFile.node("prefix").getString();
         CONFIG_VERSION = configFile.node("config-version").getInt();
 
-        DISCORD_BOT.TOKEN = configFile.node("discord-bot", "token").getString();
-        DISCORD_BOT.CHANNEL_ID = configFile.node("discord-bot", "channel").getString();
-
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
         Settings.JOIN_EXEMPTION = configFile.node("settings", "join-exemption").getInt();
         Settings.SEND_BRAND_MESSAGE = configFile.node("settings", "send-brand-message").getBoolean();
@@ -126,6 +125,11 @@ public class Config {
         Messages.PROFILE = configFile.node("messages", "profile").getString();
 
         Menu.NAME = configFile.node("menu", "name").getString();
+
+        Discord.WEBHOOK = configFile.node("discord", "webhook").getString();
+        Discord.PROFILE = configFile.node("discord", "profile-picture").getString();
+        Discord.USERNAME = configFile.node("discord", "username").getString();
+        Discord.STATUS = configFile.node("discord", "status-text").getString();
 
         if(CONFIG_VERSION != FlappyAnticheat.INSTANCE.getConfigVersion()) {
             FlappyAnticheat.INSTANCE.getPlugin().getLogger().info("Config is out of date, please update it");

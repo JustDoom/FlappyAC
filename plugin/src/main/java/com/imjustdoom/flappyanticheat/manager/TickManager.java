@@ -1,12 +1,12 @@
+//Taken from https://github.com/ElevatedDev/Frequency/blob/master/src/main/java/xyz/elevated/frequency/tick/TickManager.java
+//Removed stuff I didnt need though
+
 package com.imjustdoom.flappyanticheat.manager;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
-
-//Taken from https://github.com/ElevatedDev/Frequency/blob/master/src/main/java/xyz/elevated/frequency/tick/TickManager.java
-//Removed stuff I didnt need though
 
 @Getter
 public class TickManager implements Runnable {

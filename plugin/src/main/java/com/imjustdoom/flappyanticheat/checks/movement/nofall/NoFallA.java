@@ -20,7 +20,7 @@ public class NoFallA extends Check {
 
         // Check if the packet is not a position, look or position look packet
         // and if exempts are true, if true return
-        if(!packet.isPosition()
+        if (!packet.isPosition()
                 && !packet.isLook()
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
@@ -35,6 +35,6 @@ public class NoFallA extends Check {
             if (++buffer > 1) {
                 fail("No Info", false);
             }
-        } else if (buffer > 0) buffer-=0.5;
+        } else if (buffer > 0) buffer -= 0.5;
     }
 }
