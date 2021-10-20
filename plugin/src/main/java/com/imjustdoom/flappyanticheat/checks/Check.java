@@ -100,21 +100,23 @@ public abstract class Check implements FlappyCheck {
                 player.spigot().sendMessage(component);
             }
 
-            try {
-                // Send discord message
-                FlappyAnticheat.INSTANCE.getWebhook().addEmbed(new DiscordWebhook.EmbedObject()
-                        .setTitle(check + " " + checkType)
-                        .setDescription(description)
-                        .setColor(Color.BLUE)
-                        .addField(data.getPlayer().getName() + " flagged",
-                                getCheck() + " (" + getCheckType() + ")"
-                                        + "\nViolations: " + getVl() + "/" + getMaxVl()
-                                        + "\nClient Brand: " + data.getClientBrand()
-                                        + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
-                                false));
-                FlappyAnticheat.INSTANCE.getWebhook().execute();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(Config.Discord.ENABLED) {
+                try {
+                    // Send discord message
+                    FlappyAnticheat.INSTANCE.getWebhook().addEmbed(new DiscordWebhook.EmbedObject()
+                            .setTitle(check + " " + checkType)
+                            .setDescription(description)
+                            .setColor(Color.BLUE)
+                            .addField(data.getPlayer().getName() + " flagged",
+                                    getCheck() + " (" + getCheckType() + ")"
+                                            + "\nViolations: " + getVl() + "/" + getMaxVl()
+                                            + "\nClient Brand: " + data.getClientBrand()
+                                            + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
+                                    false));
+                    FlappyAnticheat.INSTANCE.getWebhook().execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             // Send console message

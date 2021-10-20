@@ -58,6 +58,7 @@ public class Config {
     }
 
     public static class Discord {
+        public static boolean ENABLED;
         public static String WEBHOOK;
         public static String PROFILE;
         public static String USERNAME;
@@ -126,6 +127,7 @@ public class Config {
 
         Menu.NAME = configFile.node("menu", "name").getString();
 
+        Discord.ENABLED = configFile.node("discord", "enabled").getBoolean();
         Discord.WEBHOOK = configFile.node("discord", "webhook").getString();
         Discord.PROFILE = configFile.node("discord", "profile-picture").getString();
         Discord.USERNAME = configFile.node("discord", "username").getString();

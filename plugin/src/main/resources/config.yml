@@ -8,9 +8,12 @@ settings:
   join-exemption: 5000
   send-brand-message: true
 
-discord-bot:
-  token: "token"
-  channel: "channel id"
+discord:
+  enabled: false
+  webhook: "webhook"
+  profile-picture: "link"
+  username: "FlappyAC"
+  status-text: "Banning all the hackers"
 
 alerts:
   toggle-alerts-on: "Alerts have been toggled on"
@@ -164,6 +167,15 @@ checks:
       punish-commands:
         - "kick %player% FlappyAC > Suspicious Activity"
     b:
+      enabled: true
+      min-tps: 17.0
+      punishable: true
+      broadcast-punishment: true
+      vl: 1
+      punish-vl: 20
+      punish-commands:
+        - "kick %player% FlappyAC > Suspicious Activity"
+    c:
       enabled: true
       min-tps: 17.0
       punishable: true
