@@ -12,7 +12,7 @@ public interface FlappyCheck {
 
     boolean isPunishable();
 
-    boolean isPunishableBroadcastable();
+    boolean isPunishmentBroadcastable();
 
     boolean isLagbackable();
 

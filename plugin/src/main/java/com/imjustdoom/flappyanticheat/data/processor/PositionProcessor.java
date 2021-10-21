@@ -207,7 +207,6 @@ public class PositionProcessor {
             for (final Entity nearbyEntity : nearbyEntities) {
                 nearVehicle |= nearbyEntity instanceof Boat;
                 nearShulker |= nearbyEntity instanceof Shulker;
-                getPlayer().getPlayer().sendMessage(nearbyEntity.getName());
             }
         } catch (final Throwable ignored) {
 

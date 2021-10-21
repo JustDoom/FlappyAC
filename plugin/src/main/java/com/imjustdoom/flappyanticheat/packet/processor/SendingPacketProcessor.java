@@ -28,7 +28,7 @@ public class SendingPacketProcessor {
         if (data.getPlayer().hasPermission("flappyac.bypass")) return;
 
         for (final FlappyCheck check : data.getChecks()) {
-            if(((Check) check).isEnabled()) ((Check) check).handle(packet);
+            if(check.isEnabled()) ((Check) check).handle(packet);
         }
     }
 }

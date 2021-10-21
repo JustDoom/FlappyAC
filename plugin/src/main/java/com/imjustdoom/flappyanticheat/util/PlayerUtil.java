@@ -103,7 +103,7 @@ public final class PlayerUtil {
      * @param effect - The effect to check the level of
      * @return - Returns the level of the effect
      */
-    public int getPotionLevel(final Player player, final PotionEffectType effect) {
+    public static int getPotionLevel(final Player player, final PotionEffectType effect) {
         final int effectId = effect.getId();
 
         if (!player.hasPotionEffect(effect)) return 0;

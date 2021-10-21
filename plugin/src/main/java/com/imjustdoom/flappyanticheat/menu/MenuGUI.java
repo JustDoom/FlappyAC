@@ -37,7 +37,7 @@ public class MenuGUI {
             List<String> lore = new ArrayList<>();
             lore.add("Enabled: " + check.isEnabled());
             lore.add("Punishable: " + check.isPunishable());
-            lore.add("Broadcast Punishment: " + check.isPunishableBroadcastable());
+            lore.add("Broadcast Punishment: " + check.isPunishmentBroadcastable());
             lore.add("VL: " + check.getVl());
             lore.add("Punish VL: " + check.getMaxVl());
             itemMeta.setLore(lore);

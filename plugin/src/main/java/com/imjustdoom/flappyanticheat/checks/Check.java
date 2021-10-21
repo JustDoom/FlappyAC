@@ -35,7 +35,7 @@ import java.util.UUID;
 public abstract class Check implements FlappyCheck {
 
     private String check, checkType, description;
-    private boolean experimental, punishable, lagbackable, enabled, broadcastPunishment;
+    private boolean experimental, punishable, lagbackable, enabled, punishmentBroadcastable;
     public FlappyPlayer data;
     private CheckInfo checkData;
     private CheckType type;
@@ -209,7 +209,7 @@ public abstract class Check implements FlappyCheck {
         this.maxVl = config.node("punish-vl").getInt();
         this.punishable = config.node("punishable").getBoolean();
         this.enabled = config.node("enabled").getBoolean();
-        this.broadcastPunishment = config.node("broadcast-punishment").getBoolean();
+        this.punishmentBroadcastable = config.node("broadcast-punishment").getBoolean();
         try {
             this.commands = config.node("punish-commands").getList(String.class);
         } catch (SerializationException e) {

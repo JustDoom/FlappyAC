@@ -12,13 +12,13 @@ import com.imjustdoom.flappyanticheat.manager.TickManager;
 import com.imjustdoom.flappyanticheat.menu.MenuGUI;
 import com.imjustdoom.flappyanticheat.metrics.Metrics;
 import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
+import com.imjustdoom.flappyanticheat.packet.processor.SendingPacketProcessor;
 import com.imjustdoom.flappyanticheat.util.DiscordWebhook;
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.messaging.Messenger;
 
-import javax.security.auth.login.LoginException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,6 +35,7 @@ public enum FlappyAnticheat {
     private AlertManager alertManager;
 
     private final ReceivingPacketProcessor receivingPacketProcessor = new ReceivingPacketProcessor();
+    private final SendingPacketProcessor sendingPacketProcessor = new SendingPacketProcessor();
 
     private final ExecutorService packetExecutor = Executors.newSingleThreadExecutor();
     private final ExecutorService alertExecutor = Executors.newSingleThreadExecutor();
