@@ -16,7 +16,7 @@ public class BadPacketsG extends Check {
 
     @Override
     public void handle(Packet packet) {
-        if(!packet.isPositionLook() && !packet.isLook() || isExempt(ExemptType.JOINED)) return;
+        if(!packet.isPositionLook() && !packet.isLook() || isExempt(ExemptType.JOINED, ExemptType.INSIDE_VEHICLE)) return;
 
         if(data.getRotationProcessor().getDeltaPitch() == 0 && data.getRotationProcessor().getDeltaYaw() == 0) {
             fail("No Info", false);
