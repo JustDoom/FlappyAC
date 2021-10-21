@@ -44,12 +44,12 @@ public class BadPacketsH extends Check {
                 } else {**/
                     if (Math.abs(pos.getDeltaX()) < 0.03 || Math.abs(pos.getDeltaZ()) < 0.03) {
                         if (pos.getDeltaY() < -0.1553) {
-                            debug("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
-                            wrapper.setOnGround(false);
+                            fail("dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY(), false);
+                            //wrapper.setOnGround(false);
                         }
                     } else {
-                        debug("debug BA - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
-                        wrapper.setOnGround(false);
+                        fail("dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY(), false);
+                        //wrapper.setOnGround(false);
                     }
 
             }
