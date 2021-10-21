@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.data.processor;
 
+import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import lombok.Getter;
 import org.bukkit.block.Block;
@@ -11,7 +12,8 @@ public class ActionProcessor {
 
     private Block lastBlockPlaced, blockPlacedAgainst;
     private boolean open;
-    private int slot, lastSlot, useItem;
+    private long lastPlaceTime;
+    private int slot, lastSlot, useItem, lastPlaceTick;
 
     public ActionProcessor(FlappyPlayer player){
         this.player = player;
@@ -20,6 +22,9 @@ public class ActionProcessor {
     public void handleBlockPlace(Block blockPlaced, Block blockAgainst){
         this.lastBlockPlaced = blockPlaced;
         this.blockPlacedAgainst = blockAgainst;
+
+        lastPlaceTick = FlappyAnticheat.INSTANCE.getTickManager().getTicks();
+        lastPlaceTime = System.currentTimeMillis();
     }
 
     public void handleInventory(boolean isOpen) {

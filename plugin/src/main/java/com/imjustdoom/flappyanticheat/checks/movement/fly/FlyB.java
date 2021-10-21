@@ -24,7 +24,7 @@ public class FlyB extends Check {
             //both things here can false from velocity. just return on velocity
             if (isExempt(ExemptType.VELOCITY, ExemptType.PISTON, ExemptType.INSIDE_VEHICLE, ExemptType.FLYING)) return;
 
-            boolean isExempt1 = isExempt(ExemptType.STEPPED, /**ExemptType.PLACING,**/
+            boolean isExempt1 = isExempt(ExemptType.STEPPED, ExemptType.PLACING,
                     ExemptType.LIQUID, ExemptType.CLIMBABLE /**ExemptType.SLIME, ExemptType.WEB, ExemptType.TELEPORT**/);
 
             //check if their deltaY is less than previous, and set our wentDown boolean to true if so.

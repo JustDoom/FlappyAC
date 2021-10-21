@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.exempt.type;
 
+import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
@@ -37,6 +38,8 @@ public enum ExemptType {
     STEPPED(data -> data.getPositionProcessor().isOnGround() && data.getPositionProcessor().getDeltaY() > 0),
 
     VOID(data -> data.getPositionProcessor().getY() < 0),
+
+    PLACING(data -> FlappyAnticheat.INSTANCE.getTickManager().getTicks() - data.getActionProcessor().getLastPlaceTick() < 10),
 
     ENTITIES(data -> data.getPositionProcessor().getNearbyEntities().size() > 1);
 
