@@ -11,7 +11,7 @@ public class ActionProcessor {
 
     private Block lastBlockPlaced, blockPlacedAgainst;
     private boolean open;
-    private int slot, lastSlot;
+    private int slot, lastSlot, useItem;
 
     public ActionProcessor(FlappyPlayer player){
         this.player = player;
@@ -29,5 +29,9 @@ public class ActionProcessor {
     public void handleSlots(int slot) {
         this.lastSlot = this.slot;
         this.slot = slot;
+    }
+
+    public void handleItemUse(boolean useItem) {
+        this.useItem = useItem ? this.useItem + 1 : 0;
     }
 }

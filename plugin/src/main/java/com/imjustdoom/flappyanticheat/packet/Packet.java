@@ -71,6 +71,10 @@ public class Packet {
         return isReceiving() && packetId == PacketType.Play.Client.USE_ENTITY;
     }
 
+    public boolean isUseItem() {
+        return packetId == PacketType.Play.Client.USE_ITEM;
+    }
+
     public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_SLOT; }
 
     public boolean isOutPosition() {

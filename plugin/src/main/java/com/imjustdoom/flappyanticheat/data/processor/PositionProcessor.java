@@ -174,6 +174,7 @@ public class PositionProcessor {
         waterTicks = inLiquid ? waterTicks + 1 : 0;
         inVehicle = player.getPlayer().isInsideVehicle();
         sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;
+        player.getActionProcessor().handleItemUse(false);
     }
 
     public void handleClimbableCollision() {
