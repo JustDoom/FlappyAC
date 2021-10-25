@@ -23,7 +23,8 @@ public class NoFallB extends Check {
                 && !packet.isLook()
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
-                ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE, ExemptType.FLYING)) return;
+                ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE, ExemptType.FLYING,
+                ExemptType.ON_FIRE)) return;
 
         // Get player airTicks and fallDistance
         int airTicks = data.getPositionProcessor().getAirTicks();

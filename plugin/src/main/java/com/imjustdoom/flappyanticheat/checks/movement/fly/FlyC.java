@@ -18,7 +18,7 @@ public class FlyC extends Check {
 
     public void handle(final Packet packet) {
         if (!packet.isPosition() && !packet.isPositionLook()
-                || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
+                || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.ON_FIRE)) return;
 
         final double accel =  data.getPositionProcessor().getLastDeltaY() - data.getPositionProcessor().getDeltaY();
         final double deltaY = data.getPositionProcessor().getDeltaY();

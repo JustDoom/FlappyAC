@@ -41,7 +41,9 @@ public enum ExemptType {
 
     PLACING(data -> FlappyAnticheat.INSTANCE.getTickManager().getTicks() - data.getActionProcessor().getLastPlaceTick() < 10),
 
-    ENTITIES(data -> data.getPositionProcessor().getNearbyEntities().size() > 1);
+    ENTITIES(data -> data.getPositionProcessor().getNearbyEntities().size() > 1),
+
+    ON_FIRE(data -> data.getPlayer().getFireTicks() > 0);
 
     private final Function<FlappyPlayer, Boolean> exception;
 
