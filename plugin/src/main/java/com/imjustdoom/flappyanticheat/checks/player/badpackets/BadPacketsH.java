@@ -5,6 +5,7 @@ import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
+import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 
@@ -21,6 +22,9 @@ public class BadPacketsH extends Check {
 
     @Override
     public void handle(Packet packet) {
+
+        if(isExempt(ExemptType.JOINED)) return;
+
         if (packet.isPosition()) {
             PositionProcessor pos = getData().getPositionProcessor();
             //if (pos.isTeleporting()) return;
