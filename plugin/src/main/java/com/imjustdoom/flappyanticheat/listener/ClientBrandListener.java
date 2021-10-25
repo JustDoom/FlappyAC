@@ -32,7 +32,9 @@ public class ClientBrandListener implements PluginMessageListener {
                 Player player = Bukkit.getPlayer(uuid);
                 if (!player.hasPermission("flappyac.alerts") || !Config.Settings.SEND_BRAND_MESSAGE) continue;
                 player.sendMessage(message);
-                player.sendMessage(Config.PREFIX + "&7Please remember this anti-cheat is in its dev build stages, if you have any issues join the discord and report them here https://discord.gg/wVCSqV7ptB of on github/JustDoom/FlappyAC");
+                player.sendMessage(MessageUtil.translate(Config.PREFIX + "&7Please remember this anti-cheat is in its dev build " +
+                        "stages, if you have any issues join the discord and report them " +
+                        "https://discord.gg/wVCSqV7ptB or on github/JustDoom/FlappyAC"));
             }
 
             if(Config.Settings.SEND_BRAND_MESSAGE)
