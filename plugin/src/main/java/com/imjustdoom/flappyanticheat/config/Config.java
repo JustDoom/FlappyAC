@@ -2,6 +2,7 @@ package com.imjustdoom.flappyanticheat.config;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
+import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2RTFDTM;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -24,6 +25,7 @@ public class Config {
         public static boolean OUTPUT_TO_CONSOLE;
         public static int JOIN_EXEMPTION;
         public static boolean SEND_BRAND_MESSAGE;
+        public static int VIOLATION_RESET;
     }
 
     public static class Alerts {
@@ -102,6 +104,7 @@ public class Config {
         Settings.OUTPUT_TO_CONSOLE = configFile.node("settings", "output-to-console").getBoolean();
         Settings.JOIN_EXEMPTION = configFile.node("settings", "join-exemption").getInt();
         Settings.SEND_BRAND_MESSAGE = configFile.node("settings", "send-brand-message").getBoolean();
+        Settings.VIOLATION_RESET = configFile.node("settings", "violation-reset-delay").getInt();
 
         Alerts.FAILED_CHECK = configFile.node("alerts", "failed-check").getString();
         Alerts.PLAYER_JOIN = configFile.node("alerts", "player-join").getString();

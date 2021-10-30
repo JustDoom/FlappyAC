@@ -7,6 +7,8 @@ settings:
   output-to-console: false
   join-exemption: 5000
   send-brand-message: true
+  # Time in seconds
+  violation-reset-delay: 600
 
 discord:
   enabled: false

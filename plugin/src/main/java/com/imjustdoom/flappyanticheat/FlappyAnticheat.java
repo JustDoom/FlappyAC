@@ -5,10 +5,7 @@ import com.imjustdoom.flappyanticheat.commands.FlappyACHoverClick;
 import com.imjustdoom.flappyanticheat.commands.FlappyACTabCompletion;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.listener.*;
-import com.imjustdoom.flappyanticheat.manager.AlertManager;
-import com.imjustdoom.flappyanticheat.manager.CheckManager;
-import com.imjustdoom.flappyanticheat.manager.PlayerDataManager;
-import com.imjustdoom.flappyanticheat.manager.TickManager;
+import com.imjustdoom.flappyanticheat.manager.*;
 import com.imjustdoom.flappyanticheat.menu.MenuGUI;
 import com.imjustdoom.flappyanticheat.metrics.Metrics;
 import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
@@ -31,6 +28,7 @@ public enum FlappyAnticheat {
     public int configVersion = 1;
 
     private PlayerDataManager dataManager;
+    private ViolationResetManager violationResetManager;
     private final TickManager tickManager = new TickManager();
     private AlertManager alertManager;
 
@@ -59,7 +57,8 @@ public enum FlappyAnticheat {
         // Load/Register everything
         tickManager.start();
         dataManager = new PlayerDataManager();
-        this.alertManager = new AlertManager();
+        alertManager = new AlertManager();
+        violationResetManager = new ViolationResetManager();
         CheckManager.setup();
 
         // Register client brand listener
