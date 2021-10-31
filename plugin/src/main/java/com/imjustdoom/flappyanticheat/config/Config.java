@@ -7,6 +7,7 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class Config {
         }
 
         // Set where we want to load and save the config from
-        loader = YamlConfigurationLoader.builder()
+        loader = YamlConfigurationLoader.builder().nodeStyle(NodeStyle.BLOCK)
                 .path(Paths.get(FlappyAnticheat.INSTANCE.getPlugin().getDataFolder() + "/config.yml"))
                 .build();
 
