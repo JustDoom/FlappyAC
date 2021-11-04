@@ -43,6 +43,8 @@ public enum ExemptType {
 
     ENTITIES(data -> data.getPositionProcessor().getNearbyEntities().size() > 1),
 
+    SLIME(data -> data.getPositionProcessor().getSinceSlimeTicks() < 20),
+
     ON_FIRE(data -> data.getPlayer().getFireTicks() > 0);
 
     private final Function<FlappyPlayer, Boolean> exception;

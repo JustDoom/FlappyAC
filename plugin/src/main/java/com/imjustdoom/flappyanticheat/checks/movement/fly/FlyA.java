@@ -20,7 +20,7 @@ public class FlyA extends Check {
 
         // Check if the packet is not a position packet
         // and if exempts are true, if true return
-        if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE, ExemptType.FLYING)) return;
+        if (!packet.isPosition() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.VEHICLE, ExemptType.FLYING, ExemptType.PISTON)) return;
 
         // Checks if the Y says the same while in the air
         if (data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY()

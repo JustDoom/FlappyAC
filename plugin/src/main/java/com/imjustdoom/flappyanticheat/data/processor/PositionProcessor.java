@@ -22,10 +22,10 @@ public class PositionProcessor {
     private FlappyPlayer player;
 
     private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid,
-            nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting;
+            nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting, nearSlime;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
-            fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY;
+            fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY, sinceSlimeTicks;
 
     private int airTicks, waterTicks, sinceVehicleTicks;
 
@@ -131,6 +131,7 @@ public class PositionProcessor {
                 nearShulker = false;
                 nearVehicle = false;
                 nearPiston = false;
+                nearSlime = false;
 
                 handleNearbyEntities();
 
@@ -138,6 +139,8 @@ public class PositionProcessor {
                     final Material material = block.getType();
 
                     inLiquid |= block.isLiquid();
+
+                    nearSlime |= material == XMaterial.SLIME_BLOCK.parseMaterial();
 
                     if (material != XMaterial.AIR.parseMaterial()) inAir = false;
                     nearPiston |= material == XMaterial.PISTON.parseMaterial()
@@ -172,6 +175,7 @@ public class PositionProcessor {
     public void handleTicks() {
         airTicks = inAir ? airTicks + 1 : 0;
         waterTicks = inLiquid ? waterTicks + 1 : 0;
+        sinceSlimeTicks = nearSlime ? sinceSlimeTicks + 1 : 0;
         inVehicle = player.getPlayer().isInsideVehicle();
         sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;
         player.getActionProcessor().handleItemUse(false);
