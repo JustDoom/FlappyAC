@@ -22,6 +22,7 @@ public class ReceivingPacketProcessor {
      * @param packet - The packet to handle
      */
     public void handle(final FlappyPlayer data, Packet packet){
+
         if(packet.isFlying()){
             final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
 

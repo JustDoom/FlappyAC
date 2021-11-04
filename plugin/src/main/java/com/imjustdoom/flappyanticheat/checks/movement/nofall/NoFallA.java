@@ -20,9 +20,7 @@ public class NoFallA extends Check {
 
         // Check if the packet is not a position, look or position look packet
         // and if exempts are true, if true return
-        if (!packet.isPosition()
-                && !packet.isLook()
-                && !packet.isPositionLook()
+        if (!packet.isFlying()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
                 ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE)) return;
 

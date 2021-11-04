@@ -10,7 +10,6 @@ import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import com.imjustdoom.flappyanticheat.util.DiscordWebhook;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -25,8 +24,6 @@ import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -98,25 +95,6 @@ public abstract class Check implements FlappyCheck {
                 Player player = Bukkit.getPlayer(uuid);
                 if (!player.hasPermission("flappyac.alerts")) continue;
                 player.spigot().sendMessage(component);
-            }
-
-            if(Config.Discord.ENABLED) {
-                try {
-                    // Send discord message
-                    FlappyAnticheat.INSTANCE.getWebhook().addEmbed(new DiscordWebhook.EmbedObject()
-                            .setTitle(check + " " + checkType)
-                            .setDescription(description)
-                            .setColor(Color.BLUE)
-                            .addField(data.getPlayer().getName() + " flagged",
-                                    getCheck() + " (" + getCheckType() + ")"
-                                            + "\nViolations: " + getVl() + "/" + getMaxVl()
-                                            + "\nClient Brand: " + data.getClientBrand()
-                                            + "\nClient Version: " + MessageUtil.translateVersion(data.getClientVersion().name()),
-                                    false));
-                    FlappyAnticheat.INSTANCE.getWebhook().execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
 
             // Send console message
