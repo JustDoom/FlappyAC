@@ -9,11 +9,11 @@ import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 
 @CheckInfo(check = "Criticals", checkType = "A", experimental = false, description = "Checks if the player says it's falling but isn't", type = CheckType.COMBAT)
-public class CrititcalsA extends Check {
+public class CriticalsA extends Check {
 
     private int buffer = 0;
 
-    public CrititcalsA(FlappyPlayer data) {
+    public CriticalsA(FlappyPlayer data) {
         super(data);
     }
 
@@ -27,7 +27,7 @@ public class CrititcalsA extends Check {
                 && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED,
                 ExemptType.PISTON, ExemptType.SHULKER, ExemptType.VEHICLE,
-                ExemptType.INSIDE_VEHICLE, ExemptType.VOID)) return;
+                ExemptType.INSIDE_VEHICLE, ExemptType.VOID, ExemptType.PISTON)) return;
 
         double groundY = 0.015625;
         boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
