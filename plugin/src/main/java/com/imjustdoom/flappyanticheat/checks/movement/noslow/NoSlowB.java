@@ -6,7 +6,6 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
 
 @CheckInfo(check = "NoSlow", checkType = "B", experimental = false, description = "Checks if the player is sprinting while hunger is too low", type = CheckType.MOVEMENT)
 public class NoSlowB extends Check {

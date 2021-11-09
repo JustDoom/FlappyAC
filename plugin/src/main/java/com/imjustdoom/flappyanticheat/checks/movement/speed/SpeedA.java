@@ -1,8 +1,8 @@
 package com.imjustdoom.flappyanticheat.checks.movement.speed;
 
+import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
-import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
@@ -20,7 +20,6 @@ public class SpeedA extends Check {
         if (!packet.isPosition() && !packet.isPositionLook()
                 || data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY()
                 || isExempt(ExemptType.JOINED, ExemptType.ENTITIES, ExemptType.FLYING/**ExemptType.WEB, ExemptType.TELEPORT**/)) return;
-
 
         if (!data.getPositionProcessor().isOnGround() && !data.getPositionProcessor().isLastOnGround()) {
 

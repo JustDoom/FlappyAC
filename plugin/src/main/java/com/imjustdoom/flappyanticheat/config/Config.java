@@ -2,7 +2,6 @@ package com.imjustdoom.flappyanticheat.config;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
-import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2RTFDTM;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;

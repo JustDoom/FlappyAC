@@ -1,7 +1,5 @@
 package com.imjustdoom.api.events;
 
-import com.imjustdoom.api.check.FlappyCheck;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

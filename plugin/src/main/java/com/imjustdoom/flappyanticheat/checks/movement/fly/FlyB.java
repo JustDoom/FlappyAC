@@ -1,10 +1,9 @@
 package com.imjustdoom.flappyanticheat.checks.movement.fly;
 
+import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
-import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 

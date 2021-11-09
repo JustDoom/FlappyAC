@@ -5,12 +5,13 @@ import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
 import io.github.retrooper.packetevents.packetwrappers.play.out.position.WrappedPacketOutPosition;
-import io.github.retrooper.packetevents.utils.vector.Vector3d;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Shulker;
 import org.bukkit.util.NumberConversions;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class PositionProcessor {
     private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid,
             nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting, nearSlime;
 
-    private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ,
+    private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ, groundTicks,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY, sinceSlimeTicks;
 
     private int airTicks, waterTicks, sinceVehicleTicks;
@@ -175,6 +176,7 @@ public class PositionProcessor {
     public void handleTicks() {
         airTicks = inAir ? airTicks + 1 : 0;
         waterTicks = inLiquid ? waterTicks + 1 : 0;
+        groundTicks = onGround ? groundTicks + 1 : 0;
         sinceSlimeTicks = nearSlime ? sinceSlimeTicks + 1 : 0;
         inVehicle = player.getPlayer().isInsideVehicle();
         sinceVehicleTicks = inVehicle ? 0 : sinceVehicleTicks + 1;

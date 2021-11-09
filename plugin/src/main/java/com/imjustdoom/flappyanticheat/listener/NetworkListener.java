@@ -1,7 +1,6 @@
 package com.imjustdoom.flappyanticheat.listener;
 
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
-import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;

@@ -3,11 +3,10 @@ package com.imjustdoom.flappyanticheat.data;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.data.FlappyPlayerAPI;
 import com.imjustdoom.api.events.FlappyLoadPlayerEvent;
-import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.processor.*;
-import com.imjustdoom.flappyanticheat.manager.CheckManager;
 import com.imjustdoom.flappyanticheat.exempt.ExemptManager;
+import com.imjustdoom.flappyanticheat.manager.CheckManager;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.player.ClientVersion;
 import lombok.Getter;
@@ -18,7 +17,6 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter

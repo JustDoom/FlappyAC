@@ -3,7 +3,6 @@ package com.imjustdoom.flappyanticheat.manager;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.events.ViolationResetEvent;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
-import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;

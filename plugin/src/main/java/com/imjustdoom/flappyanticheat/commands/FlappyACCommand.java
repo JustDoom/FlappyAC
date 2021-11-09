@@ -1,12 +1,10 @@
 package com.imjustdoom.flappyanticheat.commands;
 
-import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.config.Config;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.manager.AlertManager;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -16,7 +14,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class FlappyACCommand implements CommandExecutor {

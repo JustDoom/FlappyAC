@@ -2,17 +2,13 @@ package com.imjustdoom.flappyanticheat.menu;
 
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
-import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.config.Config;
-import com.imjustdoom.flappyanticheat.manager.CheckManager;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.ArrayList;
 import java.util.List;

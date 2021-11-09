@@ -9,8 +9,6 @@ import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 
-import java.util.Vector;
-
 @CheckInfo(check = "BadPackets", checkType = "H", experimental = false, description = "Checks for weird pos packets", type = CheckType.PLAYER)
 public class BadPacketsH extends Check {
 
