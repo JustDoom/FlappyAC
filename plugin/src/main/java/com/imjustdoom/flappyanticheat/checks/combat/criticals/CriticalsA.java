@@ -30,7 +30,8 @@ public class CriticalsA extends Check {
                 ExemptType.INSIDE_VEHICLE, ExemptType.VOID, ExemptType.PISTON)) return;
 
         double groundY = 0.015625;
-        boolean client = data.getPositionProcessor().isOnGround(), server = data.getPositionProcessor().getY() % groundY < 0.0001;;
+        boolean client = data.getPositionProcessor().isOnGround();
+        boolean server = data.getPositionProcessor().getY() % groundY < 0.0001;
 
         // Check if the client says it's not on the ground but the server says it is
         if (!client && server && !PlayerUtil.isOnClimbable(data.getPlayer())) {

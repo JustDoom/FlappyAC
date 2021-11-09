@@ -11,12 +11,12 @@ import org.bukkit.entity.EntityType;
 @CheckInfo(check = "KeepSprint", checkType = "A", experimental = false, description = "", type = CheckType.MOVEMENT)
 public class KeepSprintA extends Check {
 
+    private int hitTicks;
+    private double buffer;
+
     public KeepSprintA(FlappyPlayer data) {
         super(data);
     }
-
-    private int hitTicks;
-    private double buffer;
 
     @Override
     public void handle(Packet packet) {

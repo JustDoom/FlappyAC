@@ -10,12 +10,12 @@ import com.imjustdoom.flappyanticheat.packet.Packet;
 @CheckInfo(check = "Timer", checkType = "A", experimental = false, description = "Timer", type = CheckType.PLAYER)
 public class TimerA extends Check {
 
+    private long lastTime;
+    private double balance;
+
     public TimerA(FlappyPlayer data) {
         super(data);
     }
-
-    private long lastTime;
-    private double balance;
 
     @Override
     public void handle(Packet packet) {

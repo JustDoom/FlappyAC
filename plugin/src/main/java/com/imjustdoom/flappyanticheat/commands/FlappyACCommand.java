@@ -116,6 +116,8 @@ public class FlappyACCommand implements CommandExecutor {
                             .replaceAll("%movement%", String.valueOf(movement))
                             .replaceAll("%total%", String.valueOf(player + movement + combat)));
                     break;
+                default:
+
             }
         }
         return false;

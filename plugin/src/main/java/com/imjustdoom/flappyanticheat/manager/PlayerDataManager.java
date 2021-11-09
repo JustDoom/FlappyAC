@@ -15,11 +15,7 @@ public class PlayerDataManager {
     }
 
     public boolean containsPlayer(FlappyPlayer data){
-        if(dataMap.containsValue(data)){
-            return true;
-        } else {
-            return false;
-        }
+        return dataMap.containsValue(data);
     }
 
     public void removePlayer(Player player) {
@@ -30,7 +26,7 @@ public class PlayerDataManager {
         return dataMap.get(player);
     }
 
-    public Map getPlayers() {
+    public Map<Player, FlappyPlayer> getPlayers() {
         return dataMap;
     }
 }

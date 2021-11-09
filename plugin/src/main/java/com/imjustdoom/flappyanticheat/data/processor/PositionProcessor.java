@@ -219,8 +219,4 @@ public class PositionProcessor {
 
         }
     }
-
-    public void handleServerPosition(final WrappedPacketOutPosition wrapper) {
-
-    }
 }

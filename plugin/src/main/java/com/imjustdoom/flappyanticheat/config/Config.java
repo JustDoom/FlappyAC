@@ -59,14 +59,6 @@ public class Config {
         public static String NAME;
     }
 
-    public static class Discord {
-        public static boolean ENABLED;
-        public static String WEBHOOK;
-        public static String PROFILE;
-        public static String USERNAME;
-        public static String STATUS;
-    }
-
     public static void load() {
 
         // Create the config file
@@ -129,12 +121,6 @@ public class Config {
         Messages.PROFILE = configFile.node("messages", "profile").getString();
 
         Menu.NAME = configFile.node("menu", "name").getString();
-
-        Discord.ENABLED = configFile.node("discord", "enabled").getBoolean();
-        Discord.WEBHOOK = configFile.node("discord", "webhook").getString();
-        Discord.PROFILE = configFile.node("discord", "profile-picture").getString();
-        Discord.USERNAME = configFile.node("discord", "username").getString();
-        Discord.STATUS = configFile.node("discord", "status-text").getString();
 
         if(CONFIG_VERSION != FlappyAnticheat.INSTANCE.getConfigVersion()) {
             FlappyAnticheat.INSTANCE.getPlugin().getLogger().info("Config is out of date, please update it");

@@ -29,8 +29,8 @@ public class ReceivingPacketProcessor {
                 data.getRotationProcessor().handle(wrapper.getYaw(), wrapper.getPitch());
             }
 
-            if(packet.isPosition() || packet.isPositionLook()) {
-                if (wrapper.getX() != pos.getX() || wrapper.getY() != pos.getY() || wrapper.getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())
+            if((packet.isPosition() || packet.isPositionLook())
+                    && (wrapper.getX() != pos.getX() || wrapper.getY() != pos.getY() || wrapper.getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())) {
                     data.getPositionProcessor().handle(wrapper.getX(), wrapper.getY(), wrapper.getZ(), wrapper.isOnGround());
             }
         }

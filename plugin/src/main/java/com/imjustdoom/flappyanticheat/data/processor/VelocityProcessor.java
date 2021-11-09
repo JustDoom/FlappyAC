@@ -13,16 +13,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class VelocityProcessor {
 
     private FlappyPlayer data;
-
-    public VelocityProcessor(FlappyPlayer data){
-        this.data = data;
-    }
-
     private double velocityX, velocityY, velocityZ, lastVelocityX, lastVelocityY, lastVelocityZ, velocityXZ, lastVelocityXZ;
     private boolean verifyingVelocity;
     private int maxVelocityTicks, velocityTicks;
     private short transactionID, velocityID;
     private long transactionPing, transactionReply;
+
+    public VelocityProcessor(FlappyPlayer data){
+        this.data = data;
+    }
 
     public void handle(final double velocityX, final double velocityY, final double velocityZ){
 

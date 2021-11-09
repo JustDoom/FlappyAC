@@ -17,10 +17,7 @@ public class FileUtil {
      */
     public static boolean doesFileExist(String filename) {
         Path path = Paths.get(filename);
-        if (!Files.exists(path)) {
-            return false;
-        }
-        return true;
+        return Files.exists(path);
     }
 
     /**

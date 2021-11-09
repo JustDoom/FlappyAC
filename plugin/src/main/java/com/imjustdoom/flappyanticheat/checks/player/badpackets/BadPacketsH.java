@@ -12,11 +12,11 @@ import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPac
 @CheckInfo(check = "BadPackets", checkType = "H", experimental = false, description = "Checks for weird pos packets", type = CheckType.PLAYER)
 public class BadPacketsH extends Check {
 
+    private boolean checkNextPosition;
+
     public BadPacketsH(FlappyPlayer data) {
         super(data);
     }
-
-    private boolean checkNextPosition;
 
     @Override
     public void handle(Packet packet) {
