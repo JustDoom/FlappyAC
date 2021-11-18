@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class SpeedA extends Check implements Listener {
         PlayerData data = FlappyAnticheat.getInstance().dataManager.getData(event.getPlayer().getUniqueId());
 
         //dont run the check if they have /fly on or are creative flying
-        if (player.isFlying() || player.isGliding()) return;
+        if (player.isFlying() || player.isGliding() || player.hasPotionEffect(PotionEffectType.DOLPHINS_GRACE)) return;
         if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer().getPlayer())) return;
 
         //pos stuff
