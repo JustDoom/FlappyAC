@@ -16,7 +16,7 @@ public class SendingPacketProcessor {
     public void handle(final FlappyPlayer data, Packet packet){
         if(packet.isOutPosition()) {
             final WrappedPacketOutPosition wrapper = new WrappedPacketOutPosition(packet.getRawPacket());
-            data.getPositionProcessor().handleServerPosition(wrapper);
+            //data.getPositionProcessor().handleServerPosition(wrapper);
         }
 
         if (data.getPlayer().hasPermission("flappyac.bypass")) return;
