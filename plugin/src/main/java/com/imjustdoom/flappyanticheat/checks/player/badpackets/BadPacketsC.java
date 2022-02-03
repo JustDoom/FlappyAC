@@ -3,12 +3,12 @@
 
 package com.imjustdoom.flappyanticheat.checks.player.badpackets;
 
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientSteerVehicle;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.steervehicle.WrappedPacketInSteerVehicle;
 
 @CheckInfo(check = "BadPackets", checkType = "C", experimental = false, description = "Checks for common exploit in disablers", type = CheckType.PLAYER)
 public class BadPacketsC extends Check {
@@ -20,9 +20,9 @@ public class BadPacketsC extends Check {
     @Override
     public void handle(Packet packet) {
         if (!packet.isSteerVehicle()) return;
-        WrappedPacketInSteerVehicle wrapper = new WrappedPacketInSteerVehicle(packet.getRawPacket());
+        WrapperPlayClientSteerVehicle wrapper = new WrapperPlayClientSteerVehicle(packet.getEvent());
 
-        float forwardValue = Math.abs(wrapper.getForwardValue()), sideValue = Math.abs(wrapper.getSideValue());
+        float forwardValue = Math.abs(wrapper.getForward()), sideValue = Math.abs(wrapper.getSideways());
         boolean invalid = forwardValue > .98F || sideValue > .98F;
 
         if (invalid) {

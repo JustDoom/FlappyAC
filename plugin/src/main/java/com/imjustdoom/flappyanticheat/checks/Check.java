@@ -12,7 +12,7 @@ import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.FileUtil;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
-import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.SpigotReflectionUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -83,8 +83,9 @@ public abstract class Check implements FlappyCheck {
                     Config.Alerts.HOVER
                             .replaceAll("%description%", getDescription())
                             .replaceAll("%debug%", debug)
-                            .replaceAll("%tps%", String.valueOf(PacketEvents.get().getServerUtils().getTPS()))
-                            .replaceAll("%ping%", String.valueOf(PacketEvents.get().getPlayerUtils().getPing(data.getPlayer())))
+                            //TODO: tps check eeeeeeeeeeeeee
+                            .replaceAll("%tps%", String.valueOf(SpigotReflectionUtil.recentTPS()[0]))
+                            .replaceAll("%ping%", String.valueOf(SpigotReflectionUtil.getPlayerPingLegacy(data.getPlayer())))
             )).create()));
 
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/flappyachoverclick " + data.getPlayer().getName()));

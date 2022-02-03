@@ -4,15 +4,10 @@ import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
-import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
 
-@CheckInfo(check = "BadPackets", checkType = "H", experimental = false, description = "Checks for weird pos packets", type = CheckType.PLAYER)
+@CheckInfo(check = "BadPackets", checkType = "I", experimental = false, description = "Checks for invalid held item slot", type = CheckType.PLAYER)
 public class BadPacketsH extends Check {
-
-    private boolean checkNextPosition;
 
     public BadPacketsH(FlappyPlayer data) {
         super(data);
@@ -20,41 +15,12 @@ public class BadPacketsH extends Check {
 
     @Override
     public void handle(Packet packet) {
+        if(!packet.isSlotChange()) return;
 
-        if(isExempt(ExemptType.JOINED)) return;
+        int slot = data.getActionProcessor().getSlot();
 
-        if (packet.isPosition()) {
-            PositionProcessor pos = getData().getPositionProcessor();
-            //if (pos.isTeleporting()) return;
-            if (checkNextPosition) {
-                if (!pos.isOnGround() && pos.getDeltaY() < 0) {
-                    debug("checked next position - dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY());
-                    WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
-                    wrapper.setOnGround(false);
-                }
-
-                checkNextPosition = false;
-            }
-        } else if (packet.isFlying()) {
-            PositionProcessor pos = getData().getPositionProcessor();
-            WrappedPacketInFlying wrapper = new WrappedPacketInFlying(packet.getRawPacket());
-
-            if (!wrapper.isMoving() && wrapper.isOnGround() != pos.isOnGround() &&
-                    /**!pos.isTeleporting() && **/wrapper.isOnGround()) {
-                /**if (pos.getCurrentTeleportVec().equals(new Vector(pos.getX(), pos.getY(), pos.getZ()))) {
-                    checkNextPosition = true;
-                } else {**/
-                    if (Math.abs(pos.getDeltaX()) < 0.03 || Math.abs(pos.getDeltaZ()) < 0.03) {
-                        if (pos.getDeltaY() < -0.1553) {
-                            fail("dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY(), false);
-                            //wrapper.setOnGround(false);
-                        }
-                    } else {
-                        fail("dy=" + pos.getDeltaY() + " ldy=" + pos.getLastDeltaY(), false);
-                        //wrapper.setOnGround(false);
-                    }
-
-            }
+        if(slot > 8 || slot < 0) {
+            fail("slot=" + slot, false);
         }
     }
 }

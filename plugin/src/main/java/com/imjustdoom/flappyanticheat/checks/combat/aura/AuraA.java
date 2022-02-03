@@ -1,11 +1,11 @@
 package com.imjustdoom.flappyanticheat.checks.combat.aura;
 
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 
 @CheckInfo(check = "Aura", checkType = "A", experimental = true, description = "check for correct order between packets", type = CheckType.COMBAT)
 public class AuraA extends Check {
@@ -24,9 +24,9 @@ public class AuraA extends Check {
             this.lastSent = System.currentTimeMillis();
         } else if (packet.isUseEntity()) {
 
-            final WrappedPacketInUseEntity wrappedUse = new WrappedPacketInUseEntity(packet.getRawPacket());
+            final WrapperPlayClientInteractEntity wrappedUse = new WrapperPlayClientInteractEntity(packet.getEvent());
 
-            if (wrappedUse.getAction().equals(WrappedPacketInUseEntity.EntityUseAction.ATTACK)) {
+            if (wrappedUse.getAction().equals(WrapperPlayClientInteractEntity.InteractAction.ATTACK)) {
 
                 final long difference = Math.abs(System.currentTimeMillis() - lastSent);
 

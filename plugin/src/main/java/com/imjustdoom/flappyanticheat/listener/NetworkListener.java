@@ -1,49 +1,57 @@
 package com.imjustdoom.flappyanticheat.listener;
 
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import com.github.retrooper.packetevents.event.PostPlayerInjectEvent;
+import com.github.retrooper.packetevents.event.SimplePacketListenerAbstract;
+import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
+import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.event.PacketListenerAbstract;
-import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
-import io.github.retrooper.packetevents.event.impl.PostPlayerInjectEvent;
-import io.github.retrooper.packetevents.packettype.PacketType;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
+import io.github.retrooper.packetevents.utils.GeyserUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-public class NetworkListener extends PacketListenerAbstract {
+public class NetworkListener extends SimplePacketListenerAbstract {
+
+    public NetworkListener() {
+        super(PacketListenerPriority.MONITOR, true);
+    }
 
     @Override
     public void onPostPlayerInject(final PostPlayerInjectEvent event) {
 
-        // Check if the player is a bedrock player, if so don't add them to the anticheat
-        if(PacketEvents.get().getPlayerUtils().isGeyserPlayer(event.getPlayer())) return;
+        final Player player = (Player) event.getPlayer();
 
-        FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(event.getPlayer());
-        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(event.getPlayer());
+        // Check if the player is a bedrock player, if so don't add them to the anticheat
+        if(GeyserUtil.isGeyserPlayer(player.getUniqueId())) return;
+
+        FlappyAnticheat.INSTANCE.getAlertManager().toggleAlerts(player);
+        FlappyAnticheat.INSTANCE.getDataManager().addPlayer(player);
 
         Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () ->
-                ClientBrandListener.addChannel(event.getPlayer(), "minecraft:brand"));
+                ClientBrandListener.addChannel(player, "minecraft:brand"));
     }
 
     @Override
-    public void onPacketPlayReceive(final PacketPlayReceiveEvent event){
-        final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData(event.getPlayer());
+    public void onPacketPlayReceive(final PacketPlayReceiveEvent event) {
+        final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData((Player) event.getPlayer());
 
         if (player == null) return;
 
         // Check if someone is trying to choke the packet
         if (PacketType.Play.Client.Util.isInstanceOfFlying(event.getPacketId())) {
-            final WrappedPacketInFlying wrapper = new WrappedPacketInFlying(event.getNMSPacket());
+            final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
-            if (Math.abs(wrapper.getX()) > 1.0E+7
-                    || Math.abs(wrapper.getY()) > 1.0E+7
-                    || Math.abs(wrapper.getZ()) > 1.0E+7
-                    || Math.abs(wrapper.getPitch()) > 1.0E+7
-                    || Math.abs(wrapper.getYaw()) > 1.0E+7) {
+            if (Math.abs(wrapper.getLocation().getX()) > 1.0E+7
+                    || Math.abs(wrapper.getLocation().getY()) > 1.0E+7
+                    || Math.abs(wrapper.getLocation().getZ()) > 1.0E+7
+                    || Math.abs(wrapper.getLocation().getPitch()) > 1.0E+7
+                    || Math.abs(wrapper.getLocation().getYaw()) > 1.0E+7) {
                 Bukkit.getScheduler().runTask(FlappyAnticheat.INSTANCE.getPlugin(), () -> {
-                    event.getPlayer().kickPlayer("No");
+                    player.getPlayer().kickPlayer("No");
                     MessageUtil.toConsole("No");
                 });
                 return;
@@ -52,7 +60,7 @@ public class NetworkListener extends PacketListenerAbstract {
 
         // Handle the packet
         FlappyAnticheat.INSTANCE.getPacketExecutor().execute(() -> FlappyAnticheat.INSTANCE.getReceivingPacketProcessor()
-                .handle(player, new Packet(Packet.Direction.RECEIVE, event.getNMSPacket(), event.getPacketId())));
+                .handle(player, new Packet(Packet.Direction.RECEIVE, event, event.getPacketId())));
     }
 
     // TODO: onReceivePackets

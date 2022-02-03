@@ -4,13 +4,15 @@ import com.imjustdoom.flappyanticheat.commands.FlappyACCommand;
 import com.imjustdoom.flappyanticheat.commands.FlappyACHoverClick;
 import com.imjustdoom.flappyanticheat.commands.FlappyACTabCompletion;
 import com.imjustdoom.flappyanticheat.config.Config;
-import com.imjustdoom.flappyanticheat.listener.*;
+import com.imjustdoom.flappyanticheat.listener.BukkitEventListener;
+import com.imjustdoom.flappyanticheat.listener.ClientBrandListener;
+import com.imjustdoom.flappyanticheat.listener.MenuClickListener;
+import com.imjustdoom.flappyanticheat.listener.PlayerConnectionListener;
 import com.imjustdoom.flappyanticheat.manager.*;
 import com.imjustdoom.flappyanticheat.menu.MenuGUI;
 import com.imjustdoom.flappyanticheat.metrics.Metrics;
 import com.imjustdoom.flappyanticheat.packet.processor.ReceivingPacketProcessor;
 import com.imjustdoom.flappyanticheat.packet.processor.SendingPacketProcessor;
-import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.messaging.Messenger;
@@ -24,7 +26,7 @@ public enum FlappyAnticheat {
 
     private FlappyAnticheatPlugin plugin;
 
-    public int configVersion = 1;
+    public final int configVersion = 1;
 
     private PlayerDataManager dataManager;
     private ViolationResetManager violationResetManager;
@@ -66,8 +68,6 @@ public enum FlappyAnticheat {
         Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new BukkitEventListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new MenuClickListener(), plugin);
-
-        PacketEvents.get().registerListener(new NetworkListener());
 
         // Register commands
         getPlugin().getCommand("flappyac").setExecutor(new FlappyACCommand());

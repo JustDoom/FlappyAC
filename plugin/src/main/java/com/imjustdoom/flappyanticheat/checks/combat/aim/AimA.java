@@ -18,7 +18,5 @@ public class AimA extends Check {
     public void handle(Packet packet) {
         if(!packet.isLook() && !packet.isPositionLook()
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS, ExemptType.JOINED)) return;
-
-
     }
 }

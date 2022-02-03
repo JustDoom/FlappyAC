@@ -42,6 +42,7 @@ public class VelocityProcessor {
         return Math.abs(FlappyAnticheat.INSTANCE.getTickManager().getTicks() - this.velocityTicks) < this.maxVelocityTicks;
     }
 
+    //TODO: velocity stuff
     public void handleTransaction(final WrappedPacketInTransaction wrapper) {
 
         if (this.verifyingVelocity && wrapper.getActionNumber() == this.velocityID) {

@@ -3,7 +3,7 @@ package com.imjustdoom.flappyanticheat.exempt.type;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
-import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.utils.SpigotReflectionUtil;
 import lombok.Getter;
 import org.bukkit.GameMode;
 
@@ -16,7 +16,9 @@ public enum ExemptType {
 
     JOINED(data -> System.currentTimeMillis() - data.getJoinTime() < 5000L),
 
-    TPS(data -> PacketEvents.get().getServerUtils().getTPS() < 17.0),
+
+    //TODO: check if tps value is correct
+    TPS(data -> SpigotReflectionUtil.recentTPS()[0] < 17.0),
 
     LIQUID(data -> data.getPositionProcessor().isInLiquid()),
 

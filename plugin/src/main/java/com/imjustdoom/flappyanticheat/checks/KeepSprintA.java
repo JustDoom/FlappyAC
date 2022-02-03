@@ -1,5 +1,7 @@
 package com.imjustdoom.flappyanticheat.checks;
 
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientEntityAction;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -36,7 +38,8 @@ public class KeepSprintA extends Check {
 
             }
         } else if (packet.isUseEntity()) {
-            final WrappedPacketInUseEntity wrapper = new WrappedPacketInUseEntity(packet.getRawPacket());
+            //TODO: check if interact entity is use entity rename
+            final WrapperPlayClientInteractEntity wrapper = new WrapperPlayClientInteractEntity(packet.getEvent());
             Entity entity = wrapper.getEntity(data.getPlayer().getWorld());
             if(entity.getType() == EntityType.PLAYER)
                 hitTicks = 0;

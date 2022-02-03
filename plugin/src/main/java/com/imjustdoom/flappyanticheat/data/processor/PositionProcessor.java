@@ -4,7 +4,6 @@ import com.cryptomorin.xseries.XMaterial;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
-import io.github.retrooper.packetevents.packetwrappers.play.out.position.WrappedPacketOutPosition;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
