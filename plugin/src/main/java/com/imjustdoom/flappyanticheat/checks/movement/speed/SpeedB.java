@@ -9,7 +9,7 @@ import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.exempt.type.ExemptType;
 import com.imjustdoom.flappyanticheat.packet.Packet;
 
-@CheckInfo(check = "Speed", checkType = "B", experimental = false, description = "Checks players speed in the air", type = CheckType.MOVEMENT)
+@CheckInfo(check = "Speed", checkType = "B", experimental = false, description = "Checks for deceleration when turning", type = CheckType.MOVEMENT)
 public class SpeedB extends Check {
 
     public SpeedB(FlappyPlayer data) {

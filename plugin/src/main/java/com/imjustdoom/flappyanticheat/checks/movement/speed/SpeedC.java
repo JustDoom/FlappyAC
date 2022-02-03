@@ -24,12 +24,21 @@ public class SpeedC extends Check {
         if (!packet.isFlying()
                 || isExempt(ExemptType.JOINED, ExemptType.ENTITIES, ExemptType.FLYING/**ExemptType.WEB, ExemptType.TELEPORT**/)) return;
 
-        if(data.getPositionProcessor().getGroundTicks() > 20) {
-            float momentum = 0.91f * getFrictionBlock(data.getPlayer().getLocation().clone().add(0, -1.0, 0));
-            float baseSpeed = getBaseSpeed(data.getPlayer(), data.getPlayer().isSprinting());
-            float acceleration = (float) (baseSpeed * getEffectMultipliers(data.getPlayer()) * (0.16277f / Math.pow(momentum, 3)));
-            float prediction = (float) ((data.getPositionProcessor().getLastDeltaXZ() * momentum) + acceleration); // Momentum + acceleration
-            float accuracy = (float) ((data.getPositionProcessor().getDeltaXZ() - prediction) * 0.98f);
+        float momentum = 0.91f * getFrictionBlock(data.getPlayer().getLocation().clone().add(0, -1.0, 0));
+        float baseSpeed = getBaseSpeed(data.getPlayer(), data.getPlayer().isSprinting());
+        float acceleration = (float) (baseSpeed * getEffectMultipliers(data.getPlayer()) * (0.16277f / Math.pow(momentum, 3)));
+        float prediction = (float) ((data.getPositionProcessor().getLastDeltaXZ() * momentum) + acceleration); // Momentum + acceleration
+        float accuracy = (float) ((data.getPositionProcessor().getDeltaXZ() - prediction) * 0.98f);
+
+        /**debug("acc= " + accuracy);
+        debug("pred= " + prediction);
+        debug("accel= " + acceleration);
+        debug("base= " + baseSpeed);
+        debug("mom= " + momentum);
+        debug("deltaxz= " + data.getPositionProcessor().getDeltaXZ());
+        debug("ticks= " + data.getPositionProcessor().getGroundTicks());**/
+        if(data.getPositionProcessor().getGroundTicks() > 20 && data.getPositionProcessor().isOnGround()) {
+
             if (accuracy > 0.001 && data.getPositionProcessor().getDeltaXZ() > 0.1) {
                 fail("accuracy: " + accuracy, false);
             }
@@ -38,8 +47,7 @@ public class SpeedC extends Check {
 
     private float getBaseSpeed(Player player, boolean sprinting) {
         float walkSpeed = (player.getWalkSpeed() / 2f);
-        float baseSpeed = sprinting ? walkSpeed + walkSpeed * 0.3f : walkSpeed;
-        return baseSpeed;
+        return sprinting ? walkSpeed + walkSpeed * 0.3f : walkSpeed;
     }
 
     private float getFrictionBlock(Location loc) {
@@ -55,7 +63,7 @@ public class SpeedC extends Check {
         } else if (name.contains("AIR")) {
             return 1f;
         } else {
-            return 0.6f; // Normal OnGround friction
+            return 0.6f;
         }
     }
 
@@ -64,15 +72,13 @@ public class SpeedC extends Check {
         float slowness = 0;
         for (PotionEffect pe : player.getActivePotionEffects()) {
             String name = pe.getType().getName();
-            if (name.equalsIgnoreCase("SLOW")) { // equalsIgnoreCase allows us better performance (+37%
-                // of perfomance)
+            if (name.equalsIgnoreCase("SLOW")) {
                 slowness = pe.getAmplifier() + 1;
             }
             if (name.equalsIgnoreCase("SPEED")) {
                 speed = pe.getAmplifier() + 1;
             }
         }
-        float speedSlownessMultiplier = (1 + 0.2f * speed) * (1 - 0.15f * slowness);
-        return speedSlownessMultiplier;
+        return (1 + 0.2f * speed) * (1 - 0.15f * slowness);
     }
 }

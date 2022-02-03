@@ -1,5 +1,7 @@
 package com.imjustdoom.flappyanticheat.data;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.api.data.FlappyPlayerAPI;
 import com.imjustdoom.api.events.FlappyLoadPlayerEvent;
@@ -7,8 +9,6 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.processor.*;
 import com.imjustdoom.flappyanticheat.exempt.ExemptManager;
 import com.imjustdoom.flappyanticheat.manager.CheckManager;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     public FlappyPlayer(Player player){
 
         this.player = player;
-        this.clientVersion = PacketEvents.get().getPlayerUtils().getClientVersion(player);
+        this.clientVersion = PacketEvents.getAPI().getPlayerManager().getClientVersion(player);
 
         // Load the processors and exempt manager
         this.positionProcessor = new PositionProcessor(this);

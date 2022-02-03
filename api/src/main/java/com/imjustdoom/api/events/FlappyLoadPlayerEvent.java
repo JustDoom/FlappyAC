@@ -1,7 +1,7 @@
 package com.imjustdoom.api.events;
 
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.imjustdoom.api.data.FlappyPlayerAPI;
-import io.github.retrooper.packetevents.utils.player.ClientVersion;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
