@@ -9,7 +9,7 @@ public class FlappyPlayerLoadListener implements Listener {
 
     @EventHandler
     public void loadListener(FlappyLoadPlayerEvent event) {
-        if(event.getClientVersion() == ClientVersion.V_1_10) {
+        if(event.getClientVersion().isNewerThan(ClientVersion.V_1_10)) {
             event.getPlayer().sendMessage("Why are you even on this version...");
         }
 

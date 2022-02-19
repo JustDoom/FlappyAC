@@ -9,11 +9,6 @@ import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.flying.WrappedPacketInFlying;
-import io.github.retrooper.packetevents.packetwrappers.play.in.helditemslot.WrappedPacketInHeldItemSlot;
-import io.github.retrooper.packetevents.packetwrappers.play.in.settings.WrappedPacketInSettings;
-import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
-import io.github.retrooper.packetevents.packetwrappers.play.in.vehiclemove.WrappedPacketInVehicleMove;
 
 public class ReceivingPacketProcessor {
 
@@ -24,7 +19,7 @@ public class ReceivingPacketProcessor {
      */
     public void handle(final FlappyPlayer data, Packet packet){
 
-        if(packet.isFlying()){
+        if(WrapperPlayClientPlayerFlying.isFlying(packet.getEvent().getPacketType())){
             final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(packet.getEvent());
 
             PositionProcessor pos = data.getPositionProcessor();
@@ -37,33 +32,34 @@ public class ReceivingPacketProcessor {
                     && (wrapper.getLocation().getX() != pos.getX() || wrapper.getLocation().getY() != pos.getY() || wrapper.getLocation().getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())) {
                     data.getPositionProcessor().handle(wrapper.getLocation().getX(), wrapper.getLocation().getY(), wrapper.getLocation().getZ(), wrapper.isOnGround());
             }
+        } else {
+            switch (packet.getEvent().getPacketType()) {
+                case VEHICLE_MOVE:
+                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(packet.getEvent());
+
+                    data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
+                    break;
+                case CLIENT_SETTINGS:
+                    final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(packet.getEvent());
+
+                    data.getSettingProcessor().handle(clientSettings);
+                    break;
+                case HELD_ITEM_CHANGE:
+                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(packet.getEvent());
+                    //TODO: made sure its current selected slot
+                    data.getActionProcessor().handleSlots(heldItemChange.getSlot());
+                    break;
+                case ENTITY_ACTION:
+                    data.getActionProcessor().handleItemUse(true);
+                    break;
+            }
         }
 
-        if(packet.isVehicleMove()) {
-            final WrapperPlayClientVehicleMove wrapper = new WrapperPlayClientVehicleMove(packet.getEvent());
 
-            data.getPositionProcessor().handle(wrapper.getPosition().getX(), wrapper.getPosition().getY(), wrapper.getPosition().getZ(), false);
-        }
-
-        if(packet.isSetting()){
-            final WrapperPlayClientSettings wrapper = new WrapperPlayClientSettings(packet.getEvent());
-
-            data.getSettingProcessor().handle(wrapper);
-        }
-
+        // TODO: transaction packet
         if (packet.isIncomingTransaction()) {
-            final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getEvent());
-            data.getVelocityProcessor().handleTransaction(wrapper);
-        }
-
-        if (packet.isSlotChange()) {
-            final WrapperPlayClientHeldItemChange wrapper = new WrapperPlayClientHeldItemChange(packet.getEvent());
-            //TODO: made sure its current selected slot
-            data.getActionProcessor().handleSlots(wrapper.getSlot());
-        }
-
-        if (packet.isUseEntity()) {
-            data.getActionProcessor().handleItemUse(true);
+            //final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getEvent());
+            //data.getVelocityProcessor().handleTransaction(wrapper);
         }
 
         if (data.getPlayer().hasPermission("flappyac.bypass")) return;

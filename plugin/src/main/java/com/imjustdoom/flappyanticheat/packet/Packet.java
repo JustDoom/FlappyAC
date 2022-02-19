@@ -1,8 +1,8 @@
 package com.imjustdoom.flappyanticheat.packet;
 
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import io.github.retrooper.packetevents.packetwrappers.NMSPacket;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import lombok.Getter;
 
 @Getter
@@ -10,9 +10,9 @@ public class Packet {
 
     private final Direction direction;
     private final int packetId;
-    private final PacketReceiveEvent event;
+    private final PacketPlayReceiveEvent event;
 
-    public Packet(Direction direction, PacketReceiveEvent event, int packetId){
+    public Packet(Direction direction, PacketPlayReceiveEvent event, int packetId){
         this.packetId = packetId;
         this.direction = direction;
         this.event = event;
@@ -20,10 +20,6 @@ public class Packet {
 
     public boolean isPosition(){
         return packetId == PacketType.Play.Client.PLAYER_POSITION.getId();
-    }
-
-    public boolean isServerPosition(){
-        return packetId == PacketType.Play.Server.POSITION;
     }
 
     public boolean isLook(){
@@ -52,7 +48,7 @@ public class Packet {
     }
 
     public boolean isIncomingTransaction () {
-        return isReceiving() && packetId == PacketType.Play.Client.TRANSACTION;
+        return isReceiving() && packetId == PacketType.Play.Client.WINDOW_CONFIRMATION.getId();
     }
 
     public boolean isReceiving() {
@@ -64,7 +60,7 @@ public class Packet {
     }
 
     public boolean isFlying() {
-        return isReceiving() && PacketType.Play.Client.Util.isInstanceOfFlying(packetId);
+        return isReceiving() && WrapperPlayClientPlayerFlying.isFlying(event.getPacketType());
     }
 
     public boolean isInventoryClick() { return packetId == PacketType.Play.Client.CLICK_WINDOW.getId(); }
@@ -79,8 +75,13 @@ public class Packet {
 
     public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_CHANGE.getId(); }
 
+    // Possibly same as out pos?
+    public boolean isServerPosition(){
+        return packetId == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
+    }
+
     public boolean isOutPosition() {
-        return isSending() && packetId == PacketType.Play.Server.POSITION;
+        return isSending() && packetId == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
     }
 
     public enum Direction { SEND, RECEIVE }

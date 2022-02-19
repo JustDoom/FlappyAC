@@ -1,10 +1,10 @@
 package com.imjustdoom.flappyanticheat.data.processor;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientWindowConfirmation;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerWindowConfirmation;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.packetwrappers.play.in.transaction.WrappedPacketInTransaction;
-import io.github.retrooper.packetevents.packetwrappers.play.out.transaction.WrappedPacketOutTransaction;
 import lombok.Getter;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,19 +43,19 @@ public class VelocityProcessor {
     }
 
     //TODO: velocity stuff
-    public void handleTransaction(final WrappedPacketInTransaction wrapper) {
+    public void handleTransaction(final WrapperPlayClientWindowConfirmation wrapper) {
 
-        if (this.verifyingVelocity && wrapper.getActionNumber() == this.velocityID) {
+        if (this.verifyingVelocity && wrapper.getActionId() == this.velocityID) {
             this.verifyingVelocity = false;
             this.velocityTicks = FlappyAnticheat.INSTANCE.getTickManager().getTicks();
             this.maxVelocityTicks = (int) (((lastVelocityZ + lastVelocityX) / 2 + 2) * 15);
         }
 
-        if (wrapper.getActionNumber() == transactionID) {
+        if (wrapper.getActionId() == transactionID) {
             transactionPing = System.currentTimeMillis() - transactionReply;
 
             transactionID = (short) ThreadLocalRandom.current().nextInt(32767);
-            PacketEvents.get().getPlayerUtils().sendPacket(data.getPlayer(), new WrappedPacketOutTransaction(0, transactionID, false));
+            PacketEvents.getAPI().getPlayerManager().sendPacket(data.getPlayer(), new WrapperPlayServerWindowConfirmation((byte) 0, transactionID, false));
             transactionReply = System.currentTimeMillis();
         }
     }

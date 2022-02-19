@@ -37,6 +37,7 @@ public class TimerA extends Check {
                 fail("balance=" + balance, false);
                 balance = 0.0;
             }
+            // out use pos something
         } else if (packet.isServerPosition()){
             balance -= 50.0;
         }

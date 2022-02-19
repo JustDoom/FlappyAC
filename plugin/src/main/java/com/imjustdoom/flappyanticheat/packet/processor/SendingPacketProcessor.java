@@ -4,7 +4,6 @@ import com.imjustdoom.api.check.FlappyCheck;
 import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.out.position.WrappedPacketOutPosition;
 
 public class SendingPacketProcessor {
 
@@ -14,8 +13,12 @@ public class SendingPacketProcessor {
      * @param packet - The packet to handle
      */
     public void handle(final FlappyPlayer data, Packet packet){
+
+        //TODO: make a switch statement
+
         if(packet.isOutPosition()) {
-            final WrappedPacketOutPosition wrapper = new WrappedPacketOutPosition(packet.getRawPacket());
+            //TODO: packet out position
+            //final WrappedPacketOutPosition wrapper = new WrappedPacketOutPosition(packet.getRawPacket());
             //data.getPositionProcessor().handleServerPosition(wrapper);
         }
 

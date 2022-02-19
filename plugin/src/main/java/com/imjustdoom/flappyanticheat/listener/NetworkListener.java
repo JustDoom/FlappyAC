@@ -4,7 +4,6 @@ import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.github.retrooper.packetevents.event.PostPlayerInjectEvent;
 import com.github.retrooper.packetevents.event.SimplePacketListenerAbstract;
 import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
-import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
@@ -42,7 +41,8 @@ public class NetworkListener extends SimplePacketListenerAbstract {
         if (player == null) return;
 
         // Check if someone is trying to choke the packet
-        if (PacketType.Play.Client.Util.isInstanceOfFlying(event.getPacketId())) {
+        // TODO: make sure it works with isFlying check
+        if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
             final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
             if (Math.abs(wrapper.getLocation().getX()) > 1.0E+7

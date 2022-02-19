@@ -1,14 +1,10 @@
 package com.imjustdoom.flappyanticheat.checks;
 
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientEntityAction;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientInteractEntity;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.packet.Packet;
-import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 
 @CheckInfo(check = "KeepSprint", checkType = "A", experimental = false, description = "", type = CheckType.MOVEMENT)
 public class KeepSprintA extends Check {
@@ -39,10 +35,10 @@ public class KeepSprintA extends Check {
             }
         } else if (packet.isUseEntity()) {
             //TODO: check if interact entity is use entity rename
-            final WrapperPlayClientInteractEntity wrapper = new WrapperPlayClientInteractEntity(packet.getEvent());
-            Entity entity = wrapper.getEntity(data.getPlayer().getWorld());
-            if(entity.getType() == EntityType.PLAYER)
-                hitTicks = 0;
+            final WrapperPlayClientEntityAction wrapper = new WrapperPlayClientEntityAction(packet.getEvent());
+            //Entity entity = wrapper.getEntity(data.getPlayer().getWorld());
+            //if(entity.getType() == EntityType.PLAYER)
+                //hitTicks = 0;
         }
     }
 }
