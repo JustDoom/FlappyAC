@@ -7,7 +7,6 @@ import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
 import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import com.imjustdoom.flappyanticheat.FlappyAnticheat;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.packet.Packet;
 import com.imjustdoom.flappyanticheat.util.MessageUtil;
 import io.github.retrooper.packetevents.utils.GeyserUtil;
 import org.bukkit.Bukkit;
@@ -60,7 +59,7 @@ public class NetworkListener extends SimplePacketListenerAbstract {
 
         // Handle the packet
         FlappyAnticheat.INSTANCE.getPacketExecutor().execute(() -> FlappyAnticheat.INSTANCE.getReceivingPacketProcessor()
-                .handle(player, new Packet(Packet.Direction.RECEIVE, event, event.getPacketId())));
+                .handle(player, event));
     }
 
     // TODO: onReceivePackets

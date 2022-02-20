@@ -15,7 +15,6 @@ public class FlappyLoadPlayerEvent extends Event {
     private final FlappyPlayerAPI player;
 
     public FlappyLoadPlayerEvent(FlappyPlayerAPI playerAPI) {
-        super(true);
         this.player = playerAPI;
     }
 

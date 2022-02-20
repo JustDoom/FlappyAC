@@ -43,7 +43,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.github.retrooper.packetevents</pattern>
-                                    <shadedPattern>io.github.retrooper.flappyac.packetevents</shadedPattern>
+                                    <shadedPattern>com.github.retrooper.flappyac.packetevents</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.spongepowered.configurate-yaml</pattern>
@@ -92,8 +92,8 @@
         <dependency>
             <groupId>com.github.retrooper.packetevents</groupId>
             <artifactId>spigot</artifactId>
-            <version>2.0-f6b22f0ff2-1</version>
-            <scope>provided</scope>
+            <version>2.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.spongepowered</groupId>

@@ -29,6 +29,8 @@ public class PositionProcessor {
 
     private int airTicks, waterTicks, sinceVehicleTicks;
 
+    private float yaw, pitch, lastYaw, lastPitch, deltaYaw, deltaPitch;
+
     private final List<Block> blocks = new ArrayList<>();
     private final List<Block> blocksNear = new ArrayList<>();
     private List<Entity> nearbyEntities = new ArrayList<>();
@@ -80,6 +82,19 @@ public class PositionProcessor {
         // Handle collisions
         handleCollisions(0);
         handleCollisions(1);
+    }
+
+    public void handle(final float yaw, final float pitch) {
+
+        // Set last and new pitch/yaw
+        this.lastYaw = this.yaw;
+        this.lastPitch = this.pitch;
+
+        this.yaw = yaw;
+        this.pitch = pitch;
+
+        this.deltaPitch = this.pitch - this.lastPitch;
+        this.deltaYaw = this.yaw - this.lastYaw;
     }
 
     //Credit to AntiHaxerman for this part

@@ -1,71 +1,75 @@
 package com.imjustdoom.flappyanticheat.packet.processor;
 
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientHeldItemChange;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientSettings;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientVehicleMove;
+import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
+import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.wrapper.play.client.*;
 import com.imjustdoom.api.check.FlappyCheck;
-import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
-import com.imjustdoom.flappyanticheat.data.processor.PositionProcessor;
-import com.imjustdoom.flappyanticheat.packet.Packet;
 
 public class ReceivingPacketProcessor {
 
     /**
      * Handles incoming packets
      * @param data - Player to handle the packets for
-     * @param packet - The packet to handle
+     * @param event - The packet to handle
      */
-    public void handle(final FlappyPlayer data, Packet packet){
+    public void handle(final FlappyPlayer data, PacketPlayReceiveEvent event){
 
-        if(WrapperPlayClientPlayerFlying.isFlying(packet.getEvent().getPacketType())){
-            final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(packet.getEvent());
+        //if(WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
+            //final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
-            PositionProcessor pos = data.getPositionProcessor();
+            //PositionProcessor pos = data.getPositionProcessor();
 
-            if(packet.isLook() || packet.isPositionLook()) {
-                data.getRotationProcessor().handle(wrapper.getLocation().getYaw(), wrapper.getLocation().getPitch());
-            }
+            //if (packet.isLook() || packet.isPositionLook()) {
+                // data.getRotationProcessor().handle(wrapper.getLocation().getYaw(), wrapper.getLocation().getPitch());
+            //}
 
-            if((packet.isPosition() || packet.isPositionLook())
-                    && (wrapper.getLocation().getX() != pos.getX() || wrapper.getLocation().getY() != pos.getY() || wrapper.getLocation().getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())) {
-                    data.getPositionProcessor().handle(wrapper.getLocation().getX(), wrapper.getLocation().getY(), wrapper.getLocation().getZ(), wrapper.isOnGround());
-            }
+           // if ((packet.isPosition() || packet.isPositionLook())
+                    //&& (wrapper.getLocation().getX() != pos.getX() || wrapper.getLocation().getY() != pos.getY() || wrapper.getLocation().getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())) {
+                //data.getPositionProcessor().handle(wrapper.getLocation().getX(), wrapper.getLocation().getY(), wrapper.getLocation().getZ(), wrapper.isOnGround());
+            //}
+        if (event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION) {
+            WrapperPlayClientPlayerPosition wrapper = new WrapperPlayClientPlayerPosition(event);
+        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION_AND_ROTATION) {
+            WrapperPlayClientPlayerPositionAndRotation wrapper = new WrapperPlayClientPlayerPositionAndRotation(event);
+        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_ROTATION) {
+            WrapperPlayClientPlayerRotation wrapper = new WrapperPlayClientPlayerRotation(event);
+        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_FLYING) {
+            WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
         } else {
-            switch (packet.getEvent().getPacketType()) {
+            switch (event.getPacketType()) {
                 case VEHICLE_MOVE:
-                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(packet.getEvent());
+                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(event);
 
-                    data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
+                    //data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
                     break;
                 case CLIENT_SETTINGS:
-                    final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(packet.getEvent());
+                    final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(event);
 
-                    data.getSettingProcessor().handle(clientSettings);
+                    //data.getSettingProcessor().handle(clientSettings);
                     break;
                 case HELD_ITEM_CHANGE:
-                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(packet.getEvent());
+                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(event);
                     //TODO: made sure its current selected slot
-                    data.getActionProcessor().handleSlots(heldItemChange.getSlot());
+                    //data.getActionProcessor().handleSlots(heldItemChange.getSlot());
                     break;
                 case ENTITY_ACTION:
-                    data.getActionProcessor().handleItemUse(true);
+                    //data.getActionProcessor().handleItemUse(true);
                     break;
             }
         }
 
 
         // TODO: transaction packet
-        if (packet.isIncomingTransaction()) {
+       // if (packet.isIncomingTransaction()) {
             //final WrappedPacketInTransaction wrapper = new WrappedPacketInTransaction(packet.getEvent());
             //data.getVelocityProcessor().handleTransaction(wrapper);
-        }
+        //}
 
         if (data.getPlayer().hasPermission("flappyac.bypass")) return;
 
         for (final FlappyCheck check : data.getChecks()) {
-            if(check.isEnabled()) ((Check) check).handle(packet);
+            //if(check.isEnabled()) ((Check) check).handle(packet);
         }
     }
 }

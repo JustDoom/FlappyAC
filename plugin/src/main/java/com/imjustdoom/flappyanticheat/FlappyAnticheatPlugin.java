@@ -9,12 +9,13 @@ public class FlappyAnticheatPlugin extends JavaPlugin {
 
     @Override
     public void onLoad(){
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
-        PacketEvents.getAPI().load();
     }
 
     @Override
     public void onEnable() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings().bStats(true);
+        PacketEvents.getAPI().load();
         PacketEvents.getAPI().getEventManager().registerListener(new NetworkListener());
         PacketEvents.getAPI().init();
         FlappyAnticheat.INSTANCE.start(this);

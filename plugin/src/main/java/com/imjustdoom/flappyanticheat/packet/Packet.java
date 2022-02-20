@@ -9,46 +9,46 @@ import lombok.Getter;
 public class Packet {
 
     private final Direction direction;
-    private final int packetId;
+    private final PacketType.Play.Client packetId;
     private final PacketPlayReceiveEvent event;
 
-    public Packet(Direction direction, PacketPlayReceiveEvent event, int packetId){
-        this.packetId = packetId;
+    public Packet(Direction direction, PacketPlayReceiveEvent event){
+        this.packetId = event.getPacketType();
         this.direction = direction;
         this.event = event;
     }
 
     public boolean isPosition(){
-        return packetId == PacketType.Play.Client.PLAYER_POSITION.getId();
+        return packetId == PacketType.Play.Client.PLAYER_POSITION;
     }
 
     public boolean isLook(){
-        return packetId == PacketType.Play.Client.PLAYER_ROTATION.getId();
+        return packetId == PacketType.Play.Client.PLAYER_ROTATION;
     }
 
     public boolean isPositionLook(){
-        return packetId == PacketType.Play.Client.PLAYER_POSITION_AND_ROTATION.getId();
+        return packetId == PacketType.Play.Client.PLAYER_POSITION_AND_ROTATION;
     }
 
     public boolean isSetting() {
-        return packetId == PacketType.Play.Client.CLIENT_SETTINGS.getId();
+        return packetId == PacketType.Play.Client.CLIENT_SETTINGS;
     }
 
     public boolean isSteerVehicle() {
-        return packetId == PacketType.Play.Client.STEER_VEHICLE.getId();
+        return packetId == PacketType.Play.Client.STEER_VEHICLE;
     }
 
     public boolean isVehicleMove() {
-        return packetId == PacketType.Play.Client.VEHICLE_MOVE.getId();
+        return packetId == PacketType.Play.Client.VEHICLE_MOVE;
     }
 
     //TODO: make sure it works
     public boolean isBlockPlace() {
-        return packetId == PacketType.Play.Client.PLAYER_BLOCK_PLACEMENT.getId();
+        return packetId == PacketType.Play.Client.PLAYER_BLOCK_PLACEMENT;
     }
 
     public boolean isIncomingTransaction () {
-        return isReceiving() && packetId == PacketType.Play.Client.WINDOW_CONFIRMATION.getId();
+        return isReceiving() && packetId == PacketType.Play.Client.WINDOW_CONFIRMATION;
     }
 
     public boolean isReceiving() {
@@ -63,25 +63,25 @@ public class Packet {
         return isReceiving() && WrapperPlayClientPlayerFlying.isFlying(event.getPacketType());
     }
 
-    public boolean isInventoryClick() { return packetId == PacketType.Play.Client.CLICK_WINDOW.getId(); }
+    public boolean isInventoryClick() { return packetId == PacketType.Play.Client.CLICK_WINDOW; }
 
     public boolean isUseEntity() {
-        return isReceiving() && packetId == PacketType.Play.Client.ENTITY_ACTION.getId();
+        return isReceiving() && packetId == PacketType.Play.Client.ENTITY_ACTION;
     }
 
     public boolean isUseItem() {
-        return packetId == PacketType.Play.Client.USE_ITEM.getId();
+        return packetId == PacketType.Play.Client.USE_ITEM;
     }
 
-    public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_CHANGE.getId(); }
+    public boolean isSlotChange() { return packetId == PacketType.Play.Client.HELD_ITEM_CHANGE; }
 
     // Possibly same as out pos?
     public boolean isServerPosition(){
-        return packetId == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
+        return packetId.getId() == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
     }
 
     public boolean isOutPosition() {
-        return isSending() && packetId == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
+        return isSending() && packetId.getId() == PacketType.Play.Server.PLAYER_POSITION_AND_LOOK.getId();
     }
 
     public enum Direction { SEND, RECEIVE }
