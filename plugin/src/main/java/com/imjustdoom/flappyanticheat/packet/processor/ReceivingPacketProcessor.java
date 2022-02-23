@@ -36,28 +36,28 @@ public class ReceivingPacketProcessor {
             WrapperPlayClientPlayerRotation wrapper = new WrapperPlayClientPlayerRotation(event);
         } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_FLYING) {
             WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
-        } else {
-            switch (event.getPacketType()) {
-                case VEHICLE_MOVE:
-                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(event);
-
-                    //data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
-                    break;
-                case CLIENT_SETTINGS:
-                    final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(event);
-
-                    //data.getSettingProcessor().handle(clientSettings);
-                    break;
-                case HELD_ITEM_CHANGE:
-                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(event);
-                    //TODO: made sure its current selected slot
-                    //data.getActionProcessor().handleSlots(heldItemChange.getSlot());
-                    break;
-                case ENTITY_ACTION:
-                    //data.getActionProcessor().handleItemUse(true);
-                    break;
-            }
-        }
+        } //else {
+//            switch (event.getPacketType()) {
+//                case VEHICLE_MOVE:
+//                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(event);
+//
+//                    //data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
+//                    break;
+//                case CLIENT_SETTINGS:
+//                    //final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(event);
+//
+//                    //data.getSettingProcessor().handle(clientSettings);
+//                    break;
+//                case HELD_ITEM_CHANGE:
+//                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(event);
+//                    //TODO: made sure its current selected slot
+//                    //data.getActionProcessor().handleSlots(heldItemChange.getSlot());
+//                    break;
+//                case ENTITY_ACTION:
+//                    //data.getActionProcessor().handleItemUse(true);
+//                    break;
+//            }
+//        }
 
 
         // TODO: transaction packet
