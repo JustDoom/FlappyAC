@@ -27,16 +27,16 @@ public class NoFallB extends Check {
                 ExemptType.ON_FIRE)) return;
 
         // Get player airTicks and fallDistance
-        int airTicks = data.getPositionProcessor().getAirTicks();
-        double fallDistance = data.getPositionProcessor().getFallDistance();
+        int airTicks = data.getFlyingProcessor().getAirTicks();
+        double fallDistance = data.getFlyingProcessor().getFallDistance();
 
         // Check if lastFallDistance is smaller than lastLastFallDistance and airTicks are greater than 10
         // and if isOnGround is false. We use lastFallDistance and lastLastFalldistance instead of
         // fallDistance and lastFallDistance because that can cause falses when landing on the ground
-        if (data.getPositionProcessor().getLastFallDistance() < data.getPositionProcessor().getLastLastFallDistance()
-                && airTicks > 10 && !data.getPositionProcessor().isOnGround()) {
-            fail("fallDistance: " + fallDistance + " lastFallDistance: " + data.getPositionProcessor().getLastFallDistance()
-                    + " blocks: " + !data.getPositionProcessor().isOnGround(), false);
+        if (data.getFlyingProcessor().getLastFallDistance() < data.getFlyingProcessor().getLastLastFallDistance()
+                && airTicks > 10 && !data.getFlyingProcessor().isOnGround()) {
+            fail("fallDistance: " + fallDistance + " lastFallDistance: " + data.getFlyingProcessor().getLastFallDistance()
+                    + " blocks: " + !data.getFlyingProcessor().isOnGround(), false);
         }
     }
 }

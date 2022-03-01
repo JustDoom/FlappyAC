@@ -1,6 +1,8 @@
 package com.imjustdoom.flappyanticheat.data.processor;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
 import com.imjustdoom.flappyanticheat.util.PlayerUtil;
 import com.imjustdoom.flappyanticheat.util.type.BoundingBox;
@@ -17,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class PositionProcessor {
+public class FlyingProcessor {
 
-    private FlappyPlayer player;
+    private final FlappyPlayer player;
 
     private boolean onGround, lastOnGround, mathematicallyOnGround, lastMathematicallyOnGround, inAir, inLiquid,
-            nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting, nearSlime;
+            nearPiston, nearShulker, nearVehicle, inVehicle, onLadder, lastOnLadder, teleporting, nearSlime,
+            sentDuplicatePos;
 
     private double x, y, z, deltaX, deltaY, deltaZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastX, lastY, lastZ, groundTicks,
             fallDistance, lastFallDistance, lastLastFallDistance, deltaXZ, lastDeltaXZ, lastLastDeltaY, sinceSlimeTicks;
@@ -35,66 +38,70 @@ public class PositionProcessor {
     private final List<Block> blocksNear = new ArrayList<>();
     private List<Entity> nearbyEntities = new ArrayList<>();
 
-    public PositionProcessor(FlappyPlayer player) {
+    public FlyingProcessor(FlappyPlayer player) {
         this.player = player;
     }
 
-    public void handle(double x, double y, double z, boolean onGround) {
+    public void handle(WrapperPlayClientPlayerFlying wrapper) {
 
-        // Set last pos
-        lastX = this.x;
-        lastY = this.y;
-        lastZ = this.z;
+        sentDuplicatePos = checkDuplicatePosition(wrapper.getLocation().getX(), wrapper.getLocation().getY(), wrapper.getLocation().getZ());
 
-        // Set current pos
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        if(wrapper.hasPositionChanged() && !sentDuplicatePos) {
 
-        // Set on ground
-        lastOnGround = this.onGround;
-        this.onGround = onGround;
+            // Set last pos
+            lastX = this.x;
+            lastY = this.y;
+            lastZ = this.z;
 
-        // Set mathematically onGround
-        lastMathematicallyOnGround = mathematicallyOnGround;
-        mathematicallyOnGround = y % (1D / 64) == 0;
+            // Set current pos
+            this.x = wrapper.getLocation().getX();
+            this.y = wrapper.getLocation().getY();
+            this.z = wrapper.getLocation().getZ();
 
-        // Set last last delta Y
-        lastLastDeltaY = lastDeltaY;
+            // Set on ground
+            lastOnGround = this.onGround;
+            this.onGround = wrapper.isOnGround();
 
-        // Set last delta
-        lastDeltaX = deltaX;
-        lastDeltaY = deltaY;
-        lastDeltaZ = deltaZ;
-        lastDeltaXZ = deltaXZ;
+            // Set mathematically onGround
+            lastMathematicallyOnGround = mathematicallyOnGround;
+            mathematicallyOnGround = y % (1D / 64) == 0;
 
-        // Set current delta
-        deltaX = this.x - lastX;
-        deltaY = this.y - lastY;
-        deltaZ = this.z - lastZ;
-        deltaXZ = Math.hypot(deltaX, deltaZ);
+            // Set last last delta Y
+            lastLastDeltaY = lastDeltaY;
 
-        // Set fall distance
-        lastLastFallDistance = lastFallDistance;
-        lastFallDistance = fallDistance;
-        fallDistance = player.getPlayer().getFallDistance();
+            // Set last delta
+            lastDeltaX = deltaX;
+            lastDeltaY = deltaY;
+            lastDeltaZ = deltaZ;
+            lastDeltaXZ = deltaXZ;
+
+            // Set current delta
+            deltaX = this.x - lastX;
+            deltaY = this.y - lastY;
+            deltaZ = this.z - lastZ;
+            deltaXZ = Math.hypot(deltaX, deltaZ);
+
+            // Set fall distance
+            lastLastFallDistance = lastFallDistance;
+            lastFallDistance = fallDistance;
+            fallDistance = player.getPlayer().getFallDistance();
+        }
+
+        if(wrapper.hasRotationChanged()) {
+            // Set last and new pitch/yaw
+            this.lastYaw = this.yaw;
+            this.lastPitch = this.pitch;
+
+            this.yaw = wrapper.getLocation().getYaw();
+            this.pitch = wrapper.getLocation().getPitch();
+
+            this.deltaPitch = this.pitch - this.lastPitch;
+            this.deltaYaw = this.yaw - this.lastYaw;
+        }
 
         // Handle collisions
         handleCollisions(0);
         handleCollisions(1);
-    }
-
-    public void handle(final float yaw, final float pitch) {
-
-        // Set last and new pitch/yaw
-        this.lastYaw = this.yaw;
-        this.lastPitch = this.pitch;
-
-        this.yaw = yaw;
-        this.pitch = pitch;
-
-        this.deltaPitch = this.pitch - this.lastPitch;
-        this.deltaYaw = this.yaw - this.lastYaw;
     }
 
     //Credit to AntiHaxerman for this part
@@ -232,5 +239,12 @@ public class PositionProcessor {
         } catch (final Throwable ignored) {
 
         }
+    }
+
+    private boolean checkDuplicatePosition(double x, double y, double z) {
+        return player.getClientVersion().isNewerThanOrEquals(ClientVersion.V_1_16)
+                && ((x == this.x)
+                && (y == this.y)
+                && (z == this.z));
     }
 }

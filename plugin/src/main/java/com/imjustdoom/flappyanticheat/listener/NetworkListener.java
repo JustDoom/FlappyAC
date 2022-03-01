@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 public class NetworkListener extends SimplePacketListenerAbstract {
 
     public NetworkListener() {
-        super(PacketListenerPriority.MONITOR, true);
+        super(PacketListenerPriority.MONITOR);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ScaffoldB extends Check {
         // Check of the face the block was placed on was the bottom
         // and if the player is above where the block was placed
         if(wrappedPacketInBlockPlace.getFace() == BlockFace.DOWN
-                && data.getActionProcessor().getLastBlockPlaced().getY() < data.getPositionProcessor().getY())
+                && data.getActionProcessor().getLastBlockPlaced().getY() < data.getFlyingProcessor().getY())
             fail("No Info", false);
     }
 }

@@ -27,8 +27,8 @@ public class SpeedC extends Check {
         float momentum = 0.91f * getFrictionBlock(data.getPlayer().getLocation().clone().add(0, -1.0, 0));
         float baseSpeed = getBaseSpeed(data.getPlayer(), data.getPlayer().isSprinting());
         float acceleration = (float) (baseSpeed * getEffectMultipliers(data.getPlayer()) * (0.16277f / Math.pow(momentum, 3)));
-        float prediction = (float) ((data.getPositionProcessor().getLastDeltaXZ() * momentum) + acceleration); // Momentum + acceleration
-        float accuracy = (float) ((data.getPositionProcessor().getDeltaXZ() - prediction) * 0.98f);
+        float prediction = (float) ((data.getFlyingProcessor().getLastDeltaXZ() * momentum) + acceleration); // Momentum + acceleration
+        float accuracy = (float) ((data.getFlyingProcessor().getDeltaXZ() - prediction) * 0.98f);
 
         /**debug("acc= " + accuracy);
         debug("pred= " + prediction);
@@ -37,9 +37,9 @@ public class SpeedC extends Check {
         debug("mom= " + momentum);
         debug("deltaxz= " + data.getPositionProcessor().getDeltaXZ());
         debug("ticks= " + data.getPositionProcessor().getGroundTicks());**/
-        if(data.getPositionProcessor().getGroundTicks() > 20 && data.getPositionProcessor().isOnGround()) {
+        if(data.getFlyingProcessor().getGroundTicks() > 20 && data.getFlyingProcessor().isOnGround()) {
 
-            if (accuracy > 0.001 && data.getPositionProcessor().getDeltaXZ() > 0.1) {
+            if (accuracy > 0.001 && data.getFlyingProcessor().getDeltaXZ() > 0.1) {
                 fail("accuracy: " + accuracy, false);
             }
         }

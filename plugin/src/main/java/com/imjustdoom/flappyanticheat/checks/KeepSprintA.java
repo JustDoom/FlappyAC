@@ -19,8 +19,8 @@ public class KeepSprintA extends Check {
     @Override
     public void handle(Packet packet) {
         if(packet.isPositionLook() || packet.isPosition()) {
-            final double deltaXZ = data.getPositionProcessor().getDeltaXZ();
-            final double lastDeltaXZ = data.getPositionProcessor().getLastDeltaXZ();
+            final double deltaXZ = data.getFlyingProcessor().getDeltaXZ();
+            final double lastDeltaXZ = data.getFlyingProcessor().getLastDeltaXZ();
 
             if(data.getPlayer().isSprinting() && ++hitTicks <= 2) {
                 final double accel = Math.abs(deltaXZ - lastDeltaXZ);

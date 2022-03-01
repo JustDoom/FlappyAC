@@ -21,8 +21,8 @@ public class BoatFlyB extends Check {
         if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
 
         // Checks if the Y says the same while in the air
-        if (data.getPositionProcessor().getY() == data.getPositionProcessor().getLastY()
-                && data.getPositionProcessor().getAirTicks() > 20) {
+        if (data.getFlyingProcessor().getY() == data.getFlyingProcessor().getLastY()
+                && data.getFlyingProcessor().getAirTicks() > 20) {
             this.stableY++;
         } else {
             this.stableY = 0.0D;

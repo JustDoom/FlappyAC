@@ -17,10 +17,10 @@ public class FastClimbA extends Check {
     public void handle(Packet packet) {
         if (!packet.isPositionLook() && !packet.isPosition()) return;
 
-        if (data.getPositionProcessor().isOnLadder() && data.getPositionProcessor().isLastOnLadder()) {
-            double aNumber = data.getPositionProcessor().getDeltaY() - data.getPositionProcessor().getLastDeltaY();
-            if (data.getPositionProcessor().getDeltaY() > 0.1177 && aNumber == 0) {
-                fail("deltaY: " + data.getPositionProcessor().getDeltaY(), false);
+        if (data.getFlyingProcessor().isOnLadder() && data.getFlyingProcessor().isLastOnLadder()) {
+            double aNumber = data.getFlyingProcessor().getDeltaY() - data.getFlyingProcessor().getLastDeltaY();
+            if (data.getFlyingProcessor().getDeltaY() > 0.1177 && aNumber == 0) {
+                fail("deltaY: " + data.getFlyingProcessor().getDeltaY(), false);
             }
         }
     }

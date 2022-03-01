@@ -27,14 +27,14 @@ public class FlyB extends Check {
                     ExemptType.LIQUID, ExemptType.CLIMBABLE, ExemptType.SLIME /**ExemptType.WEB, ExemptType.TELEPORT**/);
 
             //check if their deltaY is less than previous, and set our wentDown boolean to true if so.
-            if (!data.getPositionProcessor().isOnGround() && !data.getPlayer().isFlying() && !isExempt1) {
-                if (data.getPositionProcessor().getDeltaY() < data.getPositionProcessor().getLastDeltaY())
+            if (!data.getFlyingProcessor().isOnGround() && !data.getPlayer().isFlying() && !isExempt1) {
+                if (data.getFlyingProcessor().getDeltaY() < data.getFlyingProcessor().getLastDeltaY())
                     wentDown = true;
             } else wentDown = false;
 
             //check if theyre heading back up after previous going down. dont run if theyre placing blocks (can false)
-            if (data.getPositionProcessor().getDeltaY() > data.getPositionProcessor().getLastDeltaY() &&
-                    wentDown && data.getPositionProcessor().getDeltaY() > data.getPositionProcessor().getLastLastDeltaY()) {
+            if (data.getFlyingProcessor().getDeltaY() > data.getFlyingProcessor().getLastDeltaY() &&
+                    wentDown && data.getFlyingProcessor().getDeltaY() > data.getFlyingProcessor().getLastLastDeltaY()) {
                 fail("", false);
             }
         }

@@ -18,9 +18,9 @@ public class StepA extends Check {
     public void handle(final Packet packet) {
         if(!packet.isPosition() && !packet.isPositionLook() || isExempt(ExemptType.PISTON)) return;
 
-        if(Math.abs(data.getPositionProcessor().getDeltaY()) > 0.6 && data.getPositionProcessor().isMathematicallyOnGround()
-                && data.getPositionProcessor().isLastMathematicallyOnGround()) {
-            fail("deltaY: " + data.getPositionProcessor().getDeltaY(), false);
+        if(Math.abs(data.getFlyingProcessor().getDeltaY()) > 0.6 && data.getFlyingProcessor().isMathematicallyOnGround()
+                && data.getFlyingProcessor().isLastMathematicallyOnGround()) {
+            fail("deltaY: " + data.getFlyingProcessor().getDeltaY(), false);
         }
     }
 }

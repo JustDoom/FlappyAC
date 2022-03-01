@@ -1,10 +1,15 @@
 package com.imjustdoom.flappyanticheat.packet.processor;
 
 import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
-import com.github.retrooper.packetevents.protocol.packettype.PacketType;
-import com.github.retrooper.packetevents.wrapper.play.client.*;
+import com.github.retrooper.packetevents.protocol.world.Location;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientHeldItemChange;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientSettings;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientVehicleMove;
 import com.imjustdoom.api.check.FlappyCheck;
+import com.imjustdoom.flappyanticheat.checks.Check;
 import com.imjustdoom.flappyanticheat.data.FlappyPlayer;
+import com.imjustdoom.flappyanticheat.packet.Packet;
 
 public class ReceivingPacketProcessor {
 
@@ -15,49 +20,45 @@ public class ReceivingPacketProcessor {
      */
     public void handle(final FlappyPlayer data, PacketPlayReceiveEvent event){
 
-        //if(WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
-            //final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
+        if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
+            final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
-            //PositionProcessor pos = data.getPositionProcessor();
+            System.out.println("boat?");
 
-            //if (packet.isLook() || packet.isPositionLook()) {
-                // data.getRotationProcessor().handle(wrapper.getLocation().getYaw(), wrapper.getLocation().getPitch());
-            //}
+            data.getFlyingProcessor().handle(wrapper);
+        } else {
+            switch (event.getPacketType()) {
+                case VEHICLE_MOVE:
+                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(event);
 
-           // if ((packet.isPosition() || packet.isPositionLook())
-                    //&& (wrapper.getLocation().getX() != pos.getX() || wrapper.getLocation().getY() != pos.getY() || wrapper.getLocation().getZ() != pos.getZ() || wrapper.isOnGround() != pos.isOnGround())) {
-                //data.getPositionProcessor().handle(wrapper.getLocation().getX(), wrapper.getLocation().getY(), wrapper.getLocation().getZ(), wrapper.isOnGround());
-            //}
-        if (event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION) {
-            WrapperPlayClientPlayerPosition wrapper = new WrapperPlayClientPlayerPosition(event);
-        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_POSITION_AND_ROTATION) {
-            WrapperPlayClientPlayerPositionAndRotation wrapper = new WrapperPlayClientPlayerPositionAndRotation(event);
-        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_ROTATION) {
-            WrapperPlayClientPlayerRotation wrapper = new WrapperPlayClientPlayerRotation(event);
-        } else if (event.getPacketType() == PacketType.Play.Client.PLAYER_FLYING) {
-            WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
-        } //else {
-//            switch (event.getPacketType()) {
-//                case VEHICLE_MOVE:
-//                    final WrapperPlayClientVehicleMove vehicleMove = new WrapperPlayClientVehicleMove(event);
-//
-//                    //data.getPositionProcessor().handle(vehicleMove.getPosition().getX(), vehicleMove.getPosition().getY(), vehicleMove.getPosition().getZ(), false);
-//                    break;
-//                case CLIENT_SETTINGS:
-//                    //final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(event);
-//
-//                    //data.getSettingProcessor().handle(clientSettings);
-//                    break;
-//                case HELD_ITEM_CHANGE:
-//                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(event);
-//                    //TODO: made sure its current selected slot
-//                    //data.getActionProcessor().handleSlots(heldItemChange.getSlot());
-//                    break;
-//                case ENTITY_ACTION:
-//                    //data.getActionProcessor().handleItemUse(true);
-//                    break;
-//            }
-//        }
+                    boolean posChanged = (data.getFlyingProcessor().getX() != data.getFlyingProcessor().getLastX()
+                            || data.getFlyingProcessor().getY() != data.getFlyingProcessor().getLastY()
+                            || data.getFlyingProcessor().getZ() != data.getFlyingProcessor().getLastZ());
+                    boolean rotChanged = (data.getFlyingProcessor().getPitch() != data.getFlyingProcessor().getLastPitch()
+                            || data.getFlyingProcessor().getYaw() != data.getFlyingProcessor().getLastYaw());
+                    WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(posChanged, rotChanged, false,
+                            new Location(vehicleMove.getPosition().getX(),
+                                    vehicleMove.getPosition().getY(),
+                                    vehicleMove.getPosition().getZ(),
+                                    vehicleMove.getYaw(),
+                                    vehicleMove.getPitch()));
+                    data.getFlyingProcessor().handle(wrapper);
+                    break;
+                case CLIENT_SETTINGS:
+                    final WrapperPlayClientSettings clientSettings = new WrapperPlayClientSettings(event);
+
+                    data.getSettingProcessor().handle(clientSettings);
+                    break;
+                case HELD_ITEM_CHANGE:
+                    final WrapperPlayClientHeldItemChange heldItemChange = new WrapperPlayClientHeldItemChange(event);
+                    //TODO: made sure its current selected slot
+                    data.getActionProcessor().handleSlots(heldItemChange.getSlot());
+                    break;
+                case ENTITY_ACTION:
+                    data.getActionProcessor().handleItemUse(true);
+                    break;
+            }
+        }
 
 
         // TODO: transaction packet
@@ -69,7 +70,7 @@ public class ReceivingPacketProcessor {
         if (data.getPlayer().hasPermission("flappyac.bypass")) return;
 
         for (final FlappyCheck check : data.getChecks()) {
-            //if(check.isEnabled()) ((Check) check).handle(packet);
+            if(check.isEnabled()) ((Check) check).handle(new Packet(Packet.Direction.RECEIVE, event));
         }
     }
 }

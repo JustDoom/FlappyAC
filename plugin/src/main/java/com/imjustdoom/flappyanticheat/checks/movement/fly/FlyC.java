@@ -20,9 +20,9 @@ public class FlyC extends Check {
         if (!packet.isPosition() && !packet.isPositionLook()
                 || isExempt(ExemptType.TPS, ExemptType.GAMEMODE, ExemptType.ON_FIRE, ExemptType.SLIME)) return;
 
-        final double accel =  data.getPositionProcessor().getLastDeltaY() - data.getPositionProcessor().getDeltaY();
-        final double deltaY = data.getPositionProcessor().getDeltaY();
-        final int airTicks = data.getPositionProcessor().getAirTicks();
+        final double accel =  data.getFlyingProcessor().getLastDeltaY() - data.getFlyingProcessor().getDeltaY();
+        final double deltaY = data.getFlyingProcessor().getDeltaY();
+        final int airTicks = data.getFlyingProcessor().getAirTicks();
 
         if(airTicks > 10 && accel > 0 && deltaY > 0 && lastAccel <= 0)
             fail("Air: " + airTicks + " accel: " + accel, false);

@@ -29,8 +29,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
     private final long joinTime = System.currentTimeMillis();
     private final List<FlappyCheck> checks = CheckManager.loadChecks(this);
 
-    private final PositionProcessor positionProcessor;
-    private final RotationProcessor rotationProcessor;
+    private final FlyingProcessor flyingProcessor;
     private final VelocityProcessor velocityProcessor;
     private final SettingProcessor settingProcessor;
     private final ActionProcessor actionProcessor;
@@ -42,8 +41,7 @@ public class FlappyPlayer implements FlappyPlayerAPI {
         this.clientVersion = PacketEvents.getAPI().getPlayerManager().getClientVersion(player);
 
         // Load the processors and exempt manager
-        this.positionProcessor = new PositionProcessor(this);
-        this.rotationProcessor = new RotationProcessor(this);
+        this.flyingProcessor = new FlyingProcessor(this);
         this.velocityProcessor = new VelocityProcessor(this);
         this.settingProcessor = new SettingProcessor(this);
         this.actionProcessor = new ActionProcessor(this);

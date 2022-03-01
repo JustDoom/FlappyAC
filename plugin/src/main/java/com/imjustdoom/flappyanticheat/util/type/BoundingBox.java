@@ -42,12 +42,12 @@ public final class BoundingBox {
     }
 
     public BoundingBox(final FlappyPlayer data) {
-        this.minX = data.getPositionProcessor().getX() - 0.3D;
-        this.minY = data.getPositionProcessor().getY();
-        this.minZ = data.getPositionProcessor().getZ() - 0.3D;
-        this.maxX = data.getPositionProcessor().getX() + 0.3D;
-        this.maxY = data.getPositionProcessor().getY() + 1.8D;
-        this.maxZ = data.getPositionProcessor().getZ() + 0.3D;
+        this.minX = data.getFlyingProcessor().getX() - 0.3D;
+        this.minY = data.getFlyingProcessor().getY();
+        this.minZ = data.getFlyingProcessor().getZ() - 0.3D;
+        this.maxX = data.getFlyingProcessor().getX() + 0.3D;
+        this.maxY = data.getFlyingProcessor().getY() + 1.8D;
+        this.maxZ = data.getFlyingProcessor().getZ() + 0.3D;
     }
 
     public BoundingBox(final Vector data) {

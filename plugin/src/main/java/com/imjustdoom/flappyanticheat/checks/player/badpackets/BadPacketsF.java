@@ -17,7 +17,7 @@ public class BadPacketsF extends Check {
     public void handle(Packet packet) {
         if(!packet.isPositionLook() && !packet.isPosition()) return;
 
-        if(data.getPlayer().isSprinting() && data.getPositionProcessor().getDeltaX() == 0 && data.getPositionProcessor().getDeltaZ() == 0) {
+        if(data.getPlayer().isSprinting() && data.getFlyingProcessor().getDeltaX() == 0 && data.getFlyingProcessor().getDeltaZ() == 0) {
             fail("No Info", false);
         }
     }

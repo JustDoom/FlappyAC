@@ -19,8 +19,8 @@ public class BoatFlyA extends Check {
 
         if (!packet.isVehicleMove() || isExempt(ExemptType.TPS, ExemptType.GAMEMODE)) return;
 
-        if(data.getPlayer().isInsideVehicle() && data.getPositionProcessor().getAirTicks() > 10
-                && data.getPositionProcessor().getY() > data.getPositionProcessor().getLastY()
+        if(data.getPlayer().isInsideVehicle() && data.getFlyingProcessor().getAirTicks() > 10
+                && data.getFlyingProcessor().getY() > data.getFlyingProcessor().getLastY()
                 && data.getPlayer().getVehicle().getType() == EntityType.BOAT) {
             fail("", false);
         }

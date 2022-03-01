@@ -23,8 +23,8 @@ public class InventoryC extends Check {
                 || isExempt(ExemptType.GAMEMODE, ExemptType.TPS)) return;
 
         // Check if the player is in an inventory and the players yaw or pitch changed while it was open
-        if(data.getActionProcessor().isOpen() && (data.getRotationProcessor().getYaw() != data.getRotationProcessor().getLastYaw()
-                || data.getRotationProcessor().getPitch() != data.getRotationProcessor().getLastPitch())
+        if(data.getActionProcessor().isOpen() && (data.getFlyingProcessor().getYaw() != data.getFlyingProcessor().getLastYaw()
+                || data.getFlyingProcessor().getPitch() != data.getFlyingProcessor().getLastPitch())
                 && data.getPlayer().getAllowFlight()) {
             fail("No Info", false);
         }

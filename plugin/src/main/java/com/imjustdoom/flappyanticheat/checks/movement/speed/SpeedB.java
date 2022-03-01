@@ -25,10 +25,10 @@ public class SpeedB extends Check {
         if (!packet.isLook() && !packet.isPositionLook()
                 || isExempt(ExemptType.JOINED)) return;
 
-        final double deltaYaw = data.getRotationProcessor().getDeltaYaw();
+        final double deltaYaw = data.getFlyingProcessor().getDeltaYaw();
 
-        final double deltaXZ = data.getPositionProcessor().getDeltaXZ();
-        final double lastDeltaXZ = data.getPositionProcessor().getLastDeltaXZ();
+        final double deltaXZ = data.getFlyingProcessor().getDeltaXZ();
+        final double lastDeltaXZ = data.getFlyingProcessor().getLastDeltaXZ();
 
         // Get acceleration and squaredAcceleration
         final double accel = Math.abs(deltaXZ - lastDeltaXZ);

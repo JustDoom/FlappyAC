@@ -1,5 +1,6 @@
 package com.imjustdoom.flappyanticheat.checks.player.badpackets;
 
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerAbilities;
 import com.imjustdoom.api.check.CheckInfo;
 import com.imjustdoom.api.check.CheckType;
 import com.imjustdoom.flappyanticheat.checks.Check;
@@ -16,9 +17,9 @@ public class BadPacketsD extends Check {
     @Override
     public void handle(Packet packet) {
 
-//        final WrapperPlayClientPlayerAbilities wrapper = new WrapperPlayClientPlayerAbilities(packet.getEvent());
-//        if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
-//            fail("No Info", false);
-//        }
+        final WrapperPlayClientPlayerAbilities wrapper = new WrapperPlayClientPlayerAbilities(packet.getEvent());
+        if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
+            fail("No Info", false);
+        }
     }
 }
