@@ -17,6 +17,8 @@ public class BadPacketsD extends Check {
     @Override
     public void handle(Packet packet) {
 
+        if(!packet.isAbilities()) return;
+
         final WrapperPlayClientPlayerAbilities wrapper = new WrapperPlayClientPlayerAbilities(packet.getEvent());
         if (wrapper.isFlightAllowed().orElse(false) && !data.getPlayer().getAllowFlight()) {
             fail("No Info", false);

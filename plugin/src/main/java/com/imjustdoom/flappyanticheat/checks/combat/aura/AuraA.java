@@ -22,7 +22,7 @@ public class AuraA extends Check {
 
         if (packet.isFlying()) {
             this.lastSent = System.currentTimeMillis();
-        } else if (packet.isUseEntity()) {
+        } else if (packet.isInteractEntity()) {
 
             final WrapperPlayClientInteractEntity wrappedUse = new WrapperPlayClientInteractEntity(packet.getEvent());
 

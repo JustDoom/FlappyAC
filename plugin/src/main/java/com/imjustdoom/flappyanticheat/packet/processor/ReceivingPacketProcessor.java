@@ -23,8 +23,6 @@ public class ReceivingPacketProcessor {
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
             final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 
-            System.out.println("boat?");
-
             data.getFlyingProcessor().handle(wrapper);
         } else {
             switch (event.getPacketType()) {
@@ -72,5 +70,8 @@ public class ReceivingPacketProcessor {
         for (final FlappyCheck check : data.getChecks()) {
             if(check.isEnabled()) ((Check) check).handle(new Packet(Packet.Direction.RECEIVE, event));
         }
+
+        // Hopefully doesnt make a mem leak
+        event.cleanUp();
     }
 }

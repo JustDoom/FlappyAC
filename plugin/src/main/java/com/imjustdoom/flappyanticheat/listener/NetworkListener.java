@@ -34,13 +34,15 @@ public class NetworkListener extends SimplePacketListenerAbstract {
     }
 
     @Override
-    public void onPacketPlayReceive(final PacketPlayReceiveEvent event) {
+    public void onPacketPlayReceive(final PacketPlayReceiveEvent e) {
+
+        final PacketPlayReceiveEvent event = e.clone();
+
         final FlappyPlayer player = FlappyAnticheat.INSTANCE.getDataManager().getData((Player) event.getPlayer());
 
         if (player == null) return;
 
         // Check if someone is trying to choke the packet
-        // TODO: make sure it works with isFlying check
         if (WrapperPlayClientPlayerFlying.isFlying(event.getPacketType())) {
             final WrapperPlayClientPlayerFlying wrapper = new WrapperPlayClientPlayerFlying(event);
 

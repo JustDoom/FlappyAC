@@ -18,6 +18,10 @@ public class Packet {
         this.event = event;
     }
 
+    public boolean isAbilities() {
+        return packetId == PacketType.Play.Client.PLAYER_ABILITIES;
+    }
+
     public boolean isPosition(){
         return packetId == PacketType.Play.Client.PLAYER_POSITION;
     }
@@ -67,6 +71,10 @@ public class Packet {
 
     public boolean isUseEntity() {
         return isReceiving() && packetId == PacketType.Play.Client.ENTITY_ACTION;
+    }
+
+    public boolean isInteractEntity() {
+        return isReceiving() && packetId == PacketType.Play.Client.INTERACT_ENTITY;
     }
 
     public boolean isUseItem() {
