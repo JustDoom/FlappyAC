@@ -3,6 +3,8 @@
 [![Build Status](https://ci.imjustdoom.com/job/FlappyAC/badge/icon?style=flat-square)](https://ci.imjustdoom.com/view/MCArchive/job/FlappyAC)
 [![Discord Server](https://img.shields.io/discord/979589333524820018?color=7289da&label=DISCORD&style=flat-square&logo=appveyor)](https://discord.gg/k8RcgxpnBS)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L3L64M1TB)
+
 FlappyAC is a free anticheat, I started it because I wanted to learn anticheat development as it seemed fun (And it was!). FlappyAC aims to support Minecraft versions 1.8+ and should work on Spigot and any forks that don't mess with packet stuff like TacoSpigot (I think). 
 
 This may not receive any more updates anymore as I don't really have motivation for this any more. Anyone is welcome to fork this and continue it or use it as "inspiration" for there anticheat as long as I get some credit.
@@ -11,6 +13,15 @@ This may not receive any more updates anymore as I don't really have motivation 
 - Compatible with 1.8 - 1.19 servers (Soon:tm:)
 - It will be free forever!
 - It has an API you can use to develop addons!
+
+## Helping out
+Want to help us out?
+
+### Donating
+Donating is a way to support the project, me and any hosting costs. You can make one time donations or subscribe monthly on our [kofi](https://ko-fi.com/justdoom) page.
+
+### Contributing
+Another way you can help is contributing to the project. You can make a pull request with more features or find bugs and report them.
 
 ## Support
 I provide support for this project in my discord server [here](https://discord.gg/wVCSqV7ptB). Or you can open an issue in tbe [issues](https://github.com/JustDoom/FlappyAC/issues) tab.
