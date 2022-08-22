@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.commands;
+package com.justdoom.flappyanticheat.command;
 
 import com.justdoom.flappyanticheat.FlappyAnticheat;
 import org.bukkit.Bukkit;

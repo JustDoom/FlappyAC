@@ -1,9 +1,9 @@
 package com.justdoom.flappyanticheat;
 
+import com.imjustdoom.cmdinstruction.CMDInstruction;
 import com.justdoom.flappyanticheat.checks.CheckManager;
-import com.justdoom.flappyanticheat.commands.FlagClickCommand;
-import com.justdoom.flappyanticheat.commands.FlappyACCommand;
-import com.justdoom.flappyanticheat.commands.tabcomplete.FlappyAnticheatTabCompletion;
+import com.justdoom.flappyanticheat.command.FlagClickCommand;
+import com.justdoom.flappyanticheat.command.FlappyACCmd;
 import com.justdoom.flappyanticheat.data.FileData;
 import com.justdoom.flappyanticheat.data.PlayerDataManager;
 import com.justdoom.flappyanticheat.listener.PlayerConnectionListener;
@@ -14,11 +14,8 @@ import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.settings.PacketEventsSettings;
 import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.Messenger;
-
-import java.util.concurrent.Callable;
 
 public final class FlappyAnticheat extends JavaPlugin {
 
@@ -68,19 +65,11 @@ public final class FlappyAnticheat extends JavaPlugin {
         saveDefaultConfig();
 
         //Load metrics
-
         int pluginId = 11300;
         Metrics metrics = new Metrics(this, pluginId);
-
-        metrics.addCustomChart(new Metrics.SimplePie("used_language", new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return getConfig().getString("language", "en");
-            }
-        }));
+        metrics.addCustomChart(new Metrics.SimplePie("used_language", () -> getConfig().getString("language", "en")));
 
         //Register incoming plugin channel for client brand
-
         Messenger messenger = Bukkit.getMessenger();
         messenger.registerIncomingPluginChannel(FlappyAnticheat.getInstance(), "minecraft:brand", new BrandMessageUtil());
 
@@ -88,19 +77,16 @@ public final class FlappyAnticheat extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerConnectionListener(this), this);
 
         //Register commands
-        this.getCommand("flappyanticheat").setExecutor(new FlappyACCommand());
+        CMDInstruction.registerCommands(this, new FlappyACCmd().setName("flappyac").setPermission("flappyanticheat.commands"));
         this.getCommand("flappyacflagclick").setExecutor(new FlagClickCommand());
 
-        //Register Tab completion
-        this.getCommand("flappyanticheat").setTabCompleter(new FlappyAnticheatTabCompletion());
-
+        // Init PacketEvents
         PacketEvents.get().init();
     }
 
     @Override
     public void onDisable() {
         //Disable PacketEvents
-
         PacketEvents.get().terminate();
     }
 
