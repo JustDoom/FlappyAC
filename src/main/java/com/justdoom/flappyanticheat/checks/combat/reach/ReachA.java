@@ -21,7 +21,6 @@ public class ReachA extends Check {
     private long lastKP;
     private int preVL;
 
-
     private List<BoundingBox> rayBB(PlayerData data, int ticks) {
         List<BoundingBox> toReturn = new ArrayList<>();
         if (data.pastVictimBoxes.size() > 4) {
@@ -48,6 +47,7 @@ public class ReachA extends Check {
         if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
             WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(event.getNMSPacket());
             if (packet.getAction() == WrappedPacketInUseEntity.EntityUseAction.ATTACK) {
+                if (!(packet.getEntity() instanceof LivingEntity)) return;
                 data.vicitm = (LivingEntity) packet.getEntity();
                 if (data.pastVictimBoxes.size() != 0) {
                     int ticks = data.ping / 50;
