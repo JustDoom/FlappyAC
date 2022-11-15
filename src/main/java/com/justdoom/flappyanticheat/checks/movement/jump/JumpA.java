@@ -50,7 +50,7 @@ public class JumpA extends Check {
 
 
 
-            if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding()
+            if (player.isFlying() || player.isDead() || player.isInsideVehicle() || player.isGliding() || PlayerUtil.isInLiquid(player)
                     || (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)) return;
 
             //0.42 is not the real jump height of the player. if youre gonna make it false atleast use the right number.
