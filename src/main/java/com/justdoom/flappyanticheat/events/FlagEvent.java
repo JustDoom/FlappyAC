@@ -1,22 +1,28 @@
-package com.justdoom.flappyanticheat.customevents;
+package com.justdoom.flappyanticheat.events;
 
+import com.justdoom.flappyanticheat.FlappyAnticheat;
 import com.justdoom.flappyanticheat.checks.Check;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PunishEvent extends Event implements Cancellable {
+public class FlagEvent extends Event implements Cancellable {
+
+    private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player player;
-    private boolean isCancelled;
+    private boolean isCancelled, isPunishable;
     private Check check;
+    private int vl;
 
-    public PunishEvent(Player player, Check check) {
+    public FlagEvent(Player player, Check check) {
         super(true);
         this.player = player;
         this.isCancelled = false;
         this.check = check;
+        this.isPunishable = FlappyAnticheat.getInstance().config.configuration.getBoolean("checks." + check.check + "." + check.checkType + ".punishable");
+        this.vl = FlappyAnticheat.getInstance().violationHandler.getViolations(check, player);
     }
 
     @Override
@@ -29,8 +35,6 @@ public class PunishEvent extends Event implements Cancellable {
         this.isCancelled = isCancelled;
     }
 
-    private static final HandlerList HANDLERS = new HandlerList();
-
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -40,11 +44,20 @@ public class PunishEvent extends Event implements Cancellable {
         return HANDLERS;
     }
 
-    public Player getPunishedPlayer() {
+    public Player getFlaggedPlayer() {
         return this.player;
     }
 
     public Check getCheck(){
         return this.check;
+    }
+
+    public boolean isPunishable(){
+        return this.isPunishable;
+    }
+
+
+    public int getViolations(){
+        return this.vl;
     }
 }

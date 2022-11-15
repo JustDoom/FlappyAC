@@ -1,4 +1,4 @@
-package com.justdoom.flappyanticheat.customevents;
+package com.justdoom.flappyanticheat.events;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
